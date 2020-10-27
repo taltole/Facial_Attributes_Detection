@@ -1,7 +1,5 @@
 # Imports
-from Classes import Summarize, LoadModel
-from Classes.LoadModel import BaseModel
-from Classes.Summarize import Metrics
+
 from config import *
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
@@ -238,46 +236,3 @@ class Train:
     #     return figure
 
 
-def main():
-    path = os.path.join(FACEPATH, '1')
-    trainer = Train('/Users/tal/Google Drive/Cellebrite/files list.csv', path)
-
-    # Start images processing and dataframe splitting
-    print('Reading File...\nCreating Train, Test...')
-
-    label = 'Eyeglasses'
-    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
-    print('Done!')
-
-    # print('Checking test sample images...')
-    # trainer.sanity_check(test)
-
-    # Loading Base Model
-    print('Loading Model...')
-
-    model_name = 'vgg19'
-    # print('Models: vgg19, MobileNetv2, vgg_face, facenet, emotion, age, gender, race')
-    # model_name = input('Choose one model to load: )
-    basemodel = BaseModel(model_name)
-    basemodel = basemodel.load_model()
-    print(f'Model {model_name} loaded')
-
-    print('Running data generator...')
-    train_data, valid_data, test_data = trainer.generator_splitter(train, test, path)
-
-    print('Training Start...')
-    model = basemodel.adding_toplayers(basemodel)
-    history = trainer.start_train(model, label + '.h5', train_data, valid_data, callback=None, optimize=None)
-    print('Done!')
-
-    metrics = Metrics(history, test_data)
-    metrics.acc_loss_graph()
-
-    # EPOCH = 1
-    # STEP_SIZE_TEST = test_data.n // test_data.batch_size
-    # loss, acc = model.evaluate(valid_data, steps=STEP_SIZE_TEST)
-    # print(f"Loss:\t{round(loss, 2)}\nAcc.:\t{round(acc, 2)}")
-
-
-if __name__ == '__main__':
-    main()

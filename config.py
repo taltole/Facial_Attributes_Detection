@@ -31,6 +31,7 @@ pylab.rcParams.update(params)
 # Constant
 MODEL_PATH = '/Users/tal/Dropbox/Projects/Cellebrite/basemodels'
 WEIGHT_PATH = '/Weights'
+IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'
 
 
 def find_imagepath(file):
@@ -51,7 +52,6 @@ def find_imagepath(file):
     return os.path.join(IMAGEPATH, file)
 
 
-IMAGEPATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/'
 
 # Constant For CelebA DS
 FILE = ''

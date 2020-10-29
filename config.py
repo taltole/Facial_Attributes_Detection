@@ -4,7 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.pylab as pylab
-# from google.colab import drive
+import seaborn as sns
+from google.colab import drive
 import itertools
 import shutil
 import cv2
@@ -30,8 +31,9 @@ pylab.rcParams.update(params)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Constant
 MODEL_PATH = '/Users/tal/Dropbox/Projects/Cellebrite/basemodels'
-WEIGHT_PATH = '/Weights'
+WEIGHT_PATH = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/Other/Weights'
 IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'
+IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
 
 
 def find_imagepath(file):
@@ -50,8 +52,6 @@ def find_imagepath(file):
     else:
         IMAGEPATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/'
     return os.path.join(IMAGEPATH, file)
-
-
 
 # Constant For CelebA DS
 FILE = ''

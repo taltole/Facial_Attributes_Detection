@@ -2,51 +2,55 @@ import matplotlib.pyplot as plt
 import numpy as np
 from Classes.Train import *
 from sklearn.metrics import classification_report, confusion_matrix
+from config import *
 
 
 class Metrics:
     """
-    This class contains a function that prints accuracy and loss graphs, confusion matrix and classification report 
+    This class contains a function that prints accuracy and loss graphs, confusion matrix and classification report
     for a model
     """
 
-    def __init__(self, history, y_test, y_pred):
+    def _init_(self, history, epoch, y_test, y_pred):
         """
         :param filepath: path to the folder
         """
         self.history = history
         self.y_pred = y_pred
         self.y_test = y_test
-
-    def acc_loss_graph(self):
-        accuracy = self.history.history['accuracy']
-        val_accuracy = self.history.history['val_accuracy']
-        loss = self.history.history['loss']
-        val_loss = self.history.history['val_loss']
-
-        plt.plot(loss, 'r', label='training loss')
-        plt.plot(val_loss, label='validation loss')
-        plt.xlabel('epoch')
-        plt.ylabel('loss')
-        plt.xticks(np.arange(10), rotation='vertical')
-        plt.title('train and val loss as function of epoch')
-        plt.legend()
-        plt.show()
-
-        plt.plot(accuracy, 'r', label='training accuracy')
-        plt.plot(val_accuracy, label='validation accuracy')
-        plt.xlabel('# epochs')
-        plt.xticks(np.arange(10), rotation='vertical')
-        plt.ylabel('accuracy')
-        plt.title('train and val accuracy as function of epoch')
-        plt.legend()
-        plt.show()
+        self.epoch = epoch
 
     def confusion_matrix(self):
-        sns.heatmap(confusion_matrix(self.y_test.argmax(axis=1), self.y_pred.argmax(axis=1)), annot=True)
-        plt.title('confusion matrix heatmap')
-        plt.show()
+        print('Confusion Matrix ...')
+        cm = confusion_matrix(self.y_test, self.y_pred)
+        df = pd.DataFrame(cm)
+        print(df)
 
-    def classification_report(self):
-        cr = classification_report(self.y_test.argmax(axis=1), self.y_pred.argmax(axis=1))
+    def class_report(self):
+        cr = classification_report(self.y_test, self.y_pred)
         print(cr)
+
+    def acc_loss_graph(self):
+        acc = self.history['accuracy']
+        val_acc = self.history['val_accuracy']
+        loss = self.history['loss']
+        val_loss = self.history['val_loss']
+        plt.figure(figsize=(15, 5))
+        plt.subplot(1, 2, 1)
+        plt.plot(range(1, EPOCH + 1), acc, label='Train')
+        plt.plot(range(1, EPOCH + 1), val_acc, label='Val')
+        plt.legend(loc='lower right')
+        plt.ylabel('Accuracy')
+        plt.xlabel('Epoch')
+        plt.ylim([min(plt.ylim()), 1])
+        plt.title('Accuracy')
+
+        plt.subplot(1, 2, 2)
+        plt.plot(range(1, EPOCH + 1), loss, label='Train')
+        plt.plot(range(1, EPOCH + 1), val_loss, label='Val')
+        plt.legend(loc='lower right')
+        plt.ylabel('Cross Entropy')
+        plt.xlabel('Epoch')
+        plt.ylim([0, max(plt.ylim())])
+        plt.title('Loss')
+        plt.show();

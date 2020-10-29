@@ -55,19 +55,19 @@ def baseModel():
 
 def loadModel(url='https://drive.google.com/uc?id=1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo'):
     model = baseModel()
-    model_file = '/vgg_face_weights.h5'
-
+    model_file = 'vgg_face_weights.h5'
+    model_path = os.path.join(WEIGHT_PATH, model_file)
     # -----------------------------------
 
-    if not os.path.isfile(WEIGHT_PATH + model_file):
+    if not os.path.isfile(model_path):
         print("vgg_face_weights.h5 will be downloaded...")
 
-        output = WEIGHT_PATH + model_file
+        output = model_path
         gdown.download(url, output, quiet=False)
 
     # -----------------------------------
 
-    model.load_weights(WEIGHT_PATH + model_file)
+    model.load_weights(model_path)
 
     # -----------------------------------
 

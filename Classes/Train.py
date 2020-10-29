@@ -4,6 +4,9 @@ from config import *
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from tensorflow import optimizers
+from sklearn.utils import shuffle
+
+
 # todo: Add option to read from libraries
 # todo: Add main class to call relevant class for
 
@@ -14,32 +17,44 @@ class Train:
         self.image_path = image_path
 
     # ######################    Data Preparation   ######################
-    @staticmethod
-    def img_preprocess(data, img_size, file_path=None):
+    # @staticmethod
+    def img_preprocess(self, data, img_size):
         data_img = []
         IMG_WIDTH = img_size
         IMG_HEIGHT = img_size
         for i in data.iloc[:, 0]:
-            if file_path is None:
+            if self.image_path.endswith('1'):
                 file_path = find_imagepath(i)
-            image = cv2.imread(file_path)
+                image = cv2.imread(file_path)
+            else:
+                file_path = self.image_path
+                image = cv2.imread(file_path+'/'+i)
             image = cv2.resize(image, (IMG_HEIGHT, IMG_WIDTH), interpolation=cv2.INTER_AREA)
             image = cv2.cvtColor(image, cv2.cv2.CAP_OPENNI_GRAY_IMAGE)
             image = np.array(image).astype('float32') / 255.
             data_img.append(image)
         return data_img
 
-    def data_preprocess(self, index_file, labels, balance, binary, img_size):
+    def data_preprocess(self, index_file, labels, balance, binary, img_size=224):
         """
-        function read "files list.csv" and return train test filename and pixel representation for the called label
+        function read "files list.csv" and return train test filename and pixel represtation for the called label
         params: index_file - CSV for indexed labels
-                labels - str/list of labels from csv columns name
+                labels - list of labels from csv columns name
                 balance - int for a specific balanced set size
                 binary - bool if user want also the negative class (= 0_  +  labels)
         returns: balanced train test set for positive and negative or multiclass labels
         """
         # read labels file list
-        df_label = pd.read_csv(index_file, usecols=[labels])
+        if isinstance(labels, str):
+            df = pd.read_csv(index_file, usecols=[labels])
+        else:
+            df = pd.read_csv(index_file, usecols=labels)
+
+        df_label = df[(df[labels] != 0) & (df[labels] != '0')]
+        if len(df_label) < balance:
+            print(f'The number of sample ({balance}) you asked for the label {labels} is higher than the number of '
+                  f'sample available {len(df_label)}\nProcess Continue with {len(df_label)} Images')
+            balance = len(df_label)
 
         # Get the label folder if not provide or label files are mix in the same folder
         #     folder = df_label[labels].apply(lambda x: '_'.join(str(x).split('_')[:-1])).unique()
@@ -49,12 +64,12 @@ class Train:
         if balance is None:
             train_size = int(len(df_label) * 0.8)
         else:
-            train_size = int(balance * 0.8)
-            # int(input('Please enter 2nd class train size: '))
+            train_size = int(balance * 0.8)  # int(input('Please enter 2nd class train size: '))
+
         train = df_label[:train_size]
         test = df_label[train_size:balance]
-        print(f"Starting Image Preprocessing")
 
+        print(f"Starting Image Preprocessing")
         # Preprocess train image
         train_img = self.img_preprocess(train, img_size)
         class_label = [np.zeros(len(train)) if labels[0].isdigit() else np.ones(len(train))]
@@ -70,15 +85,28 @@ class Train:
         if binary:
             print('Creating Negative Class')
             # check for balanced data
-            assert pd.read_csv(index_file, usecols=['0_' + labels]).shape[0] == df_label[labels].shape[0]
-
+            try:
+                assert pd.read_csv(index_file, usecols=['0_' + labels]).shape[0] == balance
+            except AssertionError:
+                print(f"Negative class files:\t{pd.read_csv(index_file, usecols=['0_' + labels]).shape[0]}")
+                print(f'Taking {balance} Images')
             # Add Negative class
-            train_n, test_n = self.data_preprocess(IND_FILE, '0_' + labels, 5000, False, 224)
+            train_n, test_n = self.data_preprocess(IND_FILE, '0_' + labels, balance, binary=False)
             train = pd.concat([train, train_n], axis=0)
             test = pd.concat([test, test_n], axis=0)
             print('Shape with Negative class:')
-
         print(f'Train shape: \t{np.array(train).shape}\nTest shape: \t{np.array(test).shape}')
+
+        # Verification
+        try:
+            assert test['files'].nunique() == len(test)
+            assert train['files'].nunique() == len(train)
+            print("Assertions Passed! Sets  Are of image files W/O Duplication")
+        except AssertionError:
+            print("Assertions Failed")
+
+        train = shuffle(train)
+        test = shuffle(test)
 
         return train, test
 
@@ -150,16 +178,18 @@ class Train:
                                                      shuffle=False)
         return train_data, valid_data, test_data
 
-    def start_train(self, model, savefile, train_set, valid_set, epoch, callback=None, optimize=None):
+    def start_train(self, model, savefile, train_set, valid_set, epoch, callback=None, optimize=None, multi=None):
         """
         :param model: update base model with top layers
         :param savefile: name of the model's save file
         :param train_set:
         :param valid_set:
-        :param callback = False, for using builtin callback list or providing another list of callbacks
-        :param optimize = False, for using builtin optimizer or providing another compiler
+        :param callback = None, for using builtin callback list or providing another list of callbacks
+        :param optimize = None, for using builtin optimizer or providing another compiler (loss=[], metrics=[], optimize=[])
+        :param multi: if None run binary parameters, else loss=multi_class_croosentropy
         :return: history after val fitting
         """
+        # todo add option for multiclass
 
         # Callbacks
         if callback is None:
@@ -173,7 +203,7 @@ class Train:
         if optimize is None:
             model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
         else:
-            model.compile(loss=[], metrics=[], optimize=[])
+            model.compile(optimize)
 
         # Fitting
         STEP_SIZE_TRAIN = train_set.n // train_set.batch_size
@@ -184,55 +214,8 @@ class Train:
                             validation_steps=STEP_SIZE_VALID,
                             callbacks=callback_list,
                             epochs=epoch)
-        return history
 
-    # def plot_acc_loss(self, history, epoch):
-    #     """
-    #     :param history:
-    #     :param epoch:
-    #     :return:
-    #     """
-    #     # plot the training loss and accuracy
-    #     fig, ax = plt.subplots(1, 2, figsize=(18, 5))
-    #     plt.suptitle("Val & Train Loss")
-    #     plt.plot(np.arange(1, EPOCH), history.history["train_loss"], label="train")
-    #     plt.plot(np.arange(1, EPOCH), history.history["val_loss"], label="val")
-    #     plt.xlabel("Epoch")
-    #     plt.ylabel("Loss")
-    #     plt.legend(loc="middle right")
-    #     plt.plot(np.arange(1, EPOCH), history.history["train_accuracy"], label="train")
-    #     plt.plot(np.arange(1, EPOCH), history.history["val_accuracy"], label="val")
-    #     plt.xlabel("Epoch")
-    #     plt.ylabel("Acc")
-    #     plt.legend(loc="middle right")
-    #
-    # def plot_confusion_matrix(self, cm, class_names):
-    #     """
-    #     Returns a matplotlib figure containing the plotted confusion matrix.
-    #     Args:
-    #     cm (array, shape = [n, n]): a confusion matrix of integer classes
-    #     class_names (array, shape = [n]): String names of the integer classes
-    #     """
-    #     figure = plt.figure(figsize=(8, 8))
-    #     plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
-    #     plt.title("Confusion matrix")
-    #     plt.colorbar()
-    #     tick_marks = np.arange(len(class_names))
-    #     plt.xticks(tick_marks, class_names, rotation=45)
-    #     plt.yticks(tick_marks, class_names)
-    #
-    #     # Compute the labels from the normalized confusion matrix.
-    #     labels = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=2)
-    #
-    #     # Use white text if squares are dark; otherwise black.
-    #     threshold = cm.max() / 2.
-    #     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-    #         color = "white" if cm[i, j] > threshold else "black"
-    #         plt.text(j, i, labels[i, j], horizontalalignment="center", color=color)
-    #
-    #     plt.tight_layout()
-    #     plt.ylabel('True label')
-    #     plt.xlabel('Predicted label')
-    #     return figure
+        return history, model
+
 
 

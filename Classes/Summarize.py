@@ -11,7 +11,7 @@ class Metrics:
     for a model
     """
 
-    def _init_(self, history, epoch, y_test, y_pred):
+    def __init__(self, history, epoch, y_test, y_pred):
         """
         :param filepath: path to the folder
         """
@@ -26,7 +26,8 @@ class Metrics:
         df = pd.DataFrame(cm)
         print(df)
 
-    def class_report(self):
+    def classification_report(self):
+        print('Classification Report ...')
         cr = classification_report(self.y_test, self.y_pred)
         print(cr)
 
@@ -37,8 +38,8 @@ class Metrics:
         val_loss = self.history['val_loss']
         plt.figure(figsize=(15, 5))
         plt.subplot(1, 2, 1)
-        plt.plot(range(1, EPOCH + 1), acc, label='Train')
-        plt.plot(range(1, EPOCH + 1), val_acc, label='Val')
+        plt.plot(acc, label='Train')
+        plt.plot(val_acc, label='Val')
         plt.legend(loc='lower right')
         plt.ylabel('Accuracy')
         plt.xlabel('Epoch')
@@ -46,8 +47,8 @@ class Metrics:
         plt.title('Accuracy')
 
         plt.subplot(1, 2, 2)
-        plt.plot(range(1, EPOCH + 1), loss, label='Train')
-        plt.plot(range(1, EPOCH + 1), val_loss, label='Val')
+        plt.plot(loss, label='Train')
+        plt.plot(val_loss, label='Val')
         plt.legend(loc='lower right')
         plt.ylabel('Cross Entropy')
         plt.xlabel('Epoch')

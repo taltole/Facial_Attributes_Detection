@@ -63,22 +63,17 @@ def main():
         model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
 
     # Evaluate the network on valid data
-    # Prediction.evaluate_model(model, valid_data)
+    Prediction.evaluate_model(model, valid_data)
 
     # Predict on test data
-    # y_pred = Prediction.test_prediction(model, test_data, train_data)
-    # print(y_pred)
-    #
+    y_pred = Prediction.test_prediction(model, test_data, train_data)
+
     # plot
-    # top = min(len(test['label']), len(y_pred))
-    # metrics = Metrics(history, EPOCH, test['label'][:top], y_pred[:top])
-    # metrics.confusion_matrix()
-    # metrics.acc_loss_graph()
-    # metrics.classification_report()
-    #
-    # filenames_test = test_data.filenames
-    # df = pd.DataFrame(data=(filenames_test, y_pred, test['files'], test['label'])).T
-    # print(df)
+    top = min(len(test['label']), len(y_pred))
+    metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top])
+    metrics.confusion_matrix()
+    metrics.acc_loss_graph()
+    metrics.classification_report()
 
     # Inference
     labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]

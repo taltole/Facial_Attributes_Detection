@@ -87,6 +87,9 @@ class Train:
             # check for balanced data
             try:
                 assert pd.read_csv(index_file, usecols=['0_' + labels]).shape[0] == balance
+            except TypeError:
+                new_label = '0_'.join(labels)
+                assert pd.read_csv(index_file, usecols=new_label).shape[0] == balance
             except AssertionError:
                 print(f"Negative class files:\t{pd.read_csv(index_file, usecols=['0_' + labels]).shape[0]}")
                 print(f'Taking {balance} Images')

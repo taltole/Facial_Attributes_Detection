@@ -51,7 +51,7 @@ class Prediction:
     @staticmethod
     def predict_file(model, file, pos, neg):
         """
-        function
+        function read an image file and predict its label using model and class name arguments
         """
         img = tf.keras.preprocessing.image.load_img(file, target_size=(224, 224))
         img_array = tf.keras.preprocessing.image.img_to_array(img)

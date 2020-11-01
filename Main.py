@@ -5,6 +5,7 @@ from config import *
 from Classes.Train import *
 from Classes.Summarize import *
 import tensorflow as tf
+from tensorflow.keras.optimizers import RMSprop, Adam
 
 
 def main():
@@ -14,7 +15,8 @@ def main():
     # Start images processing and dataframe splitting
     trainer = Train(indexfile_path, imagepath)
     print('Reading File...\nCreating Train, Test...')
-    label = 'Eyeglasses'
+    label = 'Eyeglasses' # , 'Wearing_Hat', 'Wearing_Earrings']
+    print(label)
     train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
     print('Done!')
 
@@ -27,6 +29,7 @@ def main():
 
     # Loading Base Model
     print(f'\nLoading Model...')
+    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet', 'emotion', 'age', 'gender', 'race']
     print('Pick a Model: vgg19, MobileNetV2, vgg_face, facenet, emotion, age, gender, race')
     model_name = 'vgg_face'  # input('Choose one model to load: )
 
@@ -59,8 +62,9 @@ def main():
         print(f'\nModel {model_name} Loaded!')
 
         print('Loading best weights...')
-        model.load_weights(model_file)
-        model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
+        model.load_weights(os.path.join(MODEL_PATH, model_file))
+        opt_list = {'lr': [0.001, 0.005, 0.0001, 0.0005], 'decay': [1e-6]}
+        model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
 
     # Evaluate the network on valid data
     Prediction.evaluate_model(model, valid_data)

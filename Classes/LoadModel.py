@@ -7,6 +7,9 @@ from AttModels import Age, Emotion, Gender, Race
 from Classes.Face_preprocess import BasicFunction
 from config import *
 # from deepface.commons import functions, realtime, distance as dst
+from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
+from tensorflow.keras.preprocessing import image
 
 
 class BaseModel:
@@ -105,6 +108,31 @@ class BaseModel:
         model.add(Dense(1, activation='sigmoid'))
         self.print_summary(model)
         return model
+
+    def loading_embedding(self, imagepath, model, data, layer_num):
+
+        model = Model(inputs=model.input, outputs=model.layers[-layer_num].output)
+        model.summary()
+        feature = []
+        for img in data['files'].tolist():
+
+            if self.model_name not in ['vgg19', 'MobileNetV2', 'vgg_face']:
+                img = image.load_img(imagepath + '/' + img, target_size=(160, 160))
+            else:
+                img = image.load_img(imagepath + '/' + img, target_size=(224, 224))
+
+            x = image.img_to_array(img)
+            x = np.expand_dims(x, axis=0)
+
+            if self.model_name == 'vgg19':
+                x = preprocess_input_VGG19(x)
+            elif self.model_name == 'MobileNetV2':
+                x = preprocess_input_MNV2(x)
+
+            feature.append(model.predict(x)[0])
+        label = data['label'].tolist()
+        return feature, label
+
 
     def make_model(self, input_shape, num_classes):
         inputs = Input(shape=input_shape)

@@ -30,6 +30,7 @@ params = {'legend.fontsize': 'x-large',
 pylab.rcParams.update(params)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Constant
+path = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection'
 MODEL_PATH = '/Users/tal/Dropbox/Projects/'
 WEIGHT_PATH = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/Other/Weights'
 IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'

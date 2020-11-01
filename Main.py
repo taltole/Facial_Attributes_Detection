@@ -9,9 +9,12 @@ from tensorflow.keras.optimizers import RMSprop, Adam
 from BaseCls import run_ensemble
 from keras.models import Model
 
+
 def main():
-    imagepath = IMAGE_PATH  # os.path.join(FACEPATH, '1')
-    indexfile_path = IND_FILE
+    image_path_server = ''
+    indfile_path_server = ''
+    imagepath = os.path.join(os.getcwd(), image_path_server)  #  IMAGE_PATH  # os.path.join(FACEPATH, '1')
+    indexfile_path = os.path.join(os.getcwd(), indfile_path_server)
 
     # Start images processing and dataframe splitting
     trainer = Train(indexfile_path, imagepath)

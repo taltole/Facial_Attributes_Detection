@@ -44,7 +44,7 @@ def baseModel():
 
     model.add(Convolution2D(4096, (7, 7), activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Convolution2D(4096, (1, 1), activation='relu'))
+    model.add(Convolution2D(4096, (1, 1), activation='relu', name='my_dense'))
     model.add(Dropout(0.5))
     model.add(Convolution2D(2622, (1, 1)))
     model.add(Flatten())

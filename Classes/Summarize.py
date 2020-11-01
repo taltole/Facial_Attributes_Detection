@@ -11,7 +11,7 @@ class Metrics:
     for a model
     """
 
-    def __init__(self, history, epoch, y_test, y_pred):
+    def __init__(self, history, epoch, y_test, y_pred, model_name, label):
         """
         :param filepath: path to the folder
         """
@@ -19,16 +19,21 @@ class Metrics:
         self.y_pred = y_pred
         self.y_test = y_test
         self.epoch = epoch
+        self.label = label
+        self.model_name = model_name
 
     def confusion_matrix(self):
         print('Confusion Matrix ...')
         cm = confusion_matrix(self.y_test, self.y_pred)
         df = pd.DataFrame(cm)
+        df.to_csv(self.model_name+'_cm'+ self.label)
         print(df)
 
     def classification_report(self):
         print('Classification Report ...')
-        cr = classification_report(self.y_test, self.y_pred)
+        cr = classification_report(self.y_test, self.y_pred, output_dict=True)
+        df = pd.DataFrame(cr)
+        df.to_csv(self.model_name+'_cr'+ self.label)
         print(cr)
 
     def acc_loss_graph(self):

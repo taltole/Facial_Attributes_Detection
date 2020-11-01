@@ -6,7 +6,8 @@ from Classes.Train import *
 from Classes.Summarize import *
 import tensorflow as tf
 from tensorflow.keras.optimizers import RMSprop, Adam
-
+from BaseCls import run_ensemble
+from keras.models import Model
 
 def main():
     imagepath = IMAGE_PATH  # os.path.join(FACEPATH, '1')
@@ -20,6 +21,10 @@ def main():
     train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
     print('Done!')
 
+    # print(train['image'].shape)
+    # run_ensemble(train['image'], train['label'], test['image'], test['label'])
+
+
     # print('Checking test sample images...')
     # trainer.sanity_check(test)
 
@@ -29,62 +34,106 @@ def main():
 
     # Loading Base Model
     print(f'\nLoading Model...')
-    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet', 'emotion', 'age', 'gender', 'race']
+    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet']  #, 'emotion', 'age', 'gender', 'race']
     print('Pick a Model: vgg19, MobileNetV2, vgg_face, facenet, emotion, age, gender, race')
-    model_name = 'vgg_face'  # input('Choose one model to load: )
+    for model_name in model_list:
+        # model_name  = 'vgg_face'  # input('Choose one model to load: )
 
-    # Training
-    print(f'\nTraining Start...')
-    basemodel = BaseModel(model_name)
+        # Training
+        print(f'\nTraining Start...')
+        basemodel = BaseModel(model_name)
 
-    model_file = model_name + '_' + label + '.h5'
-    epoch = 4
-    train = False
+        model_file = model_name + '_' + label + '.h5'
+        epoch = 100
+        training = True
 
-    if train:
-        if model_name not in ['vgg19', 'MobileNetV2']:
-            model = basemodel.load_model(False)
-        else:
+        if training:
             model = basemodel.load_model()
-        history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch, callback=None,
-                                             optimize=None)
-        print('Loading best weights...')
-        model.load_weights(model_file)
-        print('Done!')
+            model = basemodel.adding_toplayer(model)
+            history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch, callback=None,
+                                                 optimize=None)
+            print('Loading best weights...')
+            model.load_weights(model_file)
+            print('Done!')
 
-        # Saving History
-        with open(model_name + '_' + label + '.json', 'w') as f:
-            json.dump(history.history, f)
-    else:
-        history = json.load(open(model_name + '_' + label + '.json'))
-        model = basemodel.load_model(False)
-        model = basemodel.adding_toplayer(model)
-        print(f'\nModel {model_name} Loaded!')
+            # Saving History
+            with open(model_name + '_' + label + '.json', 'w') as f:
+                json.dump(history.history, f)
+        else:
+            history = json.load(open(model_name + '_' + label + '.json'))
+            model = basemodel.load_model(False)
+            model = basemodel.adding_toplayer(model)
+            print(f'\nModel {model_name} Loaded!')
 
-        print('Loading best weights...')
-        model.load_weights(os.path.join(MODEL_PATH, model_file))
-        opt_list = {'lr': [0.001, 0.005, 0.0001, 0.0005], 'decay': [1e-6]}
-        model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
+            print('Loading best weights...')
+            model.load_weights(os.path.join(MODEL_PATH, model_file))
 
-    # Evaluate the network on valid data
-    Prediction.evaluate_model(model, valid_data)
+            opt_list = {'lr': [0.001, 0.005, 0.0001, 0.0005], 'decay': [1e-6]}
+            model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
 
-    # Predict on test data
-    y_pred = Prediction.test_prediction(model, test_data, train_data)
+        # Evaluate the network on valid data
+        # Prediction.evaluate_model(model, valid_data)
 
-    # plot
-    top = min(len(test['label']), len(y_pred))
-    metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top])
-    metrics.confusion_matrix()
-    metrics.acc_loss_graph()
-    metrics.classification_report()
+        # Predict on test data
+        y_pred = Prediction.test_prediction(model, test_data, train_data)
 
-    # Inference
+        # plot
+        top = min(len(test['label']), len(y_pred))
+        metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top], model_name, label)
+        metrics.confusion_matrix()
+        metrics.acc_loss_graph()
+        metrics.classification_report()
+
+
+    """   # Inference
     labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
     pos, neg = f'With {label}', f'W/O {label}'
     Prediction.predict_label(model, labels, pos, neg)
     file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
     Prediction.predict_file(model, file, pos, neg)
+
+    model.load_weights(os.path.join(MODEL_PATH, model_file))
+
+    # layer_name = 'my_dense'
+    # intermediate_layer_model = Model(inputs=model.input,
+    #                                  outputs=model.get_layer(layer_name).output)
+
+    # intermediate_layer_model.summary()
+    model.summary()
+
+    # intermediate_output = intermediate_layer_model.predict()
+    intermediate_output = y_pred
+    intermediate_output = pd.DataFrame(data=intermediate_output)
+
+    # val_data = intermediate_output[53000:]
+
+    submission_cnn = model.predict(np.float32(test['image']))
+
+    # intermediate_test_output = intermediate_layer_model.predict(test['image'])
+    intermediate_test_output = model.predict(np.float32(test['image']))
+    intermediate_test_output = pd.DataFrame(data=intermediate_test_output)
+
+    # xgbmodel = XGBClassifier(objective='multi:softprob', num_class=2)
+    # xgbmodel.fit(intermediate_output, train_label1)
+    # xgbmodel.score(val_data, val_label1)
+    #
+    # intermediate_layer_model.predict(X_test)
+    # submission_xgb = xgbmodel.predict(intermediate_test_output)
+
+    from sklearn.naive_bayes import GaussianNB
+
+    gnbmodel = GaussianNB().fit(intermediate_output, np.float32(train['label']))
+
+    submission_gnb = gnbmodel.predict(intermediate_test_output)
+    gnbmodel.score(np.float32(train['image'][valid_data.filenames]), valid_data.labels)
+
+    submission_cnn = submission_cnn.astype(int)
+
+    label = np.argmax(submission_cnn, 1)
+    id_ = np.arange(0, label.shape[0])
+    print(label)
+
+"""
 
 
 if __name__ == '__main__':

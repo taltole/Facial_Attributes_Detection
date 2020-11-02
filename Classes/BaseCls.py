@@ -49,10 +49,10 @@ grid_min_samples = [5, 10, .03, .05, .10]
 grid_criterion = ['gini', 'entropy']
 grid_bool = [True, False]
 grid_seed = [0]
-
 grid_param = [
     [{
-        # AdaBoostClassifier - http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html
+        # AdaBoostClassifier
+        # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html
         'n_estimators': grid_n_estimator,  # default=50
         'learning_rate': grid_learn,  # default=1
         # 'algorithm': ['SAMME', 'SAMME.R'], #default=’SAMME.R
@@ -60,14 +60,16 @@ grid_param = [
     }],
 
     [{
-        # BaggingClassifier - http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html#sklearn.ensemble.BaggingClassifier
+        # BaggingClassifier
+        # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
         'n_estimators': grid_n_estimator,  # default=10
         'max_samples': grid_ratio,  # default=1.0
         'random_state': grid_seed
     }],
 
     [{
-        # ExtraTreesClassifier - http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html#sklearn.ensemble.ExtraTreesClassifier
+        # ExtraTreesClassifier
+        # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html
         'n_estimators': grid_n_estimator,  # default=10
         'criterion': grid_criterion,  # default=”gini”
         'max_depth': grid_max_depth,  # default=None
@@ -75,7 +77,8 @@ grid_param = [
     }],
 
     [{
-        # GradientBoostingClassifier - http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html
+        # GradientBoostingClassifier
+        # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html
         # 'loss': ['deviance', 'exponential'], #default=’deviance’
         'learning_rate': [.05],
         'n_estimators': [300],
@@ -87,15 +90,16 @@ grid_param = [
     }],
 
     [{
-        # RandomForestClassifier - http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+        # RandomForestClassifier
+        # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
         'n_estimators': grid_n_estimator,  # default=10
         'criterion': grid_criterion,  # default=”gini”
         'max_depth': grid_max_depth,  # default=None
         'oob_score': [True],
-        # default=False -- 12/31/17 set to reduce runtime -- The best parameter for RandomForestClassifier is
+        'random_state': grid_seed
+        # The best parameter for RandomForestClassifier
         # {'criterion': 'entropy', 'max_depth': 6, 'n_estimators': 100, 'oob_score': True, 'random_state': 0}
         # with a runtime of 146.35 seconds.
-        'random_state': grid_seed
     }],
 
     [{
@@ -105,8 +109,8 @@ grid_param = [
     }],
 
     [{
-        # LogisticRegressionCV - http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.
-        # LogisticRegressionCV.html
+        # LogisticRegressionCV
+        # http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html
         'fit_intercept': grid_bool,  # default: True
         # 'penalty': ['l1','l2'],
         'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'],  # default: lbfgs
@@ -114,7 +118,8 @@ grid_param = [
     }],
 
     [{
-        # BernoulliNB - http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.BernoulliNB.html
+        # BernoulliNB
+        # http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.BernoulliNB.html
         'alpha': grid_ratio,  # default: 1.0
     }],
 
@@ -122,7 +127,8 @@ grid_param = [
     [{}],
 
     [{
-        # KNeighborsClassifier - http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier
+        # KNeighborsClassifier
+        # http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier
         'n_neighbors': [1, 2, 3, 4, 5, 6, 7],  # default: 5
         'weights': ['uniform', 'distance'],  # default = ‘uniform’
         'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute']
@@ -147,12 +153,12 @@ grid_param = [
     }]
 ]
 
-# create table to compare MLA predictions
-
 
 # index through MLA and save performance to table
 def gridsearch_cls(X_train, y_train, X_test, y_test, MLA=MLA):
-
+    """
+    function takes train, test data set and run gridsearch over basic classifier from MLA dict
+    """
     cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8, random_state=39)
 
     # create table to compare MLA metrics
@@ -183,6 +189,8 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, MLA=MLA):
         # print(f'Time run {MLA_name}:\t{tic - toc}')
     name_best_model = MLA_compare['MLA Name'].values[0]
     MLA_compare.sort_values(by=['MLA Test Accuracy Mean'], ascending=False, inplace=True)
+
+    # plot confusion matrix and acc score
     cm = confusion_matrix(y_test, MLA_compare['MLA pred'].values[0]) / len(y_test)
     accuracy = accuracy_score(y_test, MLA_compare['MLA pred'].values[0])
     plt.figure(figsize=(5, 5))

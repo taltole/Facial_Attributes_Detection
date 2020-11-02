@@ -41,9 +41,8 @@ def main():
     df = gridsearch_cls(feature_train, label_train, feature_test, label_test)
     print(df)
 
+    # Plot best model
     sns.barplot(x='MLA Test Accuracy Mean', y='MLA Name', data=df, color='m')
-
-    # prettify using pyplot: https://matplotlib.org/api/pyplot_api.html
     plt.title('Machine Learning Algorithm Accuracy Score \n')
     plt.xlabel('Accuracy Score (%)')
     plt.ylabel('Algorithm')

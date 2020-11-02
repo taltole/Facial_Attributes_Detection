@@ -30,7 +30,7 @@ class BaseModel:
         """
         load face detection models
         """
-        models = {'vgg_face': VGGFace,
+        models = {'vggface': VGGFace,
                   'facenet': Facenet,
                   "emotion": Emotion,
                   "age": Age,
@@ -114,7 +114,7 @@ class BaseModel:
         model.summary()
         list_x = []
         for img in data['files'].tolist():
-            if self.model_name not in ['vgg19', 'MobileNetV2', 'vgg_face']:
+            if self.model_name not in ['vgg19', 'MobileNetV2', 'vggface']:
                 img = image.load_img(imagepath + '/' + img, target_size=(160, 160))
             else:
                 img = image.load_img(imagepath + '/' + img, target_size=(224, 224))

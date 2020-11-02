@@ -26,8 +26,8 @@ def main():
 
     # Loading Base Model
     print(f'\n\nLoading Model...')
-    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
-    print('Pick a Model: vgg19, MobileNetV2, vgg_face, facenet, emotion, age, gender, race')
+    model_list = ['vgg19', 'MobileNetV2', 'vggface', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
+    print('Pick a Model: vgg19, MobileNetV2, vggface, facenet, emotion, age, gender, race')
 
     # Looping over models
     for model_name in model_list:
@@ -80,7 +80,7 @@ def main():
         metrics.acc_loss_graph()
         metrics.classification_report()
 
-    """   # Inference
+       # Inference
     labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
     pos, neg = f'With {label}', f'W/O {label}'
     Prediction.predict_label(model, labels, pos, neg)
@@ -88,7 +88,7 @@ def main():
     Prediction.predict_file(model, file, pos, neg)
 
     model.load_weights(os.path.join(MODEL_PATH, model_file))
-
+"""
     # layer_name = 'my_dense'
     # intermediate_layer_model = Model(inputs=model.input,
     #                                  outputs=model.get_layer(layer_name).output)

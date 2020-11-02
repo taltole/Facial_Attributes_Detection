@@ -27,7 +27,7 @@ class Train:
                 image = cv2.imread(file_path)
             else:
                 file_path = self.image_path
-                image = cv2.imread(file_path+'/'+i)
+                image = cv2.imread(file_path + '/' + i)
             image = cv2.resize(image, (IMG_HEIGHT, IMG_WIDTH), interpolation=cv2.INTER_AREA)
             image = cv2.cvtColor(image, cv2.cv2.CAP_OPENNI_GRAY_IMAGE)
             image = np.array(image).astype('float32') / 255.
@@ -70,7 +70,7 @@ class Train:
 
         # Preprocess train image
 
-        if img_size!=None:
+        if img_size is not None:
             print(f"Starting Image Preprocessing")
             train_img = self.img_preprocess(train, img_size)
             class_label = [np.zeros(len(train)) if labels[0].isdigit() else np.ones(len(train))]
@@ -80,7 +80,8 @@ class Train:
             # Preprocess test image
             test_img = self.img_preprocess(test, img_size)
             class_label = [np.zeros(len(test)) if labels[0].isdigit() else np.ones(len(test))]
-            test = pd.DataFrame({'files': test.iloc[:, 0], 'label': np.array(*class_label).astype(str), 'image': test_img})
+            test = pd.DataFrame(
+                {'files': test.iloc[:, 0], 'label': np.array(*class_label).astype(str), 'image': test_img})
             print('Done!')
 
         else:
@@ -231,6 +232,3 @@ class Train:
                             epochs=epoch)
 
         return history, model
-
-
-

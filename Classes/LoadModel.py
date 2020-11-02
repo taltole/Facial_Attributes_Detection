@@ -112,7 +112,7 @@ class BaseModel:
     def loading_embedding(self, imagepath, model, data, layer_num):
         model = Model(inputs=model.input, outputs=model.layers[-layer_num].output)
         model.summary()
-        list_x =[]
+        list_x = []
         for img in data['files'].tolist():
             if self.model_name not in ['vgg19', 'MobileNetV2', 'vgg_face']:
                 img = image.load_img(imagepath + '/' + img, target_size=(160, 160))
@@ -134,9 +134,10 @@ class BaseModel:
 
         return feature, label
 
-
     def make_model(self, input_shape, num_classes):
+
         inputs = Input(shape=input_shape)
+
         # Image augmentation block
         x = data_augmentation(inputs)
 
@@ -183,7 +184,6 @@ class BaseModel:
         x = Layer.Dropout(0.5)(x)
         outputs = Layer.Dense(units, activation=activation)(x)
         return Model(inputs, outputs)
-
 
 # model = make_model(input_shape=image_size + (3,), num_classes=2)
 # keras.utils.plot_model(model, show_shapes=True)

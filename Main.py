@@ -1,13 +1,7 @@
-import json
 from Classes.LoadModel import BaseModel
 from Classes.Predict import Prediction
-from config import *
-from Classes.Train import *
 from Classes.Summarize import *
-import tensorflow as tf
-from tensorflow.keras.optimizers import RMSprop, Adam
-from BaseCls import run_ensemble
-from keras.models import Model
+from tensorflow.keras.optimizers import RMSprop
 
 
 def main():

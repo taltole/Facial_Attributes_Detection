@@ -4,6 +4,7 @@ from Classes.Predict import Prediction
 from config import *
 from Classes.Train import *
 from Classes.Summarize import *
+from Classes.BaseCls import *
 import tensorflow as tf
 from tensorflow.keras.optimizers import RMSprop, Adam
 
@@ -11,7 +12,7 @@ from tensorflow.keras.optimizers import RMSprop, Adam
 def main():
 
     # Start images processing and dataframe splitting
-    trainer = Train(IND_FILE, IMAGEPATH)
+    trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...\nCreating Train, Test...')
     label = 'Eyeglasses' # , 'Wearing_Hat', 'Wearing_Earrings']
     print(label)
@@ -30,14 +31,27 @@ def main():
     # Training
 
     basemodel = BaseModel(model_name)
-
     model = basemodel.load_model(True)
 
     print(f'\nSave embedding...')
 
-    feature_train, label_train = basemodel.loading_embedding(imagepath, model, train, 1)
-    feature_test, label_test = basemodel.loading_embedding(imagepath, model, test, 1)
+    feature_train, label_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
+    feature_test, label_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
 
-    print(feature_train)
+    df = gridsearch_cls(feature_train, label_train, feature_test, label_test)
+    print(df)
+
+    sns.barplot(x='MLA Test Accuracy Mean', y='MLA Name', data=df, color='m')
+
+    # prettify using pyplot: https://matplotlib.org/api/pyplot_api.html
+    plt.title('Machine Learning Algorithm Accuracy Score \n')
+    plt.xlabel('Accuracy Score (%)')
+    plt.ylabel('Algorithm')
+    name_best_model = df['MLA Name'].values[0]
+    plt.show()
+    print(name_best_model)
+
+
+
 if __name__ == '__main__':
     main()

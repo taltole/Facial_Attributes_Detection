@@ -4,12 +4,12 @@ from Classes.Summarize import *
 from tensorflow.keras.optimizers import RMSprop, SGD, Adam
 
 
-def main():
+def main(label):
 
     # Start images processing and dataframe splitting
     trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...')
-    label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
+    # label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
     print(f'Preparing data for class:\t{label}\nCreating Train, Test...')
     train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
     print('Done!')
@@ -32,8 +32,8 @@ def main():
     # Looping over models
     for model_name in model_list:
         # model_name  = 'vgg_face'  # input('Choose one model to load: )
-        model_file = os.path.join('weights/', model_name + '_' + label + '.h5')
-        json_path = os.path.join('json/', model_name + '_' + label + '.json')
+        model_file = os.path.join('weights2/', model_name + '_' + label + '.h5')
+        json_path = os.path.join('json2/', model_name + '_' + label + '.json')
         epoch = 100
 
         # Training
@@ -132,4 +132,12 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    
+    df = pd.read_csv(IND_FILE)
+    cols = df.columns.tolist()
+    accessories_label = [l for l in cols if l.startswith("Wearing")]
+    hair_label = [l for l in cols if "Hair" in l and not l.startswith('0')]
+    labels = [*accessories_label, *hair_label]
+
+    for label in labels:
+	main()

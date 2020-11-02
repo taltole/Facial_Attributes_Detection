@@ -1,7 +1,7 @@
 from Classes.LoadModel import BaseModel
 from Classes.Predict import Prediction
 from Classes.Summarize import *
-from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.optimizers import RMSprop, SGD, Adam
 
 
 def main():
@@ -63,8 +63,8 @@ def main():
 
             print('Loading best weights...')
             model.load_weights(os.path.join(WEIGHT_PATH, model_name + '_' + label + '.h5'))
-
-            opt_list = {'lr': [0.001, 0.005, 0.0001, 0.0005], 'decay': [1e-6]}
+            # sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+            # opt_list = {'lr': [0.001, 0.005, 0.0001, 0.0005], 'decay': [1e-6]}
             model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
 
         # Evaluate the network on valid data

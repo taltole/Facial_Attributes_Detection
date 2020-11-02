@@ -10,7 +10,6 @@ from time import time
 from sklearn.metrics import accuracy_score, confusion_matrix
 from config import *
 
-
 MLA = {
     # Ensemble Methods
     ensemble.AdaBoostClassifier().__class__.__name__: ensemble.AdaBoostClassifier(),
@@ -38,6 +37,7 @@ MLA = {
 
     XGBClassifier().__class__.__name__: XGBClassifier()
 }
+
 # Hyperparameter Tune with GridSearchCV:
 # http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
 
@@ -48,7 +48,7 @@ grid_max_depth = [2, 4, 6, 8, 10, None]
 grid_min_samples = [5, 10, .03, .05, .10]
 grid_criterion = ['gini', 'entropy']
 grid_bool = [True, False]
-grid_seed = [0]
+grid_seed = [39]
 grid_param = [
     [{
         # AdaBoostClassifier
@@ -187,20 +187,8 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, MLA=MLA):
         row_index += 1
         toc = time()
         # print(f'Time run {MLA_name}:\t{tic - toc}')
-    name_best_model = MLA_compare['MLA Name'].values[0]
     MLA_compare.sort_values(by=['MLA Test Accuracy Mean'], ascending=False, inplace=True)
 
-    # plot confusion matrix and acc score
-    cm = confusion_matrix(y_test, MLA_compare['MLA pred'].values[0]) / len(y_test)
-    accuracy = accuracy_score(y_test, MLA_compare['MLA pred'].values[0])
-    plt.figure(figsize=(5, 5))
-    ax = sns.heatmap(cm, annot=True, cmap='Wistia')
-    plt.title(f'{name_best_model}\n\nAccuracy:\t{accuracy * 100:.2f}')
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
-    # ax.set_xticklabels(labels)
-    # ax.set_yticklabels(labels)
-    plt.show()
     return MLA_compare
 
 
@@ -212,6 +200,7 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.optimizers import SGD
 from keras.layers.normalization import BatchNormalization
 from keras.layers import LeakyReLU
+
 """
 model = Sequential()
 # input: 28x28 images with 1 channels -> (28, 28, 1) tensors.
@@ -259,9 +248,4 @@ model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(10, activation='softmax'))
 """
-# sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-# model.compile(loss='categorical_crossentropy', optimizer=sgd)
-
-
-model_file = '/Users/tal/Dropbox/Projects/vgg_face_Eyeglasses.h5'
-
+# model.compile(loss='categorical_crossentropy', optimizer=sgd

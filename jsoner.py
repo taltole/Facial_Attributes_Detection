@@ -18,22 +18,24 @@ df = pd.DataFrame({'name': sum_dict['name'], 'loss': sum_dict['best']['loss'], '
                    'accuracy': sum_dict['best']['accuracy'], 'val_accuracy': sum_dict['best']['val_accuracy']})
 
 name = df['name'].apply(lambda x: x.split('_')[0]).unique()
-i = 1
 means_acc, means_loss, means_vloss, means_vacc = [], [], [], []
+means = [means_acc, means_loss, means_vloss, means_vacc]
+
 for n in name:
-    ax = plt.subplot(1, 4, i)
+    # ax = plt.subplot(1, 4, i)
     means_acc.append(df['accuracy'][df['name'].str.startswith(n)].mean())
     means_vacc.append(df['val_accuracy'][df['name'].str.startswith(n)].mean())
     means_loss.append(df['loss'][df['name'].str.startswith(n)].mean())
     means_vloss.append(df['val_loss'][df['name'].str.startswith(n)].mean())
-
-    # std_acc.append(df['accuracy'][df['name'].str.startswith(n)].std())
-    # std_vacc.append(df['val_accuracy'][df['name'].str.startswith(n)].std())
-    # std_loss.append(df['loss'][df['name'].str.startswith(n)].std())
-    # std_vloss.append(df['val_loss'][df['name'].str.startswith(n)].std())
-    means = [means_acc, means_loss, means_vloss, means_vacc]
-    sns.barplot(name, means_acc)#, data=means, ax=ax)
-    i += 1
+i = 1
+plt.figure(figsize=(15, 5))
+plt.subplot(1, 2, i)
+sns.barplot(name, means_vacc, ci="sd")
+plt.title('Validation Acc.')
+i += 1
+plt.subplot(1, 2, i)
+sns.barplot(name, means_vloss, data=df, ci="sd")
+plt.title('Validation Loss.')
 plt.show()
 
 # err = []

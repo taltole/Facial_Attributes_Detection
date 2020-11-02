@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Flatten, Layer, Input
+from tensorflow.keras.layers import Dense, Flatten, Layer, Input, Dropout, Activation, Convolution2D, MaxPooling2D
 
 from BaseModels import Facenet, VGGFace
 from AttModels import Age, Emotion, Gender, Race
@@ -97,14 +97,33 @@ class BaseModel:
         # model = Dropout(0.5)(model)
         # model = Dense(10, activation='relu')(model)
 
-        # To train our transfer learning model we will freeze the weights of the basemodel and only train the added Layer.
+        # To train our transfer learning model we will freeze the weights of the basemodel and only train
+        # the added Layers.
 
         base_model.trainable = False
         model = Sequential()
         model.add(base_model)
 
+        # inputshape = model.output_shape
+        # # model.add(Flatten())
+        # model.add(Convolution2D(64, 3, padding='same', input_shape=(inputshape, 32, 32, 3)))
+        # model.add(Activation('relu'))
+        # model.add(Convolution2D(64, (3, 3)))
+        # model.add(Activation('relu'))
+        # model.add(MaxPooling2D(pool_size=(2, 2)))
+        # model.add(Dropout(0.25))
+        # model.add(Convolution2D(32, (3, 3), padding='same'))
+        # model.add(Activation('relu'))
+        # model.add(Convolution2D(32, (3, 3)))
+        # model.add(Activation('relu'))
+        # model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
         model.add(Flatten())
-        model.add(Dense(128, activation='relu'))
+        model.add(Dense(512))
+        model.add(Activation('relu'))
+
+        model.add(Dropout(0.5))
+        model.add(Dense(256, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
         self.print_summary(model)
         return model
@@ -115,9 +134,9 @@ class BaseModel:
         list_x = []
         for img in data['files'].tolist():
             if self.model_name not in ['vgg19', 'MobileNetV2', 'vggface']:
-                img = image.load_img(imagepath + '/' + img, target_size=(160, 160))
+                img = image.load_img(os.path.join(imagepath, img), target_size=(160, 160))
             else:
-                img = image.load_img(imagepath + '/' + img, target_size=(224, 224))
+                img = image.load_img(os.path.join(imagepath, img), target_size=(224, 224))
             x = image.img_to_array(img)
             x = np.expand_dims(x, axis=0)
             if self.model_name == 'vgg19':

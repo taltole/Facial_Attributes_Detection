@@ -35,8 +35,8 @@ def main():
 
     print(f'\nSave embedding...')
 
-    feature_train, label_train = basemodel.loading_embedding(imagepath, model, train, 1)
-    feature_test, label_test = basemodel.loading_embedding(imagepath, model, test, 1)
+    feature_train, label_train = basemodel.loading_embedding(IMAGEPATH, model, train, 1)
+    feature_test, label_test = basemodel.loading_embedding(IMAGEPATH, model, test, 1)
 
     print(feature_train)
 if __name__ == '__main__':

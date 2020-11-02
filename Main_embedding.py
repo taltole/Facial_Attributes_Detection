@@ -27,7 +27,7 @@ def main():
     print(f'\nLoading Model...')
     model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet', 'emotion', 'age', 'gender', 'race']
     print('Pick a Model: vgg19, MobileNetV2, vgg_face, facenet, emotion, age, gender, race')
-    model_name = 'vgg19'  # input('Choose one model to load: )
+    model_name = 'facenet'  # input('Choose one model to load: )
 
     # Training
 
@@ -37,8 +37,9 @@ def main():
 
     print(f'\nSave embedding...')
 
-    feature_train, label_train = basemodel.loading_embedding(imagepath, model, train, 2)
-    feature_test, label_test = basemodel.loading_embedding(imagepath, model, test, 2)
+    feature_train, label_train = basemodel.loading_embedding(imagepath, model, train, 1)
+    feature_test, label_test = basemodel.loading_embedding(imagepath, model, test, 1)
 
+    print(feature_train)
 if __name__ == '__main__':
     main()

@@ -124,7 +124,8 @@ class BaseModel:
                 x = preprocess_input_VGG19(x)
             elif self.model_name == 'MobileNetV2':
                 x = preprocess_input_MNV2(x)
-
+            else:
+                x = x.astype('float32') / 255.
             list_x.append(x)
         feature_x = np.vstack(list_x)
 

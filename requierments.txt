@@ -335,7 +335,7 @@ Werkzeug==1.0.1
 widgetsnbextension==3.5.1
 wrapt==1.11.2
 wurlitzer==1.0.3
-xgboost>=1.1.1
+xgboost @ https://s3-us-west-2.amazonaws.com/xgboost-nightly-builds/xgboost-1.2.0_SNAPSHOT%2B4729458a363c64291e84da28b408a0ac8d7851fa-py3-none-macosx_10_13_x86_64.macosx_10_14_x86_64.macosx_10_15_x86_64.whl
 xlrd==1.2.0
 XlsxWriter==1.2.1
 xlwings==0.15.10

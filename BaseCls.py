@@ -5,7 +5,7 @@ network to produce results.
 """
 import pandas as pd
 from sklearn import ensemble, linear_model, naive_bayes, neighbors, svm, tree, model_selection
-# from xgboost import XGBClassifier
+from xgboost import XGBClassifier
 from time import time
 
 MLA = {
@@ -33,7 +33,7 @@ MLA = {
     tree.DecisionTreeClassifier().__class__.__name__: tree.DecisionTreeClassifier(),
     tree.ExtraTreeClassifier().__class__.__name__: tree.ExtraTreeClassifier(),
 
-    # XGBClassifier().__class__.__name__: XGBClassifier()
+    XGBClassifier().__class__.__name__: XGBClassifier()
 }
 
 cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8, random_state=39)
@@ -41,7 +41,6 @@ cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8,
 # create table to compare MLA metrics
 MLA_columns = ['MLA Name', 'MLA Test Accuracy Mean', 'MLA Time']
 MLA_compare = pd.DataFrame(columns=MLA_columns)
-
 
 # create table to compare MLA predictions
 

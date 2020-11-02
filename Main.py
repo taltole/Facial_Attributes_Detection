@@ -11,65 +11,64 @@ from keras.models import Model
 
 
 def main():
-    image_path_server = ''
-    indfile_path_server = ''
-    imagepath = os.path.join(os.getcwd(), image_path_server)  #  IMAGE_PATH  # os.path.join(FACEPATH, '1')
-    indexfile_path = os.path.join(os.getcwd(), indfile_path_server)
 
     # Start images processing and dataframe splitting
-    trainer = Train(indexfile_path, imagepath)
-    print('Reading File...\nCreating Train, Test...')
-    label = 'Eyeglasses' # , 'Wearing_Hat', 'Wearing_Earrings']
-    print(label)
+    trainer = Train(IND_FILE, IMAGE_PATH)
+    print('Reading File...')
+    label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
+    print(f'Preparing data for class:\t{label}\nCreating Train, Test...')
     train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
     print('Done!')
 
     # print(train['image'].shape)
     # run_ensemble(train['image'], train['label'], test['image'], test['label'])
 
-
     # print('Checking test sample images...')
     # trainer.sanity_check(test)
 
     # Split Train, Validation and Test Sets
     print(f'\nRunning data generator...')
-    train_data, valid_data, test_data = trainer.generator_splitter(train, test, imagepath)
+    train_data, valid_data, test_data = trainer.generator_splitter(train, test, IMAGE_PATH)
 
     # Loading Base Model
-    print(f'\nLoading Model...')
-    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet']  #, 'emotion', 'age', 'gender', 'race']
+    print(f'\n\nLoading Model...')
+    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
     print('Pick a Model: vgg19, MobileNetV2, vgg_face, facenet, emotion, age, gender, race')
+
+    # Looping over models
     for model_name in model_list:
         # model_name  = 'vgg_face'  # input('Choose one model to load: )
+        model_file = os.path.join('weights/', model_name + '_' + label + '.h5')
+        json_path = os.path.join('json/', model_name + '_' + label + '.json')
+        epoch = 100
 
         # Training
         print(f'\nTraining Start...')
         basemodel = BaseModel(model_name)
 
-        model_file = model_name + '_' + label + '.h5'
-        epoch = 100
         training = True
 
         if training:
             model = basemodel.load_model()
             model = basemodel.adding_toplayer(model)
-            history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch, callback=None,
+            history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch,
+                                                 callback=None,
                                                  optimize=None)
             print('Loading best weights...')
             model.load_weights(model_file)
             print('Done!')
 
             # Saving History
-            with open(model_name + '_' + label + '.json', 'w') as f:
+            with open(json_path, 'w') as f:
                 json.dump(history.history, f)
         else:
-            history = json.load(open(model_name + '_' + label + '.json'))
+            history = json.load(open(json_path))
             model = basemodel.load_model(False)
             model = basemodel.adding_toplayer(model)
             print(f'\nModel {model_name} Loaded!')
 
             print('Loading best weights...')
-            model.load_weights(os.path.join(MODEL_PATH, model_file))
+            model.load_weights(os.path.join(WEIGHT_PATH, model_name + '_' + label + '.h5'))
 
             opt_list = {'lr': [0.001, 0.005, 0.0001, 0.0005], 'decay': [1e-6]}
             model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
@@ -86,7 +85,6 @@ def main():
         metrics.confusion_matrix()
         metrics.acc_loss_graph()
         metrics.classification_report()
-
 
     """   # Inference
     labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]

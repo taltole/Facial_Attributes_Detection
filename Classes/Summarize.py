@@ -26,14 +26,14 @@ class Metrics:
         print('Confusion Matrix ...')
         cm = confusion_matrix(self.y_test, self.y_pred)
         df = pd.DataFrame(cm)
-        df.to_csv(self.model_name+'_cm'+ self.label)
+        df.to_csv('csv/' + self.model_name + self.label + '_cm.csv')
         print(df)
 
     def classification_report(self):
         print('Classification Report ...')
         cr = classification_report(self.y_test, self.y_pred, output_dict=True)
         df = pd.DataFrame(cr)
-        df.to_csv(self.model_name+'_cr'+ self.label)
+        df.to_csv('csv/' + self.model_name + self.label + '_cr.csv')
         print(cr)
 
     def acc_loss_graph(self):

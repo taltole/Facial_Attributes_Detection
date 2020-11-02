@@ -30,16 +30,26 @@ params = {'legend.fontsize': 'x-large',
 pylab.rcParams.update(params)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Constant
-path = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection'
-MODEL_PATH = '/Users/tal/Dropbox/Projects/'
-WEIGHT_PATH = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/Other/Weights'
-IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'
-IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
+
+if os.getcwd().startswith('/Users/tal'):
+    path = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection'
+    MODEL_PATH = '/Users/tal/Dropbox/Projects/'
+    WEIGHT_PATH = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/Other/Weights'
+    IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'
+    IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
+elif os.getcwd().startswith('/Users/Sheryl'):
+    IMAGE_PATH = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/face_att_sheryl'
+    IND_FILE = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/files_list_sheryl.csv'
+else:
+    IMAGE_PATH = '/home/ubuntu/sheryl/S3/facial-attributes-itc/face_att_sheryl'
+    IND_FILE = '/home/ubuntu/sheryl/S3/facial-attributes-itc/files_list_sheryl.csv'
+    WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weight'
+    MODEL_PATH = '/home/ubuntu/Facial_Attributes_Detection/'
 
 
 def find_imagepath(file):
     """
-    function look for image files in the relevant directory determine by condiotion
+    function look for image files in the relevant directory determine by condition
     param: file - str name of image file
     return: relevent file path
     """
@@ -54,18 +64,19 @@ def find_imagepath(file):
         IMAGEPATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/'
     return os.path.join(IMAGEPATH, file)
 
+
 # Constant For CelebA DS
 FILE = ''
 if os.getcwd() != '/content':
     IMAGEPATH = 'Datasets'
-    IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
+    IND_FILE_DS = '/Users/tal/Google Drive/Cellebrite/files list.csv'
     try:
         FACEPATH = os.path.join(IMAGEPATH, 'face_att')
     except:
         FACEPATH = find_imagepath(FILE)
 else:
     drive.mount('/content/drive')
-    IND_FILE = '/content/drive/My Drive/Cellebrite/files list.csv'
+    IND_FILE_DS = '/content/drive/My Drive/Cellebrite/files list.csv'
     IMAGEPATH = '/content/drive/My Drive/Cellebrite/Datasets'
     FACEPATH = os.path.join(IMAGEPATH, 'face_att')
 

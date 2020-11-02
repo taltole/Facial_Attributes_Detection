@@ -9,15 +9,13 @@ from tensorflow.keras.optimizers import RMSprop, Adam
 
 
 def main():
-    imagepath = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/face_att_sheryl'  # os.path.join(FACEPATH, '1')
-    indexfile_path = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/files_list_sheryl.csv'
 
     # Start images processing and dataframe splitting
-    trainer = Train(indexfile_path, imagepath)
+    trainer = Train(IND_FILE, IMAGEPATH)
     print('Reading File...\nCreating Train, Test...')
     label = 'Eyeglasses' # , 'Wearing_Hat', 'Wearing_Earrings']
     print(label)
-    train, test = trainer.data_preprocess(indexfile_path, label, 10, True, None)
+    train, test = trainer.data_preprocess(IND_FILE, label, 10, True, None)
     print('Done!')
 
     # print('Checking test sample images...')

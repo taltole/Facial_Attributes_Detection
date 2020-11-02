@@ -17,7 +17,6 @@ class Train:
         self.image_path = image_path
 
     # ######################    Data Preparation   ######################
-    # @staticmethod
     def img_preprocess(self, data, img_size):
         data_img = []
         IMG_WIDTH = img_size

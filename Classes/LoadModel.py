@@ -110,27 +110,27 @@ class BaseModel:
         return model
 
     def loading_embedding(self, imagepath, model, data, layer_num):
-
         model = Model(inputs=model.input, outputs=model.layers[-layer_num].output)
         model.summary()
-        feature = []
+        list_x =[]
         for img in data['files'].tolist():
-
             if self.model_name not in ['vgg19', 'MobileNetV2', 'vgg_face']:
                 img = image.load_img(imagepath + '/' + img, target_size=(160, 160))
             else:
                 img = image.load_img(imagepath + '/' + img, target_size=(224, 224))
-
             x = image.img_to_array(img)
             x = np.expand_dims(x, axis=0)
-
             if self.model_name == 'vgg19':
                 x = preprocess_input_VGG19(x)
             elif self.model_name == 'MobileNetV2':
                 x = preprocess_input_MNV2(x)
 
-            feature.append(model.predict(x)[0])
+            list_x.append(x)
+        feature_x = np.vstack(list_x)
+
         label = data['label'].tolist()
+        feature = model.predict(feature_x)
+
         return feature, label
 
 

@@ -17,7 +17,7 @@ def main():
     print('Reading File...\nCreating Train, Test...')
     label = 'Eyeglasses' # , 'Wearing_Hat', 'Wearing_Earrings']
     print(label)
-    train, test = trainer.data_preprocess(indexfile_path, label, 10, True, 224)
+    train, test = trainer.data_preprocess(indexfile_path, label, 10, True, None)
     print('Done!')
 
     # print('Checking test sample images...')
@@ -30,14 +30,15 @@ def main():
     model_name = 'vgg19'  # input('Choose one model to load: )
 
     # Training
-    print(f'\nTraining Start...')
+
     basemodel = BaseModel(model_name)
 
     model = basemodel.load_model(True)
 
+    print(f'\nSave embedding...')
+
     feature_train, label_train = basemodel.loading_embedding(imagepath, model, train, 2)
     feature_test, label_test = basemodel.loading_embedding(imagepath, model, test, 2)
-
 
 if __name__ == '__main__':
     main()

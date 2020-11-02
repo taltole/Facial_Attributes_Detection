@@ -35,7 +35,7 @@ class Train:
             data_img.append(image)
         return data_img
 
-    def data_preprocess(self, index_file, labels, balance, binary, img_size=224):
+    def data_preprocess(self, index_file, labels, balance, binary, img_size=None):
         """
         function read "files list.csv" and return train test filename and pixel represtation for the called label
         params: index_file - CSV for indexed labels
@@ -69,18 +69,31 @@ class Train:
         train = df_label[:train_size]
         test = df_label[train_size:balance]
 
-        print(f"Starting Image Preprocessing")
         # Preprocess train image
-        train_img = self.img_preprocess(train, img_size)
-        class_label = [np.zeros(len(train)) if labels[0].isdigit() else np.ones(len(train))]
-        train = pd.DataFrame(
-            {'files': train.iloc[:, 0], 'label': np.array(*class_label).astype(str), 'image': pd.Series(train_img)})
 
-        # Preprocess test image
-        test_img = self.img_preprocess(test, img_size)
-        class_label = [np.zeros(len(test)) if labels[0].isdigit() else np.ones(len(test))]
-        test = pd.DataFrame({'files': test.iloc[:, 0], 'label': np.array(*class_label).astype(str), 'image': test_img})
-        print('Done!')
+        if img_size!=None:
+            print(f"Starting Image Preprocessing")
+            train_img = self.img_preprocess(train, img_size)
+            class_label = [np.zeros(len(train)) if labels[0].isdigit() else np.ones(len(train))]
+            train = pd.DataFrame(
+                {'files': train.iloc[:, 0], 'label': np.array(*class_label).astype(str), 'image': pd.Series(train_img)})
+
+            # Preprocess test image
+            test_img = self.img_preprocess(test, img_size)
+            class_label = [np.zeros(len(test)) if labels[0].isdigit() else np.ones(len(test))]
+            test = pd.DataFrame({'files': test.iloc[:, 0], 'label': np.array(*class_label).astype(str), 'image': test_img})
+            print('Done!')
+
+        else:
+            print(f"Starting data splitting")
+            class_label = [np.zeros(len(train)) if labels[0].isdigit() else np.ones(len(train))]
+            train = pd.DataFrame(
+                {'files': train.iloc[:, 0], 'label': np.array(*class_label).astype(str)})
+
+            class_label = [np.zeros(len(test)) if labels[0].isdigit() else np.ones(len(test))]
+            test = pd.DataFrame(
+                {'files': test.iloc[:, 0], 'label': np.array(*class_label).astype(str)})
+            print('Done!')
 
         if binary:
             print('Creating Negative Class')
@@ -94,7 +107,7 @@ class Train:
                 print(f"Negative class files:\t{pd.read_csv(index_file, usecols=['0_' + labels]).shape[0]}")
                 print(f'Taking {balance} Images')
             # Add Negative class
-            train_n, test_n = self.data_preprocess(IND_FILE, '0_' + labels, balance, binary=False)
+            train_n, test_n = self.data_preprocess(index_file, '0_' + labels, balance, binary=False)
             train = pd.concat([train, train_n], axis=0)
             test = pd.concat([test, test_n], axis=0)
             print('Shape with Negative class:')

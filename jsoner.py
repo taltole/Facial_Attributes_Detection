@@ -1,13 +1,15 @@
 import io
 from config import *
 
-path = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/json'
+PATH_JSON = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/json'
 sum_dict = {'name': [], 'result': [], 'best': {'loss': [], 'val_loss': [], 'accuracy': [], 'val_accuracy': []}}
-for file in sorted(os.listdir(path)):
+for file in sorted(os.listdir(PATH_JSON)):
     sum_dict['name'].append(file.split('.')[0])
-    json_path = os.path.join(path, file)
+    json_path = os.path.join(PATH_JSON, file)
     history = json.load(io.open(json_path))
     sum_dict['result'].append(history)
+
+    # finding best params
     for k, v in history.items():
         if k.endswith('loss'):
             sum_dict['best'][k].append(min(v))
@@ -22,7 +24,6 @@ means_acc, means_loss, means_vloss, means_vacc = [], [], [], []
 means = [means_acc, means_loss, means_vloss, means_vacc]
 
 for n in name:
-    # ax = plt.subplot(1, 4, i)
     means_acc.append(df['accuracy'][df['name'].str.startswith(n)].mean())
     means_vacc.append(df['val_accuracy'][df['name'].str.startswith(n)].mean())
     means_loss.append(df['loss'][df['name'].str.startswith(n)].mean())

@@ -122,7 +122,7 @@ class BaseModel:
         model.add(Dense(512))
         model.add(Activation('relu'))
 
-        model.add(Dropout(0.5))
+        model.add(Dropout(0.25))
         model.add(Dense(256, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
         self.print_summary(model)
@@ -147,7 +147,6 @@ class BaseModel:
                 x = x.astype('float32') / 255.
             list_x.append(x)
         feature_x = np.vstack(list_x)
-
         label = data['label'].tolist()
         feature = model.predict(feature_x)
 

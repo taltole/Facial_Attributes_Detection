@@ -49,6 +49,7 @@ grid_min_samples = [5, 10, .03, .05, .10]
 grid_criterion = ['gini', 'entropy']
 grid_bool = [True, False]
 grid_seed = [39]
+
 grid_param = [
     [{
         # AdaBoostClassifier
@@ -123,8 +124,10 @@ grid_param = [
         'alpha': grid_ratio,  # default: 1.0
     }],
 
-    # GaussianNB -
-    [{}],
+
+    [{
+        # GaussianNB
+    }],
 
     [{
         # KNeighborsClassifier
@@ -138,7 +141,7 @@ grid_param = [
         # SVC - http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC
         # 'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
         'C': [1, 2, 3, 4, 5],  # default=1.0
-        'gamma': grid_ratio,  # edfault: auto
+        'gamma': grid_ratio,  # default: auto
         'decision_function_shape': ['ovo', 'ovr'],  # default:ovr
         'probability': [True],
         'random_state': grid_seed

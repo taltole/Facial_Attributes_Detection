@@ -35,32 +35,28 @@ def main():
     print('Running Grid Search on Cls...')
     df = gridsearch_cls(feature_train, label_train, feature_test, label_test)
     print(df)
+    name_best_model = df['MLA Name'].values[0]
+    print(name_best_model)
 
     # Plot best model
-    # plot confusion matrix and acc score
     i = 1
-    plt.figure(figsize=(18, 8))
-    ax = plt.subplot(1, 2, i+1)
-    cm = confusion_matrix(label_test, df['MLA pred'].values[0]) / len(label_test)
-    accuracy = accuracy_score(label_test, df['MLA pred'].values[0])
-    ax = sns.heatmap(cm, annot=True, cmap='Wistia', ax=ax)
-
-    name_best_model = df['MLA Name'].values[0]
-    plt.title(f'{name_best_model}\n\nAccuracy: {accuracy * 100:.2f}')
-    plt.ylabel('True')
-    plt.xlabel('Predicted')
-    # ax.set_xticklabels(labels)
-    # ax.set_yticklabels(labels)
-
-    i += 1
-    ax = plt.subplot(1, 2, i-1)
+    ax = plt.subplot(1, 2, i)
     sns.barplot(x='MLA Test Accuracy Mean', y='MLA Name', data=df, color='m', ax=ax)
     plt.title('Machine Learning Algorithm Accuracy Score \n')
     plt.xlabel('Accuracy Score (%)')
     plt.ylabel('Algorithm')
-    name_best_model = df['MLA Name'].values[0]
+
+    # plot confusion matrix and acc score
+    i += 1
+    plt.figure(figsize=(18, 8))
+    ax = plt.subplot(1, 2, i)
+    cm = confusion_matrix(label_test, df['MLA pred'].values[0]) / len(label_test)
+    accuracy = accuracy_score(label_test, df['MLA pred'].values[0])
+    ax = sns.heatmap(cm, annot=True, cmap='Wistia', ax=ax)
+    plt.title(f'{name_best_model}\n\nAccuracy: {accuracy * 100:.2f}')
+    plt.ylabel('True')
+    plt.xlabel('Predicted')
     plt.show()
-    print(name_best_model)
 
 
 if __name__ == '__main__':

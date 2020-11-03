@@ -11,7 +11,7 @@ def main(label):
     print('Reading File...')
     # label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
     print(f'Preparing data for class:\t{label}\nCreating Train, Test...')
-    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
+    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
     print('Done!')
 
     # print(train['image'].shape)

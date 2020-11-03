@@ -21,7 +21,6 @@ def main():
     # Loading Base Model
     print(f'\nLoading Model...')
     model_list = ['vgg19', 'MobileNetV2', 'vggface', 'facenet', 'emotion', 'age', 'gender', 'race']
-    print('Pick a Model: vgg19, MobileNetV2, vggface, facenet, emotion, age, gender, race')
     model_name = 'facenet'  # input('Choose one model to load: )
 
     # Training
@@ -33,29 +32,46 @@ def main():
     feature_test, label_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
 
     print('Running Grid Search on Cls...')
-    df = gridsearch_cls(feature_train, label_train, feature_test, label_test)
-    print(df)
-    name_best_model = df['MLA Name'].values[0]
-    print(name_best_model)
+    df_cls = gridsearch_cls(feature_train, label_train, feature_test, label_test, MLA)
+    print(df_cls)
 
-    # Plot best model
-    i = 1
-    ax = plt.subplot(1, 2, i)
-    sns.barplot(x='MLA Test Accuracy Mean', y='MLA Name', data=df, color='m', ax=ax)
-    plt.title('Machine Learning Algorithm Accuracy Score \n')
-    plt.xlabel('Accuracy Score (%)')
-    plt.ylabel('Algorithm')
+    name_best_model = df_cls['MLA Name'].values[0]
+    # i = 1
+    # plot_best_model(df_cls)
 
+    print('Starting Hyper_parameters GridSearch...')
+    top_cls = gridsearch_params(df_cls, feature_train, label_train)
+    print(top_cls['param'])
+
+    df_top_cls = gridsearch_cls(feature_train, label_train, feature_test, label_test, top_cls)
+    print(df_top_cls)
+    best_model = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
+
+    cls = str(best_model)
     # plot confusion matrix and acc score
-    i += 1
-    plt.figure(figsize=(18, 8))
-    ax = plt.subplot(1, 2, i)
-    cm = confusion_matrix(label_test, df['MLA pred'].values[0]) / len(label_test)
-    accuracy = accuracy_score(label_test, df['MLA pred'].values[0])
-    ax = sns.heatmap(cm, annot=True, cmap='Wistia', ax=ax)
+    ax = plt.subplot(1, 1, 1)
+    cm = confusion_matrix(label_test, df_top_cls['MLA pred'].values[0]) / len(label_test)
+    accuracy = accuracy_score(label_test, df_top_cls['MLA pred'].values[0])
+    sns.heatmap(cm, annot=True, cmap='Wistia', ax=ax)
     plt.title(f'{name_best_model}\n\nAccuracy: {accuracy * 100:.2f}')
     plt.ylabel('True')
     plt.xlabel('Predicted')
+    plt.show()
+
+    # print("Checking XGB best params:")
+    # check_xgb(feature_train, label_train)
+    get_model_results(best_model, feature_train, feature_test, label_train, label_test)
+
+
+def plot_best_model(df):
+    plt.figure(figsize=(16, 7))
+    ax = plt.subplot(1, 1, 1)
+    sns.barplot(x='MLA Test Accuracy Mean', y='MLA Name', data=df, color='m', ax=ax)
+    plt.title('Machine Learning Algorithm Accuracy Score \n')
+    plt.xlabel('Accuracy Score (%)')
+    plt.xticks(np.arange(0, 1, 0.1))
+    plt.ylabel('Algorithm')
+    plt.tight_layout()
     plt.show()
 
 

@@ -45,7 +45,7 @@ def main(label):
         if training:
             model = basemodel.load_model()
             model = basemodel.adding_toplayer(model)
-            history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch,
+            history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch, multi=False,
                                                  callback=None,
                                                  optimize=None)
             print('Loading best weights...')
@@ -55,6 +55,7 @@ def main(label):
             # Saving History
             with open(json_path, 'w') as f:
                 json.dump(history.history, f)
+            history = json.load(open(json_path))
         else:
             history = json.load(open(json_path))
             model = basemodel.load_model(False)

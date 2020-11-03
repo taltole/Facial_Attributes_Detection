@@ -18,9 +18,11 @@ def main():
     train, test = Multi.create_dataframe_multi(label_list, 100)
     print('Done!')
 
+    model_name = 'vggface'
+
     # Split Train, Validation and Test Sets
     print(f'\nRunning data generator...')
-    train_data, valid_data, test_data = Multi.generator_splitter_multi(train, test, IMAGE_PATH)
+    train_data, valid_data, test_data = Multi.generator_splitter_multi(model_name, train, test, IMAGE_PATH)
     # print(train['image'].shape)
     # run_ensemble(train['image'], train['label'], test['image'], test['label'])
 
@@ -30,7 +32,6 @@ def main():
 
     # Loading Base Model
     print(f'\n\nLoading Model...')
-    model_name = 'vggface'
     print('Pick a Model: vgg19, MobileNetV2, vggface, facenet, emotion, age, gender, race')
 
     label_name = 'Hair_color'

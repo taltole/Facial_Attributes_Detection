@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.utils import shuffle
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
 
 class Multiclass_Model:
     def __init__(self, index_file):
@@ -48,7 +50,7 @@ class Multiclass_Model:
         return train, test
 
     @staticmethod
-    def generator_splitter_multi(train, test, imagepath):
+    def generator_splitter_multi(model_name, train, test, imagepath, preprocessing=None):
         """
         function uses the `ImageDataGenerator` class
         # load our dataset as an iterator (not keeping it all in memory at once).
@@ -59,6 +61,10 @@ class Multiclass_Model:
         """
         # Train Set
         # tf.config.list_physical_devices()
+        if model_name =='vgg19':
+            preprocessing= preprocess_input_VGG19
+        elif model_name == 'MobileNetV2':
+            preprocessing = preprocess_input_MNV2
         train['label'] = train['label'].astype(str)
         img_gen = ImageDataGenerator(validation_split=0.2)
 
@@ -67,6 +73,7 @@ class Multiclass_Model:
                                                  x_col='files',
                                                  y_col='label',
                                                  featurewise_std_normalization=True,
+                                                 preprocessing_function=preprocessing,
                                                  class_mode='categorical',
                                                  batch_size=64,
                                                  target_size=(224, 224),
@@ -78,6 +85,7 @@ class Multiclass_Model:
                                                  x_col='files',
                                                  y_col='label',
                                                  featurewise_std_normalization=True,
+                                                 preprocessing_function=preprocessing,
                                                  class_mode='categorical',
                                                  batch_size=64,
                                                  target_size=(224, 224),
@@ -90,6 +98,7 @@ class Multiclass_Model:
                                                      x_col='files',
                                                      y_col='label',
                                                      featurewise_std_normalization=True,
+                                                     preprocessing_function=preprocessing,
                                                      class_mode=None,
                                                      target_size=(224, 224),
                                                      batch_size=64,

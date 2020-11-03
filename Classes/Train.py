@@ -194,7 +194,7 @@ class Train:
                                                      shuffle=False)
         return train_data, valid_data, test_data
 
-    def start_train(self, model, savefile, train_set, valid_set, epoch, callback=None, optimize=None, multi=None):
+    def start_train(self, model, savefile, train_set, valid_set, epoch, callback=None, optimize=None, multi=False):
         """
         :param model: update base model with top layers
         :param savefile: name of the model's save file
@@ -216,8 +216,10 @@ class Train:
             callback_list = callback
 
         # Optimizing
-        if optimize is None:
+        if optimize is None and multi==False:
             model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
+        elif optimize is None and multi==True:
+            model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='categorical_crossentropy', metrics=["accuracy"])
         else:
             model.compile(optimize)
 

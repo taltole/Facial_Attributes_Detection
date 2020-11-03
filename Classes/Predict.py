@@ -18,10 +18,12 @@ class Prediction:
         print('Starting prediction...')
         pred = model.predict(test_data, steps=STEP_SIZE_TEST)
         print('Done!')
-        # predicted_class_indices = np.argmax(pred, axis=1)
-        predicted_class_indices = list(map(lambda x: 1 if float(x) >= 0.5 else 0, pred))
         labels = (train_data.class_indices)
         labels = dict((v, k) for k, v in labels.items())
+        if len(list(labels.keys())) > 2:
+            predicted_class_indices = np.argmax(pred, axis=1)
+        else:
+            predicted_class_indices = list(map(lambda x: 1 if float(x) >= 0.5 else 0, pred))
         y_pred = [labels[k] for k in predicted_class_indices]
         return y_pred
 

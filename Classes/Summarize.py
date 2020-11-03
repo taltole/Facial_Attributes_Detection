@@ -55,7 +55,7 @@ class Metrics:
         plt.plot(loss, label='Train')
         plt.plot(val_loss, label='Val')
         plt.legend(loc='lower right')
-        plt.ylabel('Cross Entropy')
+        plt.ylabel('Loss')
         plt.xlabel('Epoch')
         plt.ylim([0, max(plt.ylim())])
         plt.title('Loss')

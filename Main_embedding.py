@@ -33,11 +33,10 @@ def main():
 
     print('Running Grid Search on Cls...')
     df_cls = gridsearch_cls(feature_train, label_train, feature_test, label_test, MLA)
+    plot_best_model(df_cls)
     print(df_cls)
 
     name_best_model = df_cls['MLA Name'].values[0]
-    # i = 1
-    # plot_best_model(df_cls)
 
     print('Starting Hyper_parameters GridSearch...')
     top_cls = gridsearch_params(df_cls, feature_train, label_train)
@@ -60,7 +59,8 @@ def main():
 
     # print("Checking XGB best params:")
     # check_xgb(feature_train, label_train)
-    get_model_results(best_model, feature_train, feature_test, label_train, label_test)
+
+    # get_model_results(best_model, feature_train, feature_test, label_train, label_test)
 
 
 def plot_best_model(df):

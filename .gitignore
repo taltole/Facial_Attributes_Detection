@@ -3,4 +3,5 @@ Other/
 .DS_Store
 __pycache__/
 .idea/
-.gitignore
+weights/
+*.h5

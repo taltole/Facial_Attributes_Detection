@@ -4,12 +4,12 @@ from Classes.Summarize import *
 from tensorflow.keras.optimizers import RMSprop, SGD, Adam
 
 
-def main():
+def main(label):
 
     # Start images processing and dataframe splitting
     trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...')
-    label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
+    # label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
     print(f'Preparing data for class:\t{label}\nCreating Train, Test...')
     train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
     print('Done!')
@@ -77,17 +77,16 @@ def main():
         top = min(len(test['label']), len(y_pred))
         metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top], model_name, label)
         metrics.confusion_matrix()
-        metrics.acc_loss_graph()
+        # metrics.acc_loss_graph()
         metrics.classification_report()
 
         # Inference
-    labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
-    pos, neg = f'With {label}', f'W/O {label}'
-    Prediction.predict_label(model, labels, pos, neg)
-    file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
-    Prediction.predict_file(model, file, pos, neg)
+    # labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
+    # pos, neg = f'With {label}', f'W/O {label}'
+    # Prediction.predict_label(model, labels, pos, neg)
+    # file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
+    # Prediction.predict_file(model, file, pos, neg)
 
-    model.load_weights(os.path.join(MODEL_PATH, model_file))
 
 """
     # layer_name = 'my_dense'
@@ -133,4 +132,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    df = pd.read_csv(IND_FILE)
+    cols = df.columns.tolist()
+    accessories_label = [l for l in cols if l.startswith("Wearing")]
+    # hair_label = [l for l in cols if "Hair" in l and not l.startswith('0')]
+    labels = accessories_label
+    for label in labels:
+        main(label)

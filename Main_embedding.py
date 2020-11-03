@@ -20,8 +20,8 @@ def main():
 
     # Loading Base Model
     print(f'\nLoading Model...')
-    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet', 'emotion', 'age', 'gender', 'race']
-    print('Pick a Model: vgg19, MobileNetV2, vgg_face, facenet, emotion, age, gender, race')
+    model_list = ['vgg19', 'MobileNetV2', 'vggface', 'facenet', 'emotion', 'age', 'gender', 'race']
+    print('Pick a Model: vgg19, MobileNetV2, vggface, facenet, emotion, age, gender, race')
     model_name = 'facenet'  # input('Choose one model to load: )
 
     # Training

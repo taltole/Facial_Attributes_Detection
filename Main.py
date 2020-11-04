@@ -5,6 +5,7 @@ from tensorflow.keras.optimizers import RMSprop, SGD, Adam
 
 
 def main(label):
+
     # Start images processing and dataframe splitting
     trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...')
@@ -31,8 +32,8 @@ def main(label):
     # Looping over models
     for model_name in model_list:
         # model_name  = 'vgg_face'  # input('Choose one model to load: )
-        model_file = os.path.join('weights/', model_name + '_' + label + '.h5')
-        json_path = os.path.join('json/', model_name + '_' + label + '.json')
+        model_file = os.path.join('weights/', model_name + '_' + label + '_L2.h5')
+        json_path = os.path.join('json/', model_name + '_' + label + '_L2.json')
         epoch = 100
 
         # Training
@@ -71,13 +72,13 @@ def main(label):
         Prediction.evaluate_model(model, valid_data)
 
         # Predict on test data
-        y_pred = Prediction.test_prediction(model, test_data, train_data)
+        # y_pred = Prediction.test_prediction(model, test_data, train_data)
 
         # plot
         top = min(len(test['label']), len(y_pred))
         metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top], model_name, label)
         metrics.confusion_matrix()
-        metrics.acc_loss_graph()
+        #metrics.acc_loss_graph()
         metrics.classification_report()
 
         # Inference
@@ -86,6 +87,7 @@ def main(label):
     # Prediction.predict_label(model, labels, pos, neg)
     # file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
     # Prediction.predict_file(model, file, pos, neg)
+
 
 
 """
@@ -132,10 +134,12 @@ def main(label):
 
 
 if __name__ == '__main__':
+    
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
     accessories_label = [l for l in cols if l.startswith("Wearing")]
     # hair_label = [l for l in cols if "Hair" in l and not l.startswith('0')]
     labels = accessories_label
+
     for label in labels:
         main(label)

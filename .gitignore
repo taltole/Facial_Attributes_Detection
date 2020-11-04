@@ -3,5 +3,6 @@ Other/
 .DS_Store
 __pycache__/
 .idea/
-weights/
 *.h5
+weights/
+

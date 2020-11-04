@@ -51,33 +51,39 @@ grid_param = [
     [{
         # AdaBoostClassifier
         'n_estimators': grid_n_estimator,  # default=50
-        'learning_rate': grid_learn,  # default=1
-        'random_state': grid_seed
+        'learning_rate': grid_learn,       # default=1
+        'random_state': grid_seed,
+        'n_jobs': [-1]
+
         # 'algorithm': ['SAMME', 'SAMME.R'], #default=’SAMME.R
     }],
 
     [{
         # BaggingClassifier
         'n_estimators': grid_n_estimator,  # default=10
-        'max_samples': grid_ratio,  # default=1.0
-        'random_state': grid_seed
+        'max_samples': grid_ratio,         # default=1.0
+        'random_state': grid_seed,
+        'n_jobs': [-1]
+
     }],
 
     [{
         # ExtraTreesClassifier
         'n_estimators': grid_n_estimator,  # default=10
-        'criterion': grid_criterion,  # default=”gini”
-        'max_depth': grid_max_depth,  # default=None
-        'random_state': grid_seed
+        'criterion': grid_criterion,       # default=”gini”
+        'max_depth': grid_max_depth,       # default=None
+        'random_state': grid_seed,
+        'n_jobs': [-1]
+
     }],
 
     [{
         # GradientBoostingClassifier
-        # 'loss': ['deviance', 'exponential'], #default=’deviance’
-        'learning_rate': grid_learn, # [.05],  # default=0.1
-        'n_estimators': grid_n_estimator, #[300],  # default=100
+        # 'loss': ['deviance', 'exponential'],         # default=’deviance’
         # 'criterion': ['friedman_mse', 'mse', 'mae'], # default=”friedman_mse”
-        'max_depth': grid_max_depth,  # default=3
+        'learning_rate': grid_learn,                   # default=0.1
+        'n_estimators': grid_n_estimator,              # default=100
+        'max_depth': grid_max_depth,                   # default=3
         'random_state': grid_seed
         # {'learning_rate': 0.05, 'max_depth': 2, 'n_estimators': 300, 'random_state': 0}
     }],
@@ -88,7 +94,9 @@ grid_param = [
         'criterion': grid_criterion,  # default=”gini”
         'max_depth': grid_max_depth,  # default=None
         'oob_score': [True],  # default=False
-        'random_state': grid_seed
+        'random_state': grid_seed,
+        'n_jobs': [-1]
+
         # {'criterion': 'entropy', 'max_depth': 6, 'n_estimators': 100, 'oob_score': True, 'random_state': 0}
         # {'criterion': 'gini', 'max_depth': 4, 'n_estimators': 100, 'oob_score': True, 'random_state': 39}
 
@@ -99,7 +107,9 @@ grid_param = [
         'fit_intercept': grid_bool,  # default: True
         # 'penalty': ['l1','l2'],
         'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'],  # default: lbfgs
-        'random_state': grid_seed
+        'random_state': grid_seed,
+        'n_jobs': [-1]
+
     }],
 
     # [{
@@ -111,9 +121,11 @@ grid_param = [
 
     [{
         # KNeighborsClassifier
-        'n_neighbors': [1, 2, 3, 4, 5, 6, 7],  # default: 5
+        'n_neighbors': [3, 4, 5, 6, 7],  # default: 5
         'weights': ['uniform', 'distance'],  # default = ‘uniform’
-        'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute']
+        'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
+        'n_jobs': [-1]
+
     }],
 
     [{
@@ -124,9 +136,11 @@ grid_param = [
         'decision_function_shape': ['ovo', 'ovr'],  # default:ovr
         'probability': [True],
         'random_state': grid_seed
+
         # The best parameter for SVC() is
         # {'C': 1, 'decision_function_shape': 'ovo', 'gamma': 0.1, 'probability': True, 'random_state': 39}
         # {'C': 1, 'decision_function_shape': 'ovo', 'gamma': 0.1, 'probability': True, 'random_state': 39}
+        # {'C': 1, 'decision_function_shape': 'ovo', 'gamma': 0.01, 'probability': True, 'random_state': 39}
     }],
 
     [{
@@ -138,10 +152,11 @@ grid_param = [
         'nthread': [4],  # when use hyperthread, xgboost may become slower
         'objective': ['binary:logistic'],
         'min_child_weight': [11],
-        'silent': [0],
+        # 'silent': [0],
         'subsample': [0.8],
         'colsample_bytree': [0.7],
         'missing': [-999],
+        'n_jobs': [-1]
 
     }]
 ]

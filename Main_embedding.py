@@ -34,22 +34,20 @@ def main(label, exp=True):
     print('Running Grid Search on Cls...')
     df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, MLA)
     print(df_cls.iloc[:, :-1])
+    # name_best_cls = df_cls['MLA Name'].values[0]
 
     # Plot top classifier
     if not exp:
         plot_best_model(df_cls)
 
-    name_best_model = df_cls['MLA Name'].values[0]
-
     # Optimizing
-    print('Starting hyper_parameters GridSearch...\n')
+    print('\nStarting hyper_parameters GridSearch...')
     top_cls = gridsearch_params(df_cls, X_train, y_train)
-    print(top_cls['param'])
+    # print(top_cls['param'], sep='\n')
 
-    print('Test for best classifier...')
+    print('Final Test for best classifier...')
     df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
     print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
-
     best_model = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
 
     cls = str(best_model).strip('[]')
@@ -57,19 +55,21 @@ def main(label, exp=True):
     best_cls = cls
     y_pred = df_top_cls['MLA pred'].values[0]
 
+    print(df_top_cls)
+    # plot confusion matrix and acc score
     if not exp:
-        # plot confusion matrix and acc score
         ax = plt.subplot(1, 1, 1)
         cm = confusion_matrix(y_test, y_pred) / len(y_test)
         accuracy = accuracy_score(y_test, df_top_cls['MLA pred'].values[0])
         sns.heatmap(cm, annot=True, cmap='Wistia', ax=ax)
-        plt.title(f'{name_best_model}\n\nAccuracy: {accuracy * 100:.2f}')
+        plt.title(f'{cls}\n\nAccuracy: {accuracy * 100:.2f}')
         plt.ylabel('True')
         plt.xlabel('Predicted')
         plt.show()
 
     # print("Checking XGB best params:")
     # check_xgb(feature_train, label_train)
+
     # model = eval(best_cls)
     # get_model_results(model, X_train, X_test, y_train, y_test)
 
@@ -77,4 +77,4 @@ def main(label, exp=True):
 if __name__ == '__main__':
     labels = ['Eyeglasses']
     for label in labels:
-        main(label, False)
+        main(label, True)

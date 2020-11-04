@@ -25,12 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ad8cd87-9763-479a-a6d8-4aa396ce03c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/BaseCls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/BaseCls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/LoadModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/LoadModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_embedding.py" afterDir="false" />
-    </list>
+    <list default="true" id="0ad8cd87-9763-479a-a6d8-4aa396ce03c8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

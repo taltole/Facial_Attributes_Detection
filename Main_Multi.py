@@ -18,7 +18,7 @@ def main():
     train, test = Multi.create_dataframe_multi(label_list, 100)
     print('Done!')
 
-    model_name = 'vggface'
+    model_name = 'vgg19'
 
     # Split Train, Validation and Test Sets
     print(f'\nRunning data generator...')

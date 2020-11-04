@@ -2,7 +2,9 @@ from deepface import DeepFace
 
 from config import *
 import tensorflow as tf
-
+from tensorflow.keras.applications.vgg16 import preprocess_input as preprocess_input_VGG16
+from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
 
 class Prediction:
     @staticmethod
@@ -49,6 +51,28 @@ class Prediction:
             plt.yticks([])
         plt.show()
         return result
+
+    @staticmethod
+    def predict_label_multi(model, labels, imagepath, preprocess=None):
+        img = tf.keras.preprocessing.image.load_img(os.path.join(imagepath), target_size=(224, 224))
+        img_array = tf.keras.preprocessing.image.img_to_array(img)
+        img_array = np.expand_dims(img_array, 0)  # Create batch axis
+
+        if preprocess == 'vgg16':
+            img_array = preprocess_input_VGG16(img_array)
+        elif preprocess == 'vgg19':
+            img_array = preprocess_input_VGG19(img_array)
+        elif preprocess == 'MobileNetV2':
+            img_array = preprocess_input_MNV2(img_array)
+        predictions = model.predict(img_array)
+        score = np.argmax(predictions, axis=1)
+        imge = mpimg.imread(imagepath)
+        plt.figure(figsize=(5, 5))
+        plt.imshow(imge)
+        plt.title(list(labels.keys())[int(score)])
+        plt.xticks([])
+        plt.yticks([])
+        plt.show()
 
     @staticmethod
     def predict_file(model, file, pos, neg):

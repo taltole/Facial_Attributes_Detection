@@ -129,7 +129,10 @@ class BaseModel:
         return model
 
     def loading_embedding(self, imagepath, model, data, layer_num):
-        model = Model(inputs=model.input, outputs=model.layers[-layer_num].output)
+        if model == 'vggface':
+            model = Model(inputs=model.input, outputs=model.layers.output)
+        else:
+            model = Model(inputs=model.input, outputs=model.layers[-layer_num].output)
         list_x = []
         for img in data['files'].tolist():
             if self.model_name not in ['vgg19', 'MobileNetV2', 'vggface']:

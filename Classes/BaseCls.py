@@ -84,7 +84,7 @@ grid_param = [
 
     [{
         # RandomForestClassifier
-        'n_estimators': grid_n_estimator,  # default=10
+        'n_estimators': [100, 300],  # default=10
         'criterion': grid_criterion,  # default=”gini”
         'max_depth': grid_max_depth,  # default=None
         'oob_score': [True],  # default=False
@@ -208,6 +208,18 @@ def gridsearch_params(MLA_compare, X_train, y_train):
     return best_params_dict
 
 
+def plot_best_model(df):
+    plt.figure(figsize=(16, 7))
+    ax = plt.subplot(1, 1, 1)
+    sns.barplot(x='MLA Test Accuracy Mean', y='MLA Name', data=df, color='m', ax=ax)
+    plt.title('Machine Learning Algorithm Accuracy Score \n')
+    plt.xlabel('Accuracy Score (%)')
+    plt.xticks(np.arange(0, 1, 0.1))
+    plt.ylabel('Algorithm')
+    plt.tight_layout()
+    plt.show()
+
+
 def find_best_threshold(thresholds, fpr, tpr):
     """
     find the best threshold from the roc curve. by finding the threshold for the point which
@@ -218,15 +230,15 @@ def find_best_threshold(thresholds, fpr, tpr):
     return fpr_tpr.ix[fpr_tpr.dist.idxmin(), 'thresholds']
 
 
-def get_model_results(model, train, test, y_train, y_test):
-    probabilities = model.predict_proba(test)[:, 1]
+def get_model_results(model, X_train, X_test, y_train, y_test):
+    probabilities = model.predict_proba(np.array(X_test))[:, 1]
     fpr, tpr, thresholds = metrics.roc_curve(y_test, probabilities)
     threshold = find_best_threshold(thresholds, fpr, tpr)
     predictions = probabilities > threshold
     plt.figure()
     plt.plot(fpr, tpr, label='test')
     roc_auc = metrics.roc_auc_score(y_test, probabilities)
-    probabilities = model.predict_proba(train)[:, 1]
+    probabilities = model.predict_proba(np.array(X_train))[:, 1]
     fpr, tpr, thresholds = metrics.roc_curve(y_train, probabilities)
     plt.plot(fpr, tpr, label='train')
     plt.plot([0, 1], [0, 1], 'r--', label='random guess')

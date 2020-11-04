@@ -32,7 +32,7 @@ def main():
 
     # Loading Base Model
     print(f'\n\nLoading Model...')
-    print('Pick a Model: vgg19, vgg16, MobileNetV2, vggface, facenet, emotion, age, gender, race')
+    print('Pick a Model: vgg19, vgg16, ResNet50, MobileNetV2, vggface, facenet, emotion, age, gender, race')
 
     label_name = 'Hair_color'
     model_file = os.path.join('weights/', model_name + '_' + label_name + '.h5')

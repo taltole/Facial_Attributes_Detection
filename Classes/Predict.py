@@ -5,6 +5,7 @@ import tensorflow as tf
 from tensorflow.keras.applications.vgg16 import preprocess_input as preprocess_input_VGG16
 from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
+from tensorflow.keras.applications.resnet50 import preprocess_input as Preprocess_RESNET50
 
 class Prediction:
     @staticmethod
@@ -64,6 +65,8 @@ class Prediction:
             img_array = preprocess_input_VGG19(img_array)
         elif preprocess == 'MobileNetV2':
             img_array = preprocess_input_MNV2(img_array)
+        elif preprocess == 'ResNet50':
+            img_array = Preprocess_RESNET50(img_array)
         predictions = model.predict(img_array)
         score = np.argmax(predictions, axis=1)
         imge = mpimg.imread(imagepath)

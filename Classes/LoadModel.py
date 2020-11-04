@@ -9,6 +9,8 @@ from config import *
 # from deepface.commons import functions, realtime, distance as dst
 from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
+from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG16
+from tensorflow.keras.applications.resnet50 import preprocess_input as Preprocess_RESNET50
 from tensorflow.keras.preprocessing import image
 
 
@@ -43,6 +45,8 @@ class BaseModel:
             base_model = tf.keras.applications.vgg16.VGG16(include_top=include_top, input_shape=(224, 224, 3))
         elif self.model_name == 'MobileNetV2':
             base_model = tf.keras.applications.MobileNetV2(include_top=include_top, input_shape=(224, 224, 3))
+        elif self.model_name == 'ResNet50':
+            base_model = tf.keras.applications.resnet50.ResNet50(include_top=include_top, input_shape=(224, 224, 3))
         else:
             try:
                 base_model = models[self.model_name].loadModel()
@@ -144,6 +148,10 @@ class BaseModel:
                 x = preprocess_input_VGG19(x)
             elif self.model_name == 'MobileNetV2':
                 x = preprocess_input_MNV2(x)
+            elif self.model_name == 'vgg16':
+                x = preprocess_input_VGG16(x)
+            elif self.model_name == 'ResNet50':
+                x = Preprocess_RESNET50(x)
             else:
                 x = x.astype('float32') / 255.
             list_x.append(x)

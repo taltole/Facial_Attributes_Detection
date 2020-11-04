@@ -4,6 +4,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
 from tensorflow.keras.applications.vgg16 import preprocess_input as preprocess_input_VGG16
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
+from tensorflow.keras.applications.resnet50 import preprocess_input as Preprocess_RESNET50
 
 class Multiclass_Model:
     def __init__(self, index_file):
@@ -68,6 +69,8 @@ class Multiclass_Model:
             preprocessing = preprocess_input_MNV2
         elif model_name == 'vgg16':
             preprocessing = preprocess_input_VGG16
+        elif model_name == 'ResNet50':
+            preprocessing = Preprocess_RESNET50
         train['label'] = train['label'].astype(str)
         img_gen = ImageDataGenerator(validation_split=0.2)
 

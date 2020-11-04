@@ -18,7 +18,7 @@ def main():
     train, test = Multi.create_dataframe_multi(label_list, 100)
     print('Done!')
 
-    model_name = 'vggface'
+    model_name = 'vgg19'
 
     # Split Train, Validation and Test Sets
     print(f'\nRunning data generator...')
@@ -32,7 +32,7 @@ def main():
 
     # Loading Base Model
     print(f'\n\nLoading Model...')
-    print('Pick a Model: vgg19, MobileNetV2, vggface, facenet, emotion, age, gender, race')
+    print('Pick a Model: vgg19, vgg16, ResNet50, MobileNetV2, vggface, facenet, emotion, age, gender, race')
 
     label_name = 'Hair_color'
     model_file = os.path.join('weights/', model_name + '_' + label_name + '.h5')

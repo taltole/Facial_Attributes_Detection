@@ -39,6 +39,8 @@ class BaseModel:
 
         if self.model_name == 'vgg19':
             base_model = tf.keras.applications.vgg19.VGG19(include_top=include_top, input_shape=(224, 224, 3))
+        elif self.model_name == 'vgg16':
+            base_model = tf.keras.applications.vgg16.VGG16(include_top=include_top, input_shape=(224, 224, 3))
         elif self.model_name == 'MobileNetV2':
             base_model = tf.keras.applications.MobileNetV2(include_top=include_top, input_shape=(224, 224, 3))
         else:
@@ -132,7 +134,7 @@ class BaseModel:
         model = Model(inputs=model.input, outputs=model.layers[-layer_num].output)
         list_x = []
         for img in data['files'].tolist():
-            if self.model_name not in ['vgg19', 'MobileNetV2', 'vggface']:
+            if self.model_name not in ['vgg19', 'MobileNetV2', 'vggface', 'vgg16']:
                 img = image.load_img(os.path.join(imagepath, img), target_size=(160, 160))
             else:
                 img = image.load_img(os.path.join(imagepath, img), target_size=(224, 224))

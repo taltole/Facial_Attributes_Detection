@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.utils import shuffle
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
+from tensorflow.keras.applications.vgg16 import preprocess_input as preprocess_input_VGG16
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
 
 class Multiclass_Model:
@@ -65,6 +66,8 @@ class Multiclass_Model:
             preprocessing= preprocess_input_VGG19
         elif model_name == 'MobileNetV2':
             preprocessing = preprocess_input_MNV2
+        elif model_name == 'vgg16':
+            preprocessing = preprocess_input_VGG16
         train['label'] = train['label'].astype(str)
         img_gen = ImageDataGenerator(validation_split=0.2)
 

@@ -5,7 +5,6 @@ from tensorflow.keras.optimizers import RMSprop, SGD, Adam
 
 
 def main(label):
-
     # Start images processing and dataframe splitting
     trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...')
@@ -26,8 +25,8 @@ def main(label):
 
     # Loading Base Model
     print(f'\n\nLoading Model...')
-    model_list = ['vgg19', 'vgg16', 'ResNet50' ,'MobileNetV2', 'vggface', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
-    print('Pick a Model: vgg19, vgg16, MobileNetV2, vggface, facenet, emotion, age, gender, race')
+    model_list = ['vgg19', 'vgg16' ,'MobileNetV2', 'vggface', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
+    print('Pick a Model: vgg19, vgg16, ResNet50, MobileNetV2,  vggface, facenet, emotion, age, gender, race')
 
     # Looping over models
     for model_name in model_list:
@@ -69,7 +68,7 @@ def main(label):
             model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
 
         # Evaluate the network on valid data
-        # Prediction.evaluate_model(model, valid_data)
+        Prediction.evaluate_model(model, valid_data)
 
         # Predict on test data
         y_pred = Prediction.test_prediction(model, test_data, train_data)
@@ -78,7 +77,7 @@ def main(label):
         top = min(len(test['label']), len(y_pred))
         metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top], model_name, label)
         metrics.confusion_matrix()
-        # metrics.acc_loss_graph()
+        metrics.acc_loss_graph()
         metrics.classification_report()
 
         # Inference

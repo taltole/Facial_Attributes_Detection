@@ -27,6 +27,7 @@ def main():
     basemodel = BaseModel(model_name)
     model = basemodel.load_model(True)
 
+    #Save embedding
     print(f'\nSave embedding...')
     feature_train, label_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
     feature_test, label_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)

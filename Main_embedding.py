@@ -15,7 +15,7 @@ def main(label, exp=True):
     print('Reading File...\nCreating Train, Test...')
 
     print(f'Train on {label} attribute')
-    train, test = trainer.data_preprocess(IND_FILE, label, 400, True, None)
+    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
     print('Done!')
 
     # Loading Base Model

@@ -26,10 +26,13 @@ def main(label, exp=True):
     # Training
     basemodel = BaseModel(model_name)
     model = basemodel.load_model(True)
+    # if model_name == 'vggface':
+    #     model = basemodel.adding_toplayer(model)
 
     print(f'\nSave embedding...')
     X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
     X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
+    data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
 
     print('Running Grid Search on Cls...')
     df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, MLA)
@@ -48,14 +51,19 @@ def main(label, exp=True):
     print('Final Test for best classifier...')
     df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
     print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
-    best_model = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
+    best_models = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
 
-    cls = str(best_model).strip('[]')
-    print(f'Best Model:\n{cls}\n', '-'*50,)
+    cls = str(best_models).strip('[]')
+    cls_name = cls.split('(')[0]
+    print(f'Best Model:\n{cls}\n', '-'*50)
     best_cls = cls
     y_pred = df_top_cls['MLA pred'].values[0]
 
-    print(df_top_cls)
+    # Saving embedding and final results to file
+    label_emb = pd.DataFrame({'y_test': pd.Series(y_test), 'y_pred': pd.Series(y_pred)})
+    label_emb.to_csv('csv/data/label_'+model_name+'_'+label+'_'+cls_name+'.csv')
+    data_emb.to_csv('csv/data/data_'+model_name+'_'+label+'_'+cls_name+'.csv')
+
     # plot confusion matrix and acc score
     if not exp:
         ax = plt.subplot(1, 1, 1)
@@ -70,11 +78,15 @@ def main(label, exp=True):
     # print("Checking XGB best params:")
     # check_xgb(feature_train, label_train)
 
-    # model = eval(best_cls)
+    # model = eval(cls)()
     # get_model_results(model, X_train, X_test, y_train, y_test)
 
 
 if __name__ == '__main__':
-    labels = ['Eyeglasses']
+
+    df = pd.read_csv(IND_FILE)
+    cols = df.columns.tolist()
+    accessories_label = [l for l in cols if l.startswith("Wearing")]
+    labels = accessories_label
     for label in labels:
         main(label, True)

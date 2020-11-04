@@ -107,8 +107,7 @@ grid_param = [
         'fit_intercept': grid_bool,  # default: True
         # 'penalty': ['l1','l2'],
         'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'],  # default: lbfgs
-        'random_state': grid_seed,
-        'n_jobs': [-1]
+        'random_state': grid_seed
 
     }],
 
@@ -170,7 +169,7 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8, random_state=39)
 
     # create table to compare MLA metrics
-    MLA_columns = ['MLA Name', 'MLA Test Accuracy Mean', 'MLA Time', 'MLA pred']
+    MLA_columns = ['MLA Name', 'MLA Test Accuracy Mean', 'Run Time', 'MLA pred']
     MLA_compare = pd.DataFrame(columns=MLA_columns)
 
     row_index = 0
@@ -186,7 +185,7 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
 
         # score model with cross validation:
         cv_results = model_selection.cross_validate(alg, X_train, y_train, cv=cv_split, scoring='roc_auc')
-        MLA_compare.loc[row_index, 'MLA Time'] = cv_results['fit_time'].mean()
+        MLA_compare.loc[row_index, 'Run Time'] = cv_results['fit_time'].mean()
         MLA_compare.loc[row_index, 'MLA Test Accuracy Mean'] = cv_results['test_score'].mean()
 
         # save MLA predictions

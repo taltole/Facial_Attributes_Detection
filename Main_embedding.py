@@ -64,6 +64,7 @@ def main(label, exp=True):
     label_emb = pd.DataFrame({'y_test': pd.Series(y_test), 'y_pred': pd.Series(y_pred)})
     label_emb.to_csv('csv/data/label_'+model_name+'_'+label+'_'+cls_name+'.csv')
     data_emb.to_csv('csv/data/data_'+model_name+'_'+label+'_'+cls_name+'.csv')
+    df_top_cls.to_csv('csv/data/sum_'+model_name+'_'+label+'_top3.csv')
 
     # plot confusion matrix and acc score
     if not exp:

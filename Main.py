@@ -32,8 +32,8 @@ def main(label):
     # Looping over models
     for model_name in model_list:
         # model_name  = 'vgg_face'  # input('Choose one model to load: )
-        model_file = os.path.join('weights2/', model_name + '_' + label + '.h5')
-        json_path = os.path.join('json2/', model_name + '_' + label + '.json')
+        model_file = os.path.join('weights/', model_name + '_' + label + '_L2.h5')
+        json_path = os.path.join('json/', model_name + '_' + label + '_L2.json')
         epoch = 100
 
         # Training
@@ -71,23 +71,23 @@ def main(label):
         # Prediction.evaluate_model(model, valid_data)
 
         # Predict on test data
-        y_pred = Prediction.test_prediction(model, test_data, train_data)
+        # y_pred = Prediction.test_prediction(model, test_data, train_data)
 
         # plot
         top = min(len(test['label']), len(y_pred))
         metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top], model_name, label)
         metrics.confusion_matrix()
-        metrics.acc_loss_graph()
+        #metrics.acc_loss_graph()
         metrics.classification_report()
 
        # Inference
-    labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
-    pos, neg = f'With {label}', f'W/O {label}'
-    Prediction.predict_label(model, labels, pos, neg)
-    file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
-    Prediction.predict_file(model, file, pos, neg)
+    #labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
+    #pos, neg = f'With {label}', f'W/O {label}'
+    #Prediction.predict_label(model, labels, pos, neg)
+    #file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
+    #Prediction.predict_file(model, file, pos, neg)
 
-    model.load_weights(os.path.join(MODEL_PATH, model_file))
+    #model.load_weights(os.path.join(MODEL_PATH, model_file))
 """
     # layer_name = 'my_dense'
     # intermediate_layer_model = Model(inputs=model.input,
@@ -140,4 +140,4 @@ if __name__ == '__main__':
     labels = [*accessories_label, *hair_label]
 
     for label in labels:
-	main()
+        main(label)

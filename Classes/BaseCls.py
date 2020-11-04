@@ -18,7 +18,6 @@ from keras.optimizers import SGD
 from keras.layers.normalization import BatchNormalization
 from keras.layers import LeakyReLU
 
-
 # Hyper_parameter Tune with GridSearchCV:
 grid_n_estimator = [10, 50, 100, 300]
 grid_ratio = [.01, .1, .5, 1.0]
@@ -60,7 +59,7 @@ grid_param = [
     [{
         # AdaBoostClassifier
         'n_estimators': grid_n_estimator,  # default=50
-        'learning_rate': grid_learn,       # default=1
+        'learning_rate': grid_learn,  # default=1
         'random_state': grid_seed,
         'n_jobs': [-1]
 
@@ -70,7 +69,7 @@ grid_param = [
     [{
         # BaggingClassifier
         'n_estimators': grid_n_estimator,  # default=10
-        'max_samples': grid_ratio,         # default=1.0
+        'max_samples': grid_ratio,  # default=1.0
         'random_state': grid_seed,
         'n_jobs': [-1]
 
@@ -79,8 +78,8 @@ grid_param = [
     [{
         # ExtraTreesClassifier
         'n_estimators': grid_n_estimator,  # default=10
-        'criterion': grid_criterion,       # default=”gini”
-        'max_depth': grid_max_depth,       # default=None
+        'criterion': grid_criterion,  # default=”gini”
+        'max_depth': grid_max_depth,  # default=None
         'random_state': grid_seed,
         'n_jobs': [-1]
 
@@ -90,9 +89,9 @@ grid_param = [
         # GradientBoostingClassifier
         # 'loss': ['deviance', 'exponential'],         # default=’deviance’
         # 'criterion': ['friedman_mse', 'mse', 'mae'], # default=”friedman_mse”
-        'learning_rate': grid_learn,                   # default=0.1
-        'n_estimators': grid_n_estimator,              # default=100
-        'max_depth': grid_max_depth,                   # default=3
+        'learning_rate': grid_learn,  # default=0.1
+        'n_estimators': grid_n_estimator,  # default=100
+        'max_depth': grid_max_depth,  # default=3
         'random_state': grid_seed
         # {'learning_rate': 0.05, 'max_depth': 2, 'n_estimators': 300, 'random_state': 0}
     }],
@@ -139,8 +138,8 @@ grid_param = [
     [{
         # SVC
         # 'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
-        'C': [1, 2, 3, 4, 5],  # default: 1.0
-        'gamma': grid_ratio,   # default: auto
+        'C': [1], #, 2, 3, 4, 5],  # default: 1.0
+        'gamma': grid_ratio,  # default: auto
         'decision_function_shape': ['ovo', 'ovr'],  # default:ovr
         'probability': [True],
         'random_state': grid_seed
@@ -165,8 +164,8 @@ grid_param = [
         'colsample_bytree': [0.7],
         'missing': [-999],
         'n_jobs': [-1],
-	'tree_method': 'gpu_hist', 
-	'gpu_id': [0]
+        'tree_method': ['gpu_hist'],
+        'gpu_id': [0]
 
     }]
 ]
@@ -176,6 +175,9 @@ grid_param = [
 def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     """
     This function takes train and test data sets sand run gridsearch over basic classifier from MLA dict
+    model = MLA it gridsearch over all models in MLA
+    model = df from gridsearch parm it takes the top 3
+    model = xgb func fit only on xgb
     """
     cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8, random_state=39)
 
@@ -188,7 +190,9 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     if model == MLA:
         algo = model.values()
     elif model == 'xgb':
-        algo = MLA[XGBClassifier().__class__.__name__]
+        algo = [XGBClassifier(learning_rate=.01, max_depth=2, n_estimators=100, seed=39, nthread=4,
+                              objective='binary:logistic', min_child_weight=11, subsample=0.8, colsample_bytree=0.7,
+                              missing=-999, n_jobs=-1, tree_method='gpu_hist', gpu_id=0)]  #
     else:
         algo = model['param']
     for alg in algo:
@@ -211,20 +215,26 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     return MLA_compare
 
 
-def gridsearch_params(MLA_compare, X_train, y_train):
+def gridsearch_params(MLA_compare, X_train, y_train, top):
     """
     This function will return the best parameters for a model as a dictionary
     """
+    best_classifiers = MLA_compare['MLA Name'].values[:top]
+    best_cls_ind = MLA_compare['MLA Name'].index[:top]
+
     cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8, random_state=39)
-    best_classifiers = MLA_compare['MLA Name'].values[:3]
-    best_cls_ind = MLA_compare['MLA Name'].index[:3]
     best_params_dict = {'cls': best_classifiers, 'param': [], 'score': []}
     start_total = time()
 
     for ind, clf in zip(best_cls_ind, best_classifiers):
         start = time()
         param = grid_param[ind]
-        best_search = model_selection.GridSearchCV(estimator=MLA[clf], param_grid=param, cv=cv_split, scoring='roc_auc')
+        estimator = MLA[clf]
+        best_search = model_selection.GridSearchCV(estimator=estimator,
+                                                   param_grid=param,
+                                                   cv=cv_split,
+                                                   scoring='roc_auc')
+
         best_search.fit(X_train, y_train)
         run = time() - start
         best_param = best_search.best_params_

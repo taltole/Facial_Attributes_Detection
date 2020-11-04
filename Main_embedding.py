@@ -9,13 +9,14 @@ import tensorflow as tf
 from tensorflow.keras.optimizers import RMSprop, Adam
 
 
-def main(label, exp=True):
+def main(label, cls=MLA, exp=True):
+
     # Start images processing and dataframe splitting
     trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...\nCreating Train, Test...')
 
     print(f'Train on {label} attribute')
-    train, test = trainer.data_preprocess(IND_FILE, label, 50, True, None)
+    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
     print('Done!')
 
     # Loading Base Model
@@ -29,13 +30,13 @@ def main(label, exp=True):
     #     model = basemodel.adding_toplayer(model)
 
     # Save embedding
-    print(f'\nSave embedding...')
+    print(f'\nSave Embedding...')
     X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
     X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
     data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
 
-    print('GridSearch find top Cls...')
-    df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, MLA)
+    print('GridSearch top Cls...')
+    df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, cls)
     print(df_cls.iloc[:, :-1])
     # name_best_cls = df_cls['MLA Name'].values[0]
 
@@ -44,19 +45,22 @@ def main(label, exp=True):
         plot_best_model(df_cls)
 
     # Optimizing
-    print('\nGridSearch Optimizing hyper_parameter...')
-    top_cls = gridsearch_params(df_cls, X_train, y_train)
-    # print(top_cls['param'], sep='\n')
+    if cls != 'xgb':
+        print('\nOptimizing Hyper Parameters...')
+        top_cls = gridsearch_params(df_cls, X_train, y_train, 3)
+        print('Final Test for Best Classifier...')
+        df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
+        print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
+        best_models = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
 
-    print('Final Test for best classifier...')
-    df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, 'xgb')
-    print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
-    best_models = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
+        cls = str(best_models).strip('[]')
+        cls_name = cls.split('(')[0]
+        print(f'Best Model:\n{cls}\n', '-'*50)
+        best_cls = cls
+    else:
+        df_top_cls = df_cls
+        cls_name = 'XGB'
 
-    cls = str(best_models).strip('[]')
-    cls_name = cls.split('(')[0]
-    print(f'Best Model:\n{cls}\n', '-'*50)
-    best_cls = cls
     y_pred = df_top_cls['MLA pred'].values[0]
 
     # Saving embedding and final results to file
@@ -84,10 +88,9 @@ def main(label, exp=True):
 
 
 if __name__ == '__main__':
-
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
     accessories_label = [l for l in cols if l.startswith("Wearing")]
     labels = accessories_label
     for label in labels:
-        main(label, True)
+        main(label, 'xgb', True)

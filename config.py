@@ -37,6 +37,7 @@ if os.getcwd().startswith('/Users/tal'):
     WEIGHT_PATH = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/Other/Weights'
     IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'
     IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
+    PATH_JSON = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/json'
 elif os.getcwd().startswith('/Users/Sheryl'):
     IMAGE_PATH = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/face_att_sheryl'
     IND_FILE = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/files_list_sheryl.csv'
@@ -44,7 +45,7 @@ elif os.getcwd().startswith('/Users/Sheryl'):
 else:
     IMAGE_PATH = '/home/ubuntu/sheryl/S3/facial-attributes-itc/face_att_sheryl'
     IND_FILE = '/home/ubuntu/sheryl/S3/facial-attributes-itc/files_list_sheryl.csv'
-    WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weight'
+    WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weights'
     MODEL_PATH = '/home/ubuntu/Facial_Attributes_Detection/'
 
 

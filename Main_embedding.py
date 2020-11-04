@@ -15,7 +15,7 @@ def main(label, exp=True):
     print('Reading File...\nCreating Train, Test...')
 
     print(f'Train on {label} attribute')
-    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
+    train, test = trainer.data_preprocess(IND_FILE, label, 50, True, None)
     print('Done!')
 
     # Loading Base Model
@@ -29,7 +29,7 @@ def main(label, exp=True):
     # if model_name == 'vggface':
     #     model = basemodel.adding_toplayer(model)
 
-    #Save embedding
+    # Save embedding
     print(f'\nSave embedding...')
     X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
     X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)

@@ -27,6 +27,63 @@
   <component name="ChangeListManager">
     <list default="true" id="0ad8cd87-9763-479a-a6d8-4aa396ce03c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Summarize.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Summarize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmBlack_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmBlack_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmBlond_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmBlond_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmBrown_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmBrown_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmEyeglasses" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmEyeglasses" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmGray_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmGray_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmReceding_Hairline" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmReceding_Hairline" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmStraight_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmStraight_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmWavy_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmWavy_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmWearing_Earrings" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmWearing_Earrings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmWearing_Hat" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmWearing_Hat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmWearing_Lipstick" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmWearing_Lipstick" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmWearing_Necklace" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmWearing_Necklace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_cmWearing_Necktie" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2_cmWearing_Necktie" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crBlack_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crBlack_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crBlond_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crBlond_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crBrown_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crBrown_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crEyeglasses" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crEyeglasses" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crGray_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crGray_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crReceding_Hairline" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crReceding_Hairline" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crStraight_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crStraight_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crWavy_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crWavy_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crWearing_Earrings" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crWearing_Earrings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crWearing_Hat" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crWearing_Hat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crWearing_Lipstick" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crWearing_Lipstick" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crWearing_Necklace" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crWearing_Necklace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/MobileNetV2_crWearing_Necktie" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2_crWearing_Necktie" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmBlack_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmBlack_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmBlond_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmBlond_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmBrown_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmBrown_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmEyeglasses" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmEyeglasses" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmGray_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmGray_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmReceding_Hairline" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmReceding_Hairline" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmStraight_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmStraight_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmWavy_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmWavy_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmWearing_Earrings" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmWearing_Earrings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmWearing_Hat" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmWearing_Hat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmWearing_Lipstick" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmWearing_Lipstick" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmWearing_Necklace" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmWearing_Necklace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_cmWearing_Necktie" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cm/vgg19_cmWearing_Necktie" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crBlack_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crBlack_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crBlond_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crBlond_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crBrown_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crBrown_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crEyeglasses" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crEyeglasses" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crGray_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crGray_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crReceding_Hairline" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crReceding_Hairline" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crStraight_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crStraight_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crWavy_Hair" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crWavy_Hair" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crWearing_Earrings" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crWearing_Earrings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crWearing_Hat" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crWearing_Hat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crWearing_Lipstick" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crWearing_Lipstick" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crWearing_Necklace" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crWearing_Necklace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/vgg19_crWearing_Necktie" beforeDir="false" afterPath="$PROJECT_DIR$/csv/cr/vgg19_crWearing_Necktie" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jsoner.py" beforeDir="false" afterPath="$PROJECT_DIR$/jsoner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requierments.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requierments.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,12 +123,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/csv/cr" />
+      <recent name="$PROJECT_DIR$/csv/cm" />
       <recent name="$PROJECT_DIR$/Classes" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/deepface" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Main_embedding">
+  <component name="RunManager" selected="Python.jsoner">
     <configuration name="BaseCls" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Facial_Attributes_Detection" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -200,8 +259,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Main_embedding" />
         <item itemvalue="Python.jsoner" />
+        <item itemvalue="Python.Main_embedding" />
         <item itemvalue="Python.BaseCls" />
         <item itemvalue="Python.Main" />
         <item itemvalue="Python.Train (2)" />
@@ -264,53 +323,53 @@
       <screen x="-1077" y="-1417" width="3440" height="1417" />
     </state>
     <state x="230" y="-1212" key="CommitChangelistDialog2/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604224664686" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.bottom" timestamp="1604499558052">
+    <state width="1703" height="252" key="GridCell.Tab.0.bottom" timestamp="1604503909972">
       <screen x="-1077" y="-1417" width="3440" height="1417" />
     </state>
     <state width="1413" height="313" key="GridCell.Tab.0.bottom/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604434594976" />
     <state width="1413" height="183" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1604443088683" />
     <state width="1212" height="1360" key="GridCell.Tab.0.bottom/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245226" />
     <state width="1440" height="753" key="GridCell.Tab.0.bottom/0.23.1440.810@0.23.1440.810" timestamp="1604418988972" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.bottom/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604499558052" />
+    <state width="1703" height="252" key="GridCell.Tab.0.bottom/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604503909972" />
     <state width="1413" height="164" key="GridCell.Tab.0.bottom/0.23.1440.812/-1077.-1417.3440.1417@0.23.1440.812" timestamp="1604314206425" />
     <state width="1413" height="210" key="GridCell.Tab.0.bottom/0.23.1440.812@0.23.1440.812" timestamp="1603653456642" />
     <state width="1942" height="410" key="GridCell.Tab.0.bottom/0.23.1440.813/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604336802127" />
     <state width="1413" height="336" key="GridCell.Tab.0.bottom/0.23.1440.877/-1077.-1417.3440.1345@-1077.-1417.3440.1345" timestamp="1604227621424" />
     <state width="1212" height="1360" key="GridCell.Tab.0.bottom/0.23.1440.877/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604486444093" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.center" timestamp="1604499558051">
+    <state width="1703" height="252" key="GridCell.Tab.0.center" timestamp="1604503909971">
       <screen x="-1077" y="-1417" width="3440" height="1417" />
     </state>
     <state width="1413" height="313" key="GridCell.Tab.0.center/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604434594975" />
     <state width="1413" height="183" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1604443088678" />
     <state width="1212" height="1360" key="GridCell.Tab.0.center/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245225" />
     <state width="1440" height="753" key="GridCell.Tab.0.center/0.23.1440.810@0.23.1440.810" timestamp="1604418988971" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.center/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604499558051" />
+    <state width="1703" height="252" key="GridCell.Tab.0.center/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604503909971" />
     <state width="1413" height="164" key="GridCell.Tab.0.center/0.23.1440.812/-1077.-1417.3440.1417@0.23.1440.812" timestamp="1604314206423" />
     <state width="1413" height="210" key="GridCell.Tab.0.center/0.23.1440.812@0.23.1440.812" timestamp="1603653456641" />
     <state width="1942" height="410" key="GridCell.Tab.0.center/0.23.1440.813/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604336802126" />
     <state width="1413" height="336" key="GridCell.Tab.0.center/0.23.1440.877/-1077.-1417.3440.1345@-1077.-1417.3440.1345" timestamp="1604227621423" />
     <state width="1212" height="1360" key="GridCell.Tab.0.center/0.23.1440.877/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604486444092" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.left" timestamp="1604499558050">
+    <state width="1703" height="252" key="GridCell.Tab.0.left" timestamp="1604503909971">
       <screen x="-1077" y="-1417" width="3440" height="1417" />
     </state>
     <state width="1413" height="313" key="GridCell.Tab.0.left/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604434594974" />
     <state width="1413" height="183" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1604443088673" />
     <state width="1212" height="1360" key="GridCell.Tab.0.left/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245225" />
     <state width="1440" height="753" key="GridCell.Tab.0.left/0.23.1440.810@0.23.1440.810" timestamp="1604418988969" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.left/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604499558050" />
+    <state width="1703" height="252" key="GridCell.Tab.0.left/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604503909971" />
     <state width="1413" height="164" key="GridCell.Tab.0.left/0.23.1440.812/-1077.-1417.3440.1417@0.23.1440.812" timestamp="1604314206421" />
     <state width="1413" height="210" key="GridCell.Tab.0.left/0.23.1440.812@0.23.1440.812" timestamp="1603653456641" />
     <state width="1942" height="410" key="GridCell.Tab.0.left/0.23.1440.813/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604336802126" />
     <state width="1413" height="336" key="GridCell.Tab.0.left/0.23.1440.877/-1077.-1417.3440.1345@-1077.-1417.3440.1345" timestamp="1604227621423" />
     <state width="1212" height="1360" key="GridCell.Tab.0.left/0.23.1440.877/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604486444090" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.right" timestamp="1604499558052">
+    <state width="1703" height="252" key="GridCell.Tab.0.right" timestamp="1604503909972">
       <screen x="-1077" y="-1417" width="3440" height="1417" />
     </state>
     <state width="1413" height="313" key="GridCell.Tab.0.right/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604434594975" />
     <state width="1413" height="183" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1604443088679" />
     <state width="1212" height="1360" key="GridCell.Tab.0.right/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245226" />
     <state width="1440" height="753" key="GridCell.Tab.0.right/0.23.1440.810@0.23.1440.810" timestamp="1604418988971" />
-    <state width="1180" height="1360" key="GridCell.Tab.0.right/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604499558052" />
+    <state width="1703" height="252" key="GridCell.Tab.0.right/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604503909972" />
     <state width="1413" height="164" key="GridCell.Tab.0.right/0.23.1440.812/-1077.-1417.3440.1417@0.23.1440.812" timestamp="1604314206423" />
     <state width="1413" height="210" key="GridCell.Tab.0.right/0.23.1440.812@0.23.1440.812" timestamp="1603653456642" />
     <state width="1942" height="410" key="GridCell.Tab.0.right/0.23.1440.813/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604336802127" />

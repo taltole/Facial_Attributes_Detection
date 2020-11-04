@@ -50,10 +50,10 @@ def find_best_model(PATH_JSON, label='All'):
     plt.title('Validation Loss.')
     plt.show()
 
+
 if __name__ == '__main__':
-    PATH_JSON = '/Users/Sheryl/PycharmProjects/Facial_Attributes_Detection_Git/json'
     label = 'Hat'
-    find_best_model(PATH_JSON, label)
+    find_best_model(PATH_JSON)
 
 # err = []
 # for n in name:

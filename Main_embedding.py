@@ -9,59 +9,86 @@ import tensorflow as tf
 from tensorflow.keras.optimizers import RMSprop, Adam
 
 
-def main():
+def main(label, exp=True):
     # Start images processing and dataframe splitting
     trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...\nCreating Train, Test...')
-    label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
-    print(label)
-    train, test = trainer.data_preprocess(IND_FILE, label, 40, True, None)
+
+    print(f'Train on {label} attribute')
+    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
     print('Done!')
 
     # Loading Base Model
     print(f'\nLoading Model...')
-    model_list = ['vgg19', 'MobileNetV2', 'vgg_face', 'facenet', 'emotion', 'age', 'gender', 'race']
-    print('Pick a Model: vgg19, MobileNetV2, vgg_face, facenet, emotion, age, gender, race')
+    model_list = ['vgg19', 'MobileNetV2', 'vggface', 'facenet', 'emotion', 'age', 'gender', 'race']
     model_name = 'facenet'  # input('Choose one model to load: )
 
     # Training
     basemodel = BaseModel(model_name)
     model = basemodel.load_model(True)
+    # if model_name == 'vggface':
+    #     model = basemodel.adding_toplayer(model)
 
+    #Save embedding
     print(f'\nSave embedding...')
-    feature_train, label_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
-    feature_test, label_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
+    X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
+    X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
+    data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
 
     print('Running Grid Search on Cls...')
-    df = gridsearch_cls(feature_train, label_train, feature_test, label_test)
-    print(df)
+    df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, MLA)
+    print(df_cls.iloc[:, :-1])
+    # name_best_cls = df_cls['MLA Name'].values[0]
 
-    # Plot best model
+    # Plot top classifier
+    if not exp:
+        plot_best_model(df_cls)
+
+    # Optimizing
+    print('\nStarting hyper_parameters GridSearch...')
+    top_cls = gridsearch_params(df_cls, X_train, y_train)
+    # print(top_cls['param'], sep='\n')
+
+    print('Final Test for best classifier...')
+    df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
+    print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
+    best_models = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
+
+    cls = str(best_models).strip('[]')
+    cls_name = cls.split('(')[0]
+    print(f'Best Model:\n{cls}\n', '-'*50)
+    best_cls = cls
+    y_pred = df_top_cls['MLA pred'].values[0]
+
+    # Saving embedding and final results to file
+    label_emb = pd.DataFrame({'y_test': pd.Series(y_test), 'y_pred': pd.Series(y_pred)})
+    label_emb.to_csv('csv/data/label_'+model_name+'_'+label+'_'+cls_name+'.csv')
+    data_emb.to_csv('csv/data/data_'+model_name+'_'+label+'_'+cls_name+'.csv')
+    df_top_cls.to_csv('csv/data/sum_'+model_name+'_'+label+'_top3.csv')
+
     # plot confusion matrix and acc score
-    i = 1
-    plt.figure(figsize=(18, 8))
-    ax = plt.subplot(1, 2, i+1)
-    cm = confusion_matrix(label_test, df['MLA pred'].values[0]) / len(label_test)
-    accuracy = accuracy_score(label_test, df['MLA pred'].values[0])
-    ax = sns.heatmap(cm, annot=True, cmap='Wistia', ax=ax)
+    if not exp:
+        ax = plt.subplot(1, 1, 1)
+        cm = confusion_matrix(y_test, y_pred) / len(y_test)
+        accuracy = accuracy_score(y_test, df_top_cls['MLA pred'].values[0])
+        sns.heatmap(cm, annot=True, cmap='Wistia', ax=ax)
+        plt.title(f'{cls}\n\nAccuracy: {accuracy * 100:.2f}')
+        plt.ylabel('True')
+        plt.xlabel('Predicted')
+        plt.show()
 
-    name_best_model = df['MLA Name'].values[0]
-    plt.title(f'{name_best_model}\n\nAccuracy: {accuracy * 100:.2f}')
-    plt.ylabel('True')
-    plt.xlabel('Predicted')
-    # ax.set_xticklabels(labels)
-    # ax.set_yticklabels(labels)
+    # print("Checking XGB best params:")
+    # check_xgb(feature_train, label_train)
 
-    i += 1
-    ax = plt.subplot(1, 2, i-1)
-    sns.barplot(x='MLA Test Accuracy Mean', y='MLA Name', data=df, color='m', ax=ax)
-    plt.title('Machine Learning Algorithm Accuracy Score \n')
-    plt.xlabel('Accuracy Score (%)')
-    plt.ylabel('Algorithm')
-    name_best_model = df['MLA Name'].values[0]
-    plt.show()
-    print(name_best_model)
+    # model = eval(cls)()
+    # get_model_results(model, X_train, X_test, y_train, y_test)
 
 
 if __name__ == '__main__':
-    main()
+
+    df = pd.read_csv(IND_FILE)
+    cols = df.columns.tolist()
+    accessories_label = [l for l in cols if l.startswith("Wearing")]
+    labels = accessories_label
+    for label in labels:
+        main(label, True)

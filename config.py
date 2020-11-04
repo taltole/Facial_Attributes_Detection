@@ -40,6 +40,7 @@ if os.getcwd().startswith('/Users/tal'):
 elif os.getcwd().startswith('/Users/Sheryl'):
     IMAGE_PATH = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/face_att_sheryl'
     IND_FILE = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/files_list_sheryl.csv'
+    WEIGHT_PATH = '/Users/Sheryl/PycharmProjects/Facial_Attributes_Detection_BEFORE/Weights'
 else:
     IMAGE_PATH = '/home/ubuntu/sheryl/S3/facial-attributes-itc/face_att_sheryl'
     IND_FILE = '/home/ubuntu/sheryl/S3/facial-attributes-itc/files_list_sheryl.csv'

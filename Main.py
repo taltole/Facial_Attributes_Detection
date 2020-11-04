@@ -11,7 +11,7 @@ def main(label):
     print('Reading File...')
     # label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
     print(f'Preparing data for class:\t{label}\nCreating Train, Test...')
-    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, 224)
+    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
     print('Done!')
 
     # print(train['image'].shape)
@@ -26,8 +26,8 @@ def main(label):
 
     # Loading Base Model
     print(f'\n\nLoading Model...')
-    model_list = ['vgg19', 'MobileNetV2', 'vggface', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
-    print('Pick a Model: vgg19, MobileNetV2, vggface, facenet, emotion, age, gender, race')
+    model_list = ['vgg19', 'vgg16' ,'MobileNetV2', 'vggface', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
+    print('Pick a Model: vgg19, vgg16, ResNet50, MobileNetV2,  vggface, facenet, emotion, age, gender, race')
 
     # Looping over models
     for model_name in model_list:
@@ -45,7 +45,7 @@ def main(label):
         if training:
             model = basemodel.load_model()
             model = basemodel.adding_toplayer(model)
-            history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch,
+            history, model = trainer.start_train(model, model_file, train_data, valid_data, epoch, multi=False,
                                                  callback=None,
                                                  optimize=None)
             print('Loading best weights...')
@@ -55,6 +55,7 @@ def main(label):
             # Saving History
             with open(json_path, 'w') as f:
                 json.dump(history.history, f)
+            history = json.load(open(json_path))
         else:
             history = json.load(open(json_path))
             model = basemodel.load_model(False)
@@ -68,7 +69,7 @@ def main(label):
             model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
 
         # Evaluate the network on valid data
-        # Prediction.evaluate_model(model, valid_data)
+        Prediction.evaluate_model(model, valid_data)
 
         # Predict on test data
         # y_pred = Prediction.test_prediction(model, test_data, train_data)
@@ -80,14 +81,15 @@ def main(label):
         #metrics.acc_loss_graph()
         metrics.classification_report()
 
-       # Inference
-    #labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
-    #pos, neg = f'With {label}', f'W/O {label}'
-    #Prediction.predict_label(model, labels, pos, neg)
-    #file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
-    #Prediction.predict_file(model, file, pos, neg)
+        # Inference
+    # labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
+    # pos, neg = f'With {label}', f'W/O {label}'
+    # Prediction.predict_label(model, labels, pos, neg)
+    # file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
+    # Prediction.predict_file(model, file, pos, neg)
 
-    #model.load_weights(os.path.join(MODEL_PATH, model_file))
+
+
 """
     # layer_name = 'my_dense'
     # intermediate_layer_model = Model(inputs=model.input,
@@ -136,8 +138,8 @@ if __name__ == '__main__':
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
     accessories_label = [l for l in cols if l.startswith("Wearing")]
-    hair_label = [l for l in cols if "Hair" in l and not l.startswith('0')]
-    labels = [*accessories_label, *hair_label]
+    # hair_label = [l for l in cols if "Hair" in l and not l.startswith('0')]
+    labels = accessories_label
 
     for label in labels:
         main(label)

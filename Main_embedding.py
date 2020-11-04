@@ -29,6 +29,7 @@ def main(label, exp=True):
     # if model_name == 'vggface':
     #     model = basemodel.adding_toplayer(model)
 
+    #Save embedding
     print(f'\nSave embedding...')
     X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
     X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)

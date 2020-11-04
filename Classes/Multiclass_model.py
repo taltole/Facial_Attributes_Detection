@@ -8,9 +8,17 @@ from tensorflow.keras.applications.resnet50 import preprocess_input as Preproces
 
 class Multiclass_Model:
     def __init__(self, index_file):
+        """
+        :param index_file: path to the csv file
+        """
         self.index_file = index_file
 
     def data_preprocess_multi(self, label, nb_data):
+        """
+        :param label: label name
+        :param nb_data: number of data needed for this label
+        This function takes a specific number of sample for a label and return train and test dataset
+        """
         # for color in list(dict_color.keys()):
         df = pd.read_csv(self.index_file, usecols=[label])
         df_label = df[(df[label] != 0) & (df[label] != '0')][:nb_data]
@@ -28,11 +36,14 @@ class Multiclass_Model:
         return train, test
 
     def create_dataframe_multi(self, label_list, nb_data):
+        """
+        :param label_list: list
+        :param nb_data: number of sample for each label
+        This function creates a dataframe with all the labels
+        """
         test_list = []
         train_list = []
         for element in label_list:
-            train_name = 'train_' + element
-            test_name = 'test_' + element
             train_name, test_name = self.data_preprocess_multi(element, nb_data)
             test_list.append(test_name)
             train_list.append(train_name)
@@ -52,13 +63,14 @@ class Multiclass_Model:
         return train, test
 
     @staticmethod
-    def generator_splitter_multi(model_name, train, test, imagepath, preprocessing=None):
+    def generator_splitter_multi(model_name, train, test, imagepath):
         """
         function uses the `ImageDataGenerator` class
         # load our dataset as an iterator (not keeping it all in memory at once).
-        :param train:
-        :param test:
-        :param imagepath:
+        :param model_name: model name
+        :param train: data set
+        :param test: data set
+        :param imagepath: path to the image folder
         :return: data split for train val and test
         """
         # Train Set
@@ -71,6 +83,8 @@ class Multiclass_Model:
             preprocessing = preprocess_input_VGG16
         elif model_name == 'ResNet50':
             preprocessing = Preprocess_RESNET50
+        else:
+            preprocessing = None
         train['label'] = train['label'].astype(str)
         img_gen = ImageDataGenerator(validation_split=0.2)
 

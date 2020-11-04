@@ -9,6 +9,15 @@ from xgboost import XGBClassifier
 from time import time
 from sklearn.metrics import accuracy_score, confusion_matrix
 from config import *
+import numpy as np
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Conv2D, MaxPooling2D
+from keras.optimizers import SGD
+from keras.layers.normalization import BatchNormalization
+from keras.layers import LeakyReLU
+
 
 # Hyper_parameter Tune with GridSearchCV:
 grid_n_estimator = [10, 50, 100, 300]
@@ -164,7 +173,7 @@ grid_param = [
 # index through MLA and save performance to table
 def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     """
-    function takes train, test data set and run gridsearch over basic classifier from MLA dict
+    This function takes train and test data sets sand run gridsearch over basic classifier from MLA dict
     """
     cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8, random_state=39)
 
@@ -199,6 +208,9 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
 
 
 def gridsearch_params(MLA_compare, X_train, y_train):
+    """
+    This function will return the best parameters for a model as a dictionary
+    """
     cv_split = model_selection.ShuffleSplit(n_splits=5, test_size=.2, train_size=.8, random_state=39)
     best_classifiers = MLA_compare['MLA Name'].values[:3]
     best_cls_ind = MLA_compare['MLA Name'].index[:3]
@@ -236,7 +248,7 @@ def plot_best_model(df):
 
 def find_best_threshold(thresholds, fpr, tpr):
     """
-    find the best threshold from the roc curve. by finding the threshold for the point which
+    This function is finding the best threshold from the roc curve. By finding the threshold for the point which
     is closest to (fpr=0,tpr=1)
     """
     fpr_tpr = pd.DataFrame({'thresholds': thresholds, 'fpr': fpr, 'tpr': tpr})
@@ -298,14 +310,6 @@ def check_xgb(X_train, y_train):
     for param_name in sorted(best_parameters):
         print("%s: %r" % (param_name, score))
 
-import numpy as np
-import keras
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D
-from keras.optimizers import SGD
-from keras.layers.normalization import BatchNormalization
-from keras.layers import LeakyReLU
 
 """
 model = Sequential()

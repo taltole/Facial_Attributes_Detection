@@ -1,43 +1,59 @@
 import io
 from config import *
 
-PATH_JSON = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/json'
-sum_dict = {'name': [], 'result': [], 'best': {'loss': [], 'val_loss': [], 'accuracy': [], 'val_accuracy': []}}
-for file in sorted(os.listdir(PATH_JSON)):
-    sum_dict['name'].append(file.split('.')[0])
-    json_path = os.path.join(PATH_JSON, file)
-    history = json.load(io.open(json_path))
-    sum_dict['result'].append(history)
 
-    # finding best params
-    for k, v in history.items():
-        if k.endswith('loss'):
-            sum_dict['best'][k].append(min(v))
-        else:
-            sum_dict['best'][k].append(max(v))
+def find_best_model(PATH_JSON, label='All'):
+    """
+    :param PATH_JSON: path to the forder that contains all the json files
+    :param label: label to consider to find the best model. The default value 'All' will
+                return the best model in general for all attributes
+    """
+    sum_dict = {'name': [], 'result': [], 'best': {'loss': [], 'val_loss': [], 'accuracy': [], 'val_accuracy': []}}
+    label = label.lower()
+    if label == 'all':
+        list_file = [file for file in os.listdir(PATH_JSON)]
+    else:
+        list_file = [file for file in os.listdir(PATH_JSON) if label in file.lower()]
+    for file in sorted(list_file):
+        sum_dict['name'].append(file.split('.')[0])
+        json_path = os.path.join(PATH_JSON, file)
+        history = json.load(io.open(json_path))
+        sum_dict['result'].append(history)
 
-df = pd.DataFrame({'name': sum_dict['name'], 'loss': sum_dict['best']['loss'], 'val_loss': sum_dict['best']['val_loss'],
-                   'accuracy': sum_dict['best']['accuracy'], 'val_accuracy': sum_dict['best']['val_accuracy']})
+        # finding best params
+        for k, v in history.items():
+            if k.endswith('loss'):
+                sum_dict['best'][k].append(min(v))
+            else:
+                sum_dict['best'][k].append(max(v))
 
-name = df['name'].apply(lambda x: x.split('_')[0]).unique()
-means_acc, means_loss, means_vloss, means_vacc = [], [], [], []
-means = [means_acc, means_loss, means_vloss, means_vacc]
+    df = pd.DataFrame({'name': sum_dict['name'], 'loss': sum_dict['best']['loss'], 'val_loss': sum_dict['best']['val_loss'],
+                       'accuracy': sum_dict['best']['accuracy'], 'val_accuracy': sum_dict['best']['val_accuracy']})
 
-for n in name:
-    means_acc.append(df['accuracy'][df['name'].str.startswith(n)].mean())
-    means_vacc.append(df['val_accuracy'][df['name'].str.startswith(n)].mean())
-    means_loss.append(df['loss'][df['name'].str.startswith(n)].mean())
-    means_vloss.append(df['val_loss'][df['name'].str.startswith(n)].mean())
-i = 1
-plt.figure(figsize=(15, 5))
-plt.subplot(1, 2, i)
-sns.barplot(name, means_vacc, ci="sd")
-plt.title('Validation Acc.')
-i += 1
-plt.subplot(1, 2, i)
-sns.barplot(name, means_vloss, data=df, ci="sd")
-plt.title('Validation Loss.')
-plt.show()
+    name = df['name'].apply(lambda x: x.split('_')[0] if x.count('_') <= 2 else '_'.join(x.split('_')[:2])).unique()
+    means_acc, means_loss, means_vloss, means_vacc = [], [], [], []
+    means = [means_acc, means_loss, means_vloss, means_vacc]
+
+    for n in name:
+        means_acc.append(df['accuracy'][df['name'].str.startswith(n)].mean())
+        means_vacc.append(df['val_accuracy'][df['name'].str.startswith(n)].mean())
+        means_loss.append(df['loss'][df['name'].str.startswith(n)].mean())
+        means_vloss.append(df['val_loss'][df['name'].str.startswith(n)].mean())
+    i = 1
+    plt.figure(figsize=(15, 5))
+    plt.subplot(1, 2, i)
+    sns.barplot(name, means_vacc, ci="sd")
+    plt.title('Validation Acc.')
+    i += 1
+    plt.subplot(1, 2, i)
+    sns.barplot(name, means_vloss, data=df, ci="sd")
+    plt.title('Validation Loss.')
+    plt.show()
+
+if __name__ == '__main__':
+    PATH_JSON = '/Users/Sheryl/PycharmProjects/Facial_Attributes_Detection_Git/json'
+    label = 'Hat'
+    find_best_model(PATH_JSON, label)
 
 # err = []
 # for n in name:

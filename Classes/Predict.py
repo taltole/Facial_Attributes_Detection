@@ -10,12 +10,23 @@ from tensorflow.keras.applications.resnet50 import preprocess_input as Preproces
 class Prediction:
     @staticmethod
     def evaluate_model(model, valid_data):
+        """
+        :param model: model
+        :param valid_data: validation data set
+        Evalutates the network on the validation set
+        """
         print('Evaluating the network ...')
         loss, acc = model.evaluate(valid_data)
         print(f"Validation Loss:\t{round(loss, 3)}\nValidation Acc.:\t{round(acc, 3)}")
 
     @staticmethod
     def test_prediction(model, test_data, train_data):
+        """
+        :param model: model
+        :param test_data: test data set
+        :param train_data: train data set
+        return: predictions on the test set
+        """
         test_data.reset()
         STEP_SIZE_TEST = test_data.n // test_data.batch_size
         print('Starting prediction...')
@@ -30,6 +41,7 @@ class Prediction:
         y_pred = [labels[k] for k in predicted_class_indices]
         return y_pred
 
+# ----------------------------------------------------------------------------------
     # Inference
     @staticmethod
     def predict_label(model, labels, pos, neg):

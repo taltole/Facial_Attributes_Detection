@@ -23,18 +23,19 @@ def main(label, exp=True):
     model_list = ['vgg19', 'MobileNetV2', 'vggface', 'facenet', 'emotion', 'age', 'gender', 'race']
     model_name = 'facenet'  # input('Choose one model to load: )
 
+    # Training
     basemodel = BaseModel(model_name)
     model = basemodel.load_model(True)
     # if model_name == 'vggface':
     #     model = basemodel.adding_toplayer(model)
 
-    # Save embedding
+    #Save embedding
     print(f'\nSave embedding...')
     X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
     X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
     data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
 
-    print('GridSearch find top Cls...')
+    print('Run Grid Search on Cls...')
     df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, MLA)
     print(df_cls.iloc[:, :-1])
     # name_best_cls = df_cls['MLA Name'].values[0]
@@ -44,7 +45,7 @@ def main(label, exp=True):
         plot_best_model(df_cls)
 
     # Optimizing
-    print('\nGridSearch Optimizing hyper_parameter...')
+    print('\nStarting hyper_parameters GridSearch...')
     top_cls = gridsearch_params(df_cls, X_train, y_train)
     # print(top_cls['param'], sep='\n')
 

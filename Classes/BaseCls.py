@@ -164,7 +164,9 @@ grid_param = [
         'subsample': [0.8],
         'colsample_bytree': [0.7],
         'missing': [-999],
-        'n_jobs': [-1]
+        'n_jobs': [-1],
+	'tree_method': 'gpu_hist', 
+	'gpu_id': [0]
 
     }]
 ]
@@ -185,6 +187,8 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     MLA_predict = y_test.copy()
     if model == MLA:
         algo = model.values()
+    elif model == 'xgb':
+        algo = MLA[XGBClassifier().__class__.__name__]
     else:
         algo = model['param']
     for alg in algo:

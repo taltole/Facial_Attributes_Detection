@@ -44,7 +44,7 @@ elif os.getcwd().startswith('/Users/Sheryl'):
 else:
     IMAGE_PATH = '/home/ubuntu/sheryl/S3/facial-attributes-itc/face_att_sheryl'
     IND_FILE = '/home/ubuntu/sheryl/S3/facial-attributes-itc/files_list_sheryl.csv'
-    WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weight'
+    WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weights'
     MODEL_PATH = '/home/ubuntu/Facial_Attributes_Detection/'
 
 

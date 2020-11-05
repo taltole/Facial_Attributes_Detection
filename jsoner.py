@@ -2,21 +2,21 @@ import io
 from config import *
 
 
-def find_best_model(PATH_JSON, label='All'):
+def find_best_model(path, label='All'):
     """
-    :param PATH_JSON: path to the forder that contains all the json files
+    :param path: path to the forder that contains all the json files
     :param label: label to consider to find the best model. The default value 'All' will
                 return the best model in general for all attributes
     """
     sum_dict = {'name': [], 'result': [], 'best': {'loss': [], 'val_loss': [], 'accuracy': [], 'val_accuracy': []}}
     label = label.lower()
     if label == 'all':
-        list_file = [file for file in os.listdir(PATH_JSON)]
+        list_file = [file for file in os.listdir(path)]
     else:
-        list_file = [file for file in os.listdir(PATH_JSON) if label in file.lower()]
+        list_file = [file for file in os.listdir(path) if label in file.lower()]
     for file in sorted(list_file):
         sum_dict['name'].append(file.split('.')[0])
-        json_path = os.path.join(PATH_JSON, file)
+        json_path = os.path.join(path, file)
         history = json.load(io.open(json_path))
         sum_dict['result'].append(history)
 
@@ -27,8 +27,9 @@ def find_best_model(PATH_JSON, label='All'):
             else:
                 sum_dict['best'][k].append(max(v))
 
-    df = pd.DataFrame({'name': sum_dict['name'], 'loss': sum_dict['best']['loss'], 'val_loss': sum_dict['best']['val_loss'],
-                       'accuracy': sum_dict['best']['accuracy'], 'val_accuracy': sum_dict['best']['val_accuracy']})
+    df = pd.DataFrame(
+        {'name': sum_dict['name'], 'loss': sum_dict['best']['loss'], 'val_loss': sum_dict['best']['val_loss'],
+         'accuracy': sum_dict['best']['accuracy'], 'val_accuracy': sum_dict['best']['val_accuracy']})
 
     name = df['name'].apply(lambda x: x.split('_')[0] if x.count('_') <= 2 else '_'.join(x.split('_')[:2])).unique()
     means_acc, means_loss, means_vloss, means_vacc = [], [], [], []

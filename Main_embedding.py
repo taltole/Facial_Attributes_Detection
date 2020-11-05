@@ -93,4 +93,4 @@ if __name__ == '__main__':
     accessories_label = [l for l in cols if l.startswith("Wearing")]
     labels = accessories_label
     for label in labels:
-        main(label, 'xgb', True)
+        main(label, MLA, True)

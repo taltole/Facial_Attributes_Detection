@@ -10,13 +10,8 @@ from time import time
 from sklearn.metrics import accuracy_score, confusion_matrix
 from config import *
 import numpy as np
-import keras
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D
-from keras.optimizers import SGD
-from keras.layers.normalization import BatchNormalization
-from keras.layers import LeakyReLU
+# from tune_sklearn import TuneGridSearchCV
+
 
 # Hyper_parameter Tune with GridSearchCV:
 grid_n_estimator = [10, 50, 100, 300]

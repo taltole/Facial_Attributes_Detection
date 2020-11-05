@@ -1,0 +1,2 @@
+,MLA Name,MLA Test Accuracy Mean,Run Time,MLA pred
+0,XGBClassifier,0.8444446265360368,0.21458120346069337,['1.0' '1.0' '1.0' ... '0.0' '0.0' '0.0']

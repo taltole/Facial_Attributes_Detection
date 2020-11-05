@@ -47,7 +47,7 @@ def main(label, cls=MLA, exp=True):
     # Optimizing
     if cls != 'xgb':
         print('\nOptimizing Hyper Parameters...')
-        top_cls = gridsearch_params(df_cls, X_train, y_train, 3)
+        top_cls = gridsearch_params(df_cls, X_train, y_train, 1)
         print('Final Test for Best Classifier...')
         df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
         print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
@@ -65,9 +65,9 @@ def main(label, cls=MLA, exp=True):
 
     # Saving embedding and final results to file
     label_emb = pd.DataFrame({'y_test': pd.Series(y_test), 'y_pred': pd.Series(y_pred)})
-    label_emb.to_csv('csv/data/label_'+model_name+'_'+label+'_'+cls_name+'.csv')
-    data_emb.to_csv('csv/data/data_'+model_name+'_'+label+'_'+cls_name+'.csv')
-    df_top_cls.to_csv('csv/data/sum_'+model_name+'_'+label+'_top3.csv')
+    label_emb.to_csv(os.getcwd()+'/csv/data/label_'+model_name+'_'+label+'_'+cls_name+'.csv')
+    data_emb.to_csv(os.getcwd()+'/csv/data/data_'+model_name+'_'+label+'_'+cls_name+'.csv')
+    df_top_cls.to_csv(os.getcwd()+'/csv/data/sum_'+model_name+'_'+label+'_top3.csv')
 
     # plot confusion matrix and acc score
     if not exp:
@@ -90,7 +90,30 @@ def main(label, cls=MLA, exp=True):
 if __name__ == '__main__':
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
-    accessories_label = [l for l in cols if l.startswith("Wearing")]
-    labels = accessories_label
+    # accessories_label = [l for l in cols if l.startswith("Wearing")]
+    labels = ['Arched_Eyebrows',
+ 'Attractive',
+ 'Bags_Under_Eyes',
+ 'Bald',
+ 'Bangs',
+ 'Big_Lips',
+ 'Big_Nose',
+ 'Bushy_Eyebrows',
+ 'Chubby',
+ 'Double_Chin',
+ 'Eyeglasses',
+ 'Goatee',
+ 'Heavy_Makeup',
+ 'High_Cheekbones',
+ 'Mustache',
+ 'Narrow_Eyes',
+ 'No_Beard',
+ 'Oval_Face',
+ 'Pale_Skin',
+ 'Pointy_Nose',
+ 'Receding_Hairline',
+ 'Rosy_Cheeks',
+ 'Sideburns',
+ 'Smiling']
     for label in labels:
-        main(label, 'xgb', True)
+        main(label, MLA, True)

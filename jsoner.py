@@ -54,7 +54,7 @@ def find_best_model(path, label='All'):
 
 if __name__ == '__main__':
     label = 'Hat'
-    find_best_model(PATH_JSON)
+    find_best_model(PATH_JSON,label)
 
 # err = []
 # for n in name:

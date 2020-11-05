@@ -198,6 +198,14 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.config" />
+      <item itemvalue="Python.jsoner" />
+      <item itemvalue="Python.BaseCls" />
+      <item itemvalue="Python.Main_embedding" />
+      <item itemvalue="Python.Train (2)" />
+      <item itemvalue="Python.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Main_embedding" />

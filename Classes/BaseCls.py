@@ -26,11 +26,11 @@ grid_seed = [39]
 # Classifiers Models
 MLA = {
     # Ensemble Methods
-    ensemble.AdaBoostClassifier().__class__.__name__: ensemble.AdaBoostClassifier(),
-    ensemble.BaggingClassifier().__class__.__name__: ensemble.BaggingClassifier(),
-    ensemble.ExtraTreesClassifier().__class__.__name__: ensemble.ExtraTreesClassifier(),
-    ensemble.GradientBoostingClassifier().__class__.__name__: ensemble.GradientBoostingClassifier(),
-    ensemble.RandomForestClassifier().__class__.__name__: ensemble.RandomForestClassifier(),
+    #ensemble.AdaBoostClassifier().__class__.__name__: ensemble.AdaBoostClassifier(),
+    #ensemble.BaggingClassifier().__class__.__name__: ensemble.BaggingClassifier(),
+    #ensemble.ExtraTreesClassifier().__class__.__name__: ensemble.ExtraTreesClassifier(),
+    #ensemble.GradientBoostingClassifier().__class__.__name__: ensemble.GradientBoostingClassifier(),
+    #ensemble.RandomForestClassifier().__class__.__name__: ensemble.RandomForestClassifier(),
 
     # GLM
     linear_model.LogisticRegression().__class__.__name__: linear_model.LogisticRegression(),
@@ -40,13 +40,13 @@ MLA = {
     # naive_bayes.GaussianNB().__class__.__name__: naive_bayes.GaussianNB(),
 
     # Nearest Neighbor
-    neighbors.KNeighborsClassifier().__class__.__name__: neighbors.KNeighborsClassifier(),
+    #neighbors.KNeighborsClassifier().__class__.__name__: neighbors.KNeighborsClassifier(),
 
     # SVM
     svm.SVC().__class__.__name__: svm.SVC(),
 
     # XGB
-    XGBClassifier().__class__.__name__: XGBClassifier()
+    #XGBClassifier().__class__.__name__: XGBClassifier()
 }
 
 # Classifiers Models HyperParameters
@@ -135,7 +135,7 @@ grid_param = [
         # 'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
         'C': [1], #, 2, 3, 4, 5],  # default: 1.0
         'gamma': grid_ratio,  # default: auto
-        'decision_function_shape': ['ovo', 'ovr'],  # default:ovr
+        'decision_function_shape': ['ovo'], # 'ovr'],  # default:ovr
         'probability': [True],
         'random_state': grid_seed
 

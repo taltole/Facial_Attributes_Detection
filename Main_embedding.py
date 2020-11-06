@@ -45,9 +45,9 @@ def main(label, cls=MLA, exp=True):
         plot_best_model(df_cls)
 
     # Optimizing
-    if cls != 'xgb':
+    if cls not in ['xgb', 'svm']:
         print('\nOptimizing Hyper Parameters...')
-        top_cls = gridsearch_params(df_cls, X_train, y_train, 1)
+        top_cls = gridsearch_params(df_cls, X_train, y_train, 3)
         print('Final Test for Best Classifier...')
         df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
         print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
@@ -115,5 +115,4 @@ if __name__ == '__main__':
  'Rosy_Cheeks',
  'Sideburns',
  'Smiling']
-    for label in labels:
-        main(label, MLA, True)
+    main(labels[0], 'svm', True)

@@ -33,7 +33,7 @@ def find_best_model(path, label='All'):
 
     name = df['name'].apply(lambda x: x.split('_')[0] if x.count('_') <= 2 else '_'.join(x.split('_')[:2])).unique()
     means_acc, means_loss, means_vloss, means_vacc = [], [], [], []
-    means = [means_acc, means_loss, means_vloss, means_vacc]
+    # means = [means_acc, means_loss, means_vloss, means_vacc]
 
     for n in name:
         means_acc.append(df['accuracy'][df['name'].str.startswith(n)].mean())
@@ -52,29 +52,61 @@ def find_best_model(path, label='All'):
     plt.show()
 
 
+def summarize_classic_cls(csv_path, att, model):
+    acc_list = [i for i in os.listdir(csv_path) if i.startswith('sum')]
+    df_dict = pd.DataFrame()
+    for file in acc_list:
+        temp_df = pd.read_csv(os.path.join(csv_path, file))
+        name = file.split('_')[2:-1]
+        name = ['_'.join(name) if len(name) >= 2 else ''.join(name)]
+        temp_df.iloc[:, 0] = name
+        df_dict = df_dict.append(temp_df)
+
+    df_dict.rename(columns={'Unnamed: 0': 'Attribute', 'MLA Name': 'Classifier', 'MLA Test Accuracy Mean': 'Acc',
+                            'Run Time': 'Run_Time', 'MLA pred': 'y_pred'}, inplace=True)
+    df = df_dict.sort_values(by='Acc')
+    print(df)
+
+    #  Classifiers Comparison
+    if model is not None:
+        yaxis = df['Attribute'][df['Classifier'] == model]
+        xaxis = df['Acc'][df['Classifier'] == model].apply(lambda x: x.mean() if not isinstance(x, float) else x)
+        title = model.title() + ' Comparison'
+        # if att is not None:
+        #     return f"{model} Acc mean score for {att}:\t{np.where(((df['Classifier'] == model) & (df['Attribute'] == att)), [df['Acc'].mean() if not isinstance(df['Acc'].values, float) else df['Acc'].values])}"
+    else:
+        yaxis = df['Attribute']
+        xaxis = df['Acc']
+        title = 'Mean Acc Score Comparison'
+
+    #  Attribute Comparison
+    if att is not None:
+        yaxis = df['Classifier'][df['Attribute'] == att]
+        xaxis = df['Acc'][df['Attribute'] == att].apply(lambda x: x.mean() if not isinstance(x, float) else x)
+        title = att.title() + ' Comparison'
+        # if model is not None:
+            # return f"{att} Acc mean score for {model}:  " \
+            #        f"{np.where(((df['Classifier'] == model) & (df['Attribute'] == att)), df['Acc'].mean())}"
+    else:
+        yaxis = df['Attribute']
+        xaxis = df['Acc']
+        title = 'Mean Acc Score Comparison'
+    hue = df['Classifier'].unique()
+
+    # Plot
+    plt.figure(figsize=(15, 10))
+    plt.subplot(1, 1, 1)
+    sns.barplot(xaxis,
+                yaxis,
+                # hue=hue,
+                # hue=df['Classifier'].unique()v,
+                orient='h')
+    plt.title(title)
+    plt.xticks(np.arange(0, 1, 0.05))
+    plt.show()
+
+
 if __name__ == '__main__':
     label = 'Hat'
     find_best_model(PATH_JSON)
-
-# err = []
-# for n in name:
-#     means.append(df[df['name'].str.startswith(n), 1:].mean())
-#     err.append(df[df['name'].str.startswith(n), 1:].std())
-
-
-# for name in sum_dict['name']:
-#     plt.bar(name, sum_dict['best']['loss'])
-#     plt.show()
-
-# print(sum_dict['best'])
-# for name, value in sum_dict.items():
-#     min_loss = sum_dict[name]['result']
-#     print(min_loss)
-
-# Plot best model
-# sns.barplot(x=sum_dict['name'], y=sum_dict['best'].values(), color='m')
-# plt.title('Machine Learning Algorithm Accuracy Score \n')
-# plt.xlabel('Accuracy Score (%)')
-# plt.ylabel('Algorithm')
-# name_best_model = df['MLA Name'].values[0]
-# plt.show()
+    summarize_classic_cls(PATH_CSV, att=None, model=None)

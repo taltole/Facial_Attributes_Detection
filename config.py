@@ -38,6 +38,8 @@ if os.getcwd().startswith('/Users/tal'):
     IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'
     IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
     PATH_JSON = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/json'
+    PATH_CSV = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/csv/data'
+
 elif os.getcwd().startswith('/Users/Sheryl'):
     IMAGE_PATH = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/face_att_sheryl'
     IND_FILE = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/files_list_sheryl.csv'

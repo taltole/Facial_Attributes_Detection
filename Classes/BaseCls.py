@@ -26,11 +26,11 @@ grid_seed = [39]
 # Classifiers Models
 MLA = {
     # Ensemble Methods
-    #ensemble.AdaBoostClassifier().__class__.__name__: ensemble.AdaBoostClassifier(),
-    #ensemble.BaggingClassifier().__class__.__name__: ensemble.BaggingClassifier(),
-    #ensemble.ExtraTreesClassifier().__class__.__name__: ensemble.ExtraTreesClassifier(),
-    #ensemble.GradientBoostingClassifier().__class__.__name__: ensemble.GradientBoostingClassifier(),
-    #ensemble.RandomForestClassifier().__class__.__name__: ensemble.RandomForestClassifier(),
+    ensemble.AdaBoostClassifier().__class__.__name__: ensemble.AdaBoostClassifier(),
+    ensemble.BaggingClassifier().__class__.__name__: ensemble.BaggingClassifier(),
+    ensemble.ExtraTreesClassifier().__class__.__name__: ensemble.ExtraTreesClassifier(),
+    ensemble.GradientBoostingClassifier().__class__.__name__: ensemble.GradientBoostingClassifier(),
+    ensemble.RandomForestClassifier().__class__.__name__: ensemble.RandomForestClassifier(),
 
     # GLM
     linear_model.LogisticRegression().__class__.__name__: linear_model.LogisticRegression(),
@@ -40,13 +40,13 @@ MLA = {
     # naive_bayes.GaussianNB().__class__.__name__: naive_bayes.GaussianNB(),
 
     # Nearest Neighbor
-    #neighbors.KNeighborsClassifier().__class__.__name__: neighbors.KNeighborsClassifier(),
+    neighbors.KNeighborsClassifier().__class__.__name__: neighbors.KNeighborsClassifier(),
 
     # SVM
     svm.SVC().__class__.__name__: svm.SVC(),
 
     # XGB
-    #XGBClassifier().__class__.__name__: XGBClassifier()
+    XGBClassifier().__class__.__name__: XGBClassifier()
 }
 
 # Classifiers Models HyperParameters
@@ -188,6 +188,8 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
         algo = [XGBClassifier(learning_rate=.01, max_depth=2, n_estimators=100, seed=39, nthread=4,
                               objective='binary:logistic', min_child_weight=11, subsample=0.8, colsample_bytree=0.7,
                               missing=-999, n_jobs=-1, tree_method='gpu_hist', gpu_id=0)]  #
+    elif model == 'svm':
+        algo = [svm.SVC(C=1, decision_function_shape='ovo', gamma=0.01, probability=True, random_state=39)]
     else:
         algo = model['param']
     for alg in algo:

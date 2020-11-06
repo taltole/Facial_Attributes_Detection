@@ -27,7 +27,7 @@ def main(label, cls=MLA, exp=True):
     print('Reading File...\nCreating Train, Test...')
     trainer = Train(IND_FILE, IMAGE_PATH)
     print(f'\nTrain on {label} attribute\n')
-    train, test = trainer.data_preprocess(IND_FILE, label, 50, True, None)
+    train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
     print('Done!')
 
     # Save embedding
@@ -123,4 +123,5 @@ if __name__ == '__main__':
  'Rosy_Cheeks',
  'Sideburns',
  'Smiling']
-    main(labels[0], MLA, True)
+    for label in labels:
+        main(label, 'svm', True)

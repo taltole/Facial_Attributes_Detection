@@ -227,18 +227,22 @@ def gridsearch_params(MLA_compare, X_train, y_train, top):
         start = time()
         param = grid_param[ind]
         estimator = MLA[clf]
-        best_search = model_selection.GridSearchCV(estimator=estimator,
-                                                   param_grid=param,
-                                                   cv=cv_split,
-                                                   scoring='roc_auc')
+        if estimator == 'XGBClassifier':
+            pass
+        else:
+            best_search = model_selection.RandomizedSearchCV(estimator=estimator,
+                                                             param_distributions=param,
+                                                             cv=cv_split,
+                                                             scoring='roc_auc',
+                                                             n_jobs=-1)
 
-        best_search.fit(X_train, y_train)
-        run = time() - start
-        best_param = best_search.best_params_
-        best_params_dict['param'].append(MLA[clf].set_params(**best_param))
-        best_params_dict['score'].append(best_search.best_score_)
-        print(f'{clf}\nBest Parameters: {best_param}\nRuntime: {run:.2f} seconds.')
-        print('-' * 10)
+            best_search.fit(X_train, y_train)
+            run = time() - start
+            best_param = best_search.best_params_
+            best_params_dict['param'].append(MLA[clf].set_params(**best_param))
+            best_params_dict['score'].append(best_search.best_score_)
+            print(f'{clf}\nBest Parameters: {best_param}\nRuntime: {run:.2f} seconds.')
+            print('-' * 10)
 
     run_total = time() - start_total
     print(f'Total optimization time was {(run_total / 60):.2f} minutes.')

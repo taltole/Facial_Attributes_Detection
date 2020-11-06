@@ -26,53 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ad8cd87-9763-479a-a6d8-4aa396ce03c8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/MBV2_HairColor-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/ResNet_Hair_color-BEST-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/ResNet_Hair_color_2-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Vgg16_Hair_color-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Vgg16_Hair_color_2_BEST-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Vgg19_HairColor-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Vgg19_HairColor_2-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Vggface_2_Hair_color_BEST-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/MBV2_HairColor.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/ResNet_Hair_color-BEST.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/ResNet_Hair_color_2.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/Vgg16_Hair_color.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/Vgg16_Hair_color_2_BEST.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/Vgg19_HairColor.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/Vgg19_HairColor_2.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Notebooks/Vggface_2_Hair_color_BEST.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Untitled.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/MobileNetV2Hair_color_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/ResNet50Hair_color_2_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/ResNetHair_color_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/Vgg16Hair_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/facenetHair_color_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/vgg16Hair_color_2_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/vgg19Hair_color_2_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/vgg19Hair_color_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cm/vggfaceHair_color_cm.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/MobileNetV2Hair_color_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/ResNet50Hair_color_2_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/ResNetHair_color_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/facenetHair_color_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/vgg16Hair_color_2_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/vgg19Hair_color_2_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/vgg19Hair_color_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/csv/cr/vggfaceHair_color_cr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/MobileNetV2_Hair_color.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/ResNet50_2Hair_color_2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/ResNet_Hair_color.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/ResNet_Hair_color_2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/Vgg16_hair_color.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/facenet_Hair_color.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/vgg16_Hair_color_2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/vgg19_Hair_color.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/vgg19_Hair_color_2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/vggface_2Hair_color.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_embedding.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jsoner.py" beforeDir="false" afterPath="$PROJECT_DIR$/jsoner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +75,7 @@
       <recent name="$PROJECT_DIR$/deepface" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.jsoner">
+  <component name="RunManager" selected="Python.Main_embedding">
     <configuration name="BaseCls" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Facial_Attributes_Detection" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -248,17 +203,17 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.BaseCls" />
-      <item itemvalue="Python.Main" />
-      <item itemvalue="Python.Main_embedding" />
-      <item itemvalue="Python.Train (2)" />
       <item itemvalue="Python.config" />
       <item itemvalue="Python.jsoner" />
+      <item itemvalue="Python.BaseCls" />
+      <item itemvalue="Python.Main_embedding" />
+      <item itemvalue="Python.Train (2)" />
+      <item itemvalue="Python.Main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.jsoner" />
         <item itemvalue="Python.Main_embedding" />
+        <item itemvalue="Python.jsoner" />
         <item itemvalue="Python.BaseCls" />
         <item itemvalue="Python.Main" />
         <item itemvalue="Python.Train (2)" />
@@ -325,10 +280,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="459" height="582" key="DebuggerActiveHint/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604666160645" />
-    <state width="1413" height="220" key="GridCell.Tab.0.bottom" timestamp="1604668046802">
+    <state width="1413" height="220" key="GridCell.Tab.0.bottom" timestamp="1604671332001">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="220" key="GridCell.Tab.0.bottom/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604668046802" />
+    <state width="1413" height="220" key="GridCell.Tab.0.bottom/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604671332001" />
     <state width="1413" height="262" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1604658741994" />
     <state width="1212" height="1360" key="GridCell.Tab.0.bottom/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245226" />
     <state width="1440" height="753" key="GridCell.Tab.0.bottom/0.23.1440.810@0.23.1440.810" timestamp="1604418988972" />
@@ -339,10 +294,10 @@
     <state width="1413" height="336" key="GridCell.Tab.0.bottom/0.23.1440.877/-1077.-1417.3440.1345@-1077.-1417.3440.1345" timestamp="1604227621424" />
     <state width="1212" height="1360" key="GridCell.Tab.0.bottom/0.23.1440.877/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604486444093" />
     <state width="1714" height="370" key="GridCell.Tab.0.bottom/0.23.3440.1345@0.23.3440.1345" timestamp="1604512476999" />
-    <state width="1413" height="220" key="GridCell.Tab.0.center" timestamp="1604668046801">
+    <state width="1413" height="220" key="GridCell.Tab.0.center" timestamp="1604671332000">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="220" key="GridCell.Tab.0.center/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604668046801" />
+    <state width="1413" height="220" key="GridCell.Tab.0.center/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604671332000" />
     <state width="1413" height="262" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1604658741992" />
     <state width="1212" height="1360" key="GridCell.Tab.0.center/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245225" />
     <state width="1440" height="753" key="GridCell.Tab.0.center/0.23.1440.810@0.23.1440.810" timestamp="1604418988971" />
@@ -353,10 +308,10 @@
     <state width="1413" height="336" key="GridCell.Tab.0.center/0.23.1440.877/-1077.-1417.3440.1345@-1077.-1417.3440.1345" timestamp="1604227621423" />
     <state width="1212" height="1360" key="GridCell.Tab.0.center/0.23.1440.877/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604486444092" />
     <state width="1714" height="370" key="GridCell.Tab.0.center/0.23.3440.1345@0.23.3440.1345" timestamp="1604512476998" />
-    <state width="1413" height="220" key="GridCell.Tab.0.left" timestamp="1604668046800">
+    <state width="1413" height="220" key="GridCell.Tab.0.left" timestamp="1604671331997">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="220" key="GridCell.Tab.0.left/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604668046800" />
+    <state width="1413" height="220" key="GridCell.Tab.0.left/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604671331997" />
     <state width="1413" height="262" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1604658741991" />
     <state width="1212" height="1360" key="GridCell.Tab.0.left/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245225" />
     <state width="1440" height="753" key="GridCell.Tab.0.left/0.23.1440.810@0.23.1440.810" timestamp="1604418988969" />
@@ -367,10 +322,10 @@
     <state width="1413" height="336" key="GridCell.Tab.0.left/0.23.1440.877/-1077.-1417.3440.1345@-1077.-1417.3440.1345" timestamp="1604227621423" />
     <state width="1212" height="1360" key="GridCell.Tab.0.left/0.23.1440.877/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604486444090" />
     <state width="1714" height="370" key="GridCell.Tab.0.left/0.23.3440.1345@0.23.3440.1345" timestamp="1604512476997" />
-    <state width="1413" height="220" key="GridCell.Tab.0.right" timestamp="1604668046801">
+    <state width="1413" height="220" key="GridCell.Tab.0.right" timestamp="1604671332000">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="220" key="GridCell.Tab.0.right/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604668046801" />
+    <state width="1413" height="220" key="GridCell.Tab.0.right/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604671332000" />
     <state width="1413" height="262" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1604658741993" />
     <state width="1212" height="1360" key="GridCell.Tab.0.right/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604488245226" />
     <state width="1440" height="753" key="GridCell.Tab.0.right/0.23.1440.810@0.23.1440.810" timestamp="1604418988971" />
@@ -381,10 +336,10 @@
     <state width="1413" height="336" key="GridCell.Tab.0.right/0.23.1440.877/-1077.-1417.3440.1345@-1077.-1417.3440.1345" timestamp="1604227621424" />
     <state width="1212" height="1360" key="GridCell.Tab.0.right/0.23.1440.877/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604486444092" />
     <state width="1714" height="370" key="GridCell.Tab.0.right/0.23.3440.1345@0.23.3440.1345" timestamp="1604512476998" />
-    <state width="1413" height="295" key="GridCell.Tab.1.bottom" timestamp="1604666289175">
+    <state width="1413" height="295" key="GridCell.Tab.1.bottom" timestamp="1604670040546">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="295" key="GridCell.Tab.1.bottom/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604666289175" />
+    <state width="1413" height="295" key="GridCell.Tab.1.bottom/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604670040546" />
     <state width="1413" height="139" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1604652552131" />
     <state width="1371" height="396" key="GridCell.Tab.1.bottom/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604413323125" />
     <state width="720" height="752" key="GridCell.Tab.1.bottom/0.23.1440.810@0.23.1440.810" timestamp="1604415953931" />
@@ -392,10 +347,10 @@
     <state width="1714" height="503" key="GridCell.Tab.1.bottom/0.23.1440.813/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604510420860" />
     <state width="1714" height="488" key="GridCell.Tab.1.bottom/0.23.1440.814/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604510922508" />
     <state width="1714" height="430" key="GridCell.Tab.1.bottom/0.23.3440.1345@0.23.3440.1345" timestamp="1604512474395" />
-    <state width="1413" height="295" key="GridCell.Tab.1.center" timestamp="1604666289174">
+    <state width="1413" height="295" key="GridCell.Tab.1.center" timestamp="1604670040545">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="295" key="GridCell.Tab.1.center/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604666289174" />
+    <state width="1413" height="295" key="GridCell.Tab.1.center/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604670040545" />
     <state width="1413" height="139" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1604652552130" />
     <state width="1371" height="396" key="GridCell.Tab.1.center/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604413323124" />
     <state width="720" height="752" key="GridCell.Tab.1.center/0.23.1440.810@0.23.1440.810" timestamp="1604415953931" />
@@ -403,10 +358,10 @@
     <state width="1714" height="503" key="GridCell.Tab.1.center/0.23.1440.813/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604510420859" />
     <state width="1714" height="488" key="GridCell.Tab.1.center/0.23.1440.814/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604510922507" />
     <state width="1714" height="430" key="GridCell.Tab.1.center/0.23.3440.1345@0.23.3440.1345" timestamp="1604512474395" />
-    <state width="1413" height="295" key="GridCell.Tab.1.left" timestamp="1604666289173">
+    <state width="1413" height="295" key="GridCell.Tab.1.left" timestamp="1604670040544">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="295" key="GridCell.Tab.1.left/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604666289173" />
+    <state width="1413" height="295" key="GridCell.Tab.1.left/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604670040544" />
     <state width="1413" height="139" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1604652552130" />
     <state width="1371" height="396" key="GridCell.Tab.1.left/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604413323124" />
     <state width="720" height="752" key="GridCell.Tab.1.left/0.23.1440.810@0.23.1440.810" timestamp="1604415953931" />
@@ -414,10 +369,10 @@
     <state width="1714" height="503" key="GridCell.Tab.1.left/0.23.1440.813/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604510420858" />
     <state width="1714" height="488" key="GridCell.Tab.1.left/0.23.1440.814/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604510922505" />
     <state width="1714" height="430" key="GridCell.Tab.1.left/0.23.3440.1345@0.23.3440.1345" timestamp="1604512474394" />
-    <state width="1413" height="295" key="GridCell.Tab.1.right" timestamp="1604666289174">
+    <state width="1413" height="295" key="GridCell.Tab.1.right" timestamp="1604670040545">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1413" height="295" key="GridCell.Tab.1.right/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604666289174" />
+    <state width="1413" height="295" key="GridCell.Tab.1.right/0.0.1440.900/-1077.-1440.3440.1440@0.0.1440.900" timestamp="1604670040545" />
     <state width="1413" height="139" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1604652552131" />
     <state width="1371" height="396" key="GridCell.Tab.1.right/0.23.1440.810/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1604413323124" />
     <state width="720" height="752" key="GridCell.Tab.1.right/0.23.1440.810@0.23.1440.810" timestamp="1604415953931" />
@@ -454,5 +409,16 @@
     </state>
     <state x="602" y="202" width="838" height="656" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1604419206252" />
     <state x="704" y="-1099" width="838" height="1032" key="search.everywhere.popup/0.23.1440.812/-1077.-1417.3440.1417@-1077.-1417.3440.1417" timestamp="1603718695929" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/jsoner.py</url>
+          <line>35</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -31,23 +31,31 @@ def find_best_model(path, label='All'):
         {'name': sum_dict['name'], 'loss': sum_dict['best']['loss'], 'val_loss': sum_dict['best']['val_loss'],
          'accuracy': sum_dict['best']['accuracy'], 'val_accuracy': sum_dict['best']['val_accuracy']})
 
-    name = df['name'].apply(lambda x: x.split('_')[0] if x.count('_') <= 2 else '_'.join(x.split('_')[:2])).unique()
+    name = df['name'].apply(lambda x: x.split('_')[0]).unique()
+    # if x.count('_') <= 2 else '_'.join(x.split('_')[:2])).unique()
     means_acc, means_loss, means_vloss, means_vacc = [], [], [], []
     # means = [means_acc, means_loss, means_vloss, means_vacc]
-
+    df_mean = pd.DataFrame()
     for n in name:
-        means_acc.append(df['accuracy'][df['name'].str.startswith(n)].mean())
-        means_vacc.append(df['val_accuracy'][df['name'].str.startswith(n)].mean())
-        means_loss.append(df['loss'][df['name'].str.startswith(n)].mean())
-        means_vloss.append(df['val_loss'][df['name'].str.startswith(n)].mean())
+        df_mean['name'] = n
+        means_acc = df['accuracy'][df['name'].str.startswith(n)].mean()
+        means_vacc = df['val_accuracy'][df['name'].str.startswith(n)].mean()
+        means_loss = df['loss'][df['name'].str.startswith(n)].mean()
+        means_vloss = df['val_loss'][df['name'].str.startswith(n)].mean()
+        df_mean.loc[df_mean['name'] == n, 'means_vacc'] = means_vacc
+        df_mean.loc[df_mean['name'] == n, 'means_acc'] = means_acc
+        df_mean.loc[df_mean['name'] == n, 'means_vloss'] = means_vloss
+        df_mean.loc[df_mean['name'] == n, 'means_loss'] = means_loss
+
     i = 1
     plt.figure(figsize=(15, 5))
     plt.subplot(1, 2, i)
-    sns.barplot(name, means_vacc, ci="sd")
+    sns.barplot(df_mean['means_vacc'], df_mean['name'], data=df_mean.sort_values(by='means_vacc'), ci="sd", orient='h')
     plt.title('Validation Acc.')
     i += 1
     plt.subplot(1, 2, i)
-    sns.barplot(name, means_vloss, data=df, ci="sd")
+    sns.barplot(df_mean['means_vloss'], df_mean['name'], data=df_mean.sort_values(by='means_vloss'), ci="sd",
+                orient='h')
     plt.title('Validation Loss.')
     plt.show()
 
@@ -84,8 +92,8 @@ def summarize_classic_cls(csv_path, att, model):
         xaxis = df['Acc'][df['Attribute'] == att].apply(lambda x: x.mean() if not isinstance(x, float) else x)
         title = att.title() + ' Comparison'
         # if model is not None:
-            # return f"{att} Acc mean score for {model}:  " \
-            #        f"{np.where(((df['Classifier'] == model) & (df['Attribute'] == att)), df['Acc'].mean())}"
+        # return f"{att} Acc mean score for {model}:  " \
+        #        f"{np.where(((df['Classifier'] == model) & (df['Attribute'] == att)), df['Acc'].mean())}"
     else:
         yaxis = df['Attribute']
         xaxis = df['Acc']

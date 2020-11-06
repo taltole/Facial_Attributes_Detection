@@ -227,11 +227,14 @@ def gridsearch_params(MLA_compare, X_train, y_train, top):
         start = time()
         param = grid_param[ind]
         estimator = MLA[clf]
+        # if estimator == 'XGBClassifier':
+        #     break
+        # else:
         best_search = model_selection.GridSearchCV(estimator=estimator,
                                                    param_grid=param,
                                                    cv=cv_split,
-                                                   scoring='roc_auc')
-
+                                                   scoring='roc_auc',
+                                                   n_jobs=-1)
         best_search.fit(X_train, y_train)
         run = time() - start
         best_param = best_search.best_params_

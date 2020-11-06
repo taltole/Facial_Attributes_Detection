@@ -61,7 +61,6 @@ def summarize_classic_cls(csv_path, att, model):
         name = ['_'.join(name) if len(name) >= 2 else ''.join(name)]
         temp_df.iloc[:, 0] = name
         df_dict = df_dict.append(temp_df)
-
     df_dict.rename(columns={'Unnamed: 0': 'Attribute', 'MLA Name': 'Classifier', 'MLA Test Accuracy Mean': 'Acc',
                             'Run Time': 'Run_Time', 'MLA pred': 'y_pred'}, inplace=True)
     df = df_dict.sort_values(by='Acc')

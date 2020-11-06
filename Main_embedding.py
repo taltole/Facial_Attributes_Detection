@@ -21,8 +21,10 @@ def main(label, cls=MLA, exp=True):
     #     model = basemodel.adding_toplayer(model)
 
     # todo add file embedding lookout
-    # if os.path.exist(os.path.join(emb_file, data_path))
+    # emb_file = 'data_'+model_name+'_'+label'.csv'
+    # if os.path.exist(os.path.join(EMB_PATH, emb_file))
     # train, test = read_file[x], [y]
+
     # Start images processing and dataframe splitting
     print('Reading File...\nCreating Train, Test...')
     trainer = Train(IND_FILE, IMAGE_PATH)
@@ -35,6 +37,7 @@ def main(label, cls=MLA, exp=True):
     X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
     X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
     data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
+    data_emb.to_csv(os.getcwd()+'/csv/data/data_'+model_name+'_'+label+'.csv')
 
     if not isinstance(cls, str):
         print('GridSearch top Cls...')
@@ -74,7 +77,6 @@ def main(label, cls=MLA, exp=True):
     # Saving embedding and final results to file
     label_emb = pd.DataFrame({'y_test': pd.Series(y_test), 'y_pred': pd.Series(y_pred)})
     label_emb.to_csv(os.getcwd()+'/csv/data/label_'+model_name+'_'+label+'_'+cls_name+'.csv')
-    data_emb.to_csv(os.getcwd()+'/csv/data/data_'+model_name+'_'+label+'_'+cls_name+'.csv')
     df_top_cls.to_csv(os.getcwd()+'/csv/data/sum_'+model_name+'_'+label+'_top3.csv')
 
     # plot confusion matrix and acc score
@@ -123,4 +125,5 @@ if __name__ == '__main__':
  'Rosy_Cheeks',
  'Sideburns',
  'Smiling']
-    main(labels[0], MLA, True)
+    for label in labels:
+        main(label, MLA, True)

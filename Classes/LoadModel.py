@@ -60,7 +60,7 @@ class BaseModel:
             except ValueError:
                 print('No model found')
 
-        self.print_summary(base_model)
+        # self.print_summary(base_model)
         return base_model
 
     # ######################    Transfer Learning   ######################

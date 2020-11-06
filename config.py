@@ -39,6 +39,7 @@ if os.getcwd().startswith('/Users/tal'):
     IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
     PATH_JSON = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/json'
     PATH_CSV = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/csv/data'
+    EMB_PATH = '/Users/tal/Google Drive/embedding'
 
 elif os.getcwd().startswith('/Users/Sheryl'):
     IMAGE_PATH = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/face_att_sheryl'
@@ -49,6 +50,7 @@ else:
     IND_FILE = '/home/ubuntu/sheryl/S3/facial-attributes-itc/files_list_sheryl.csv'
     WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weights'
     MODEL_PATH = '/home/ubuntu/Facial_Attributes_Detection/'
+    EMB_PATH = '/home/ubuntu/saved_emd/'
 
 
 def find_imagepath(file):

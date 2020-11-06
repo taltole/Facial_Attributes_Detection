@@ -28,12 +28,6 @@
     <list default="true" id="0ad8cd87-9763-479a-a6d8-4aa396ce03c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/csv/data/data_facenet_Arched_Eyebrows_ExtraTreesClassifier.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/csv/data/data_facenet_Arched_Eyebrows_RandomForestClassifier.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/csv/data/data_facenet_Arched_Eyebrows_SVC.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/csv/data/data_facenet_Arched_Eyebrows_XGB.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/csv/data/data_facenet_Arched_Eyebrows_svm.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -49,6 +49,7 @@ def main(label, cls=MLA, exp=True):
             label_emb = pd.DataFrame(np.hstack([y_train, y_test]))
             data_emb.to_csv(emb_path)
             label_emb.to_csv(lbl_path)
+    print(f'\nTrain on {label}...\n')
 
     # GridSearch Classifiers
     if not isinstance(cls, str):

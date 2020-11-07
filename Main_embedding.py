@@ -30,7 +30,6 @@ def main(label, cls=MLA, exp=True):
         top = int(0.8 * df_lbl_temp.shape[0])
         X_train, X_test = np.array(df_emb_temp.iloc[:top, :]), np.array(df_emb_temp.iloc[top:, :])
         y_train, y_test = df_lbl_temp.iloc[:top, 1].tolist(), df_lbl_temp.iloc[top:, 1].tolist()
-        print(X_train.shape, len(y_train), X_test.shape, len(y_test), type(X_train), type(y_train), type(X_test), type(y_test), )
 
     else:
         # Start images processing and dataframe splitting
@@ -43,7 +42,7 @@ def main(label, cls=MLA, exp=True):
         print(f'\nSave Embedding...')
         X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
         X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
-        print(X_train.shape, len(y_train), X_test.shape, len(y_test), type(X_train), type(y_train), type(X_test), type(y_test), )
+        
         if exp:
             data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
             label_emb = pd.DataFrame(np.hstack([y_train, y_test]))
@@ -109,8 +108,7 @@ if __name__ == '__main__':
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
     # accessories_label = [l for l in cols if l.startswith("Wearing")]
-    labels = [
-        'Arched_Eyebrows',
+    labels = ['Arched_Eyebrows',
               'Attractive',
               'Bags_Under_Eyes',
               'Bald',

@@ -197,7 +197,7 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
         # set name and parameters
         MLA_name = alg.__class__.__name__
         MLA_compare.loc[row_index, 'MLA Name'] = MLA_name
-        print(y_train)
+
         # score model with cross validation:
         cv_results = model_selection.cross_validate(alg, X_train, y_train, cv=cv_split, scoring='roc_auc')
         MLA_compare.loc[row_index, 'Run Time'] = cv_results['fit_time'].mean()

@@ -1,0 +1,2 @@
+,MLA Name,MLA Test Accuracy Mean,Run Time,MLA pred
+0,XGBClassifier,0.8386410586819641,0.20229406356811525,[0. 1. 0. ... 1. 1. 1.]

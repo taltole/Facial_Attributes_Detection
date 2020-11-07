@@ -50,7 +50,7 @@ else:
     IND_FILE = '/home/ubuntu/sheryl/S3/facial-attributes-itc/files_list_sheryl.csv'
     WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weights'
     MODEL_PATH = '/home/ubuntu/Facial_Attributes_Detection/'
-    EMB_PATH = '/home/ubuntu/Facial_Attributes_Detection/csv/data/emb'
+    EMB_PATH = '/home/ubuntu/Facial_Attributes_Detection/csv/emb'
 
 
 def find_imagepath(file):

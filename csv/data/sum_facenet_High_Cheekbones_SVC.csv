@@ -1,0 +1,2 @@
+,MLA Name,MLA Test Accuracy Mean,Run Time,MLA pred
+0,SVC,0.8877626886659584,22.731583738327025,['0.0' '1.0' '0.0' ... '0.0' '0.0' '0.0']

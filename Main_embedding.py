@@ -23,29 +23,29 @@ def main(label, cls=MLA, exp=True):
     emb_path = os.path.join(EMB_PATH, emb_file)
     lbl_path = os.path.join(EMB_PATH, lbl_file)
 
-    if os.path.exists(emb_path):
-        print('Load Saved Embedding...')
-        df_emb_temp = pd.read_csv(emb_path)
-        df_lbl_temp = pd.read_csv(lbl_path)
-        top = int(0.8 * df_lbl_temp.shape[0])
-        X_train, X_test = df_emb_temp.iloc[:top, :], df_emb_temp.iloc[top:, :]
-        y_train, y_test = df_lbl_temp.iloc[:top, 0], df_lbl_temp.iloc[top:, 0]
-    else:
-        # Start images processing and dataframe splitting
-        print('Reading File...\nCreating Train, Test...')
-        trainer = Train(IND_FILE, IMAGE_PATH)
-        train, test = trainer.data_preprocess(IND_FILE, label, 50, True, None)
-        print('Done!')
+    # if os.path.exists(emb_path):
+    #     print('Load Saved Embedding...')
+    #     df_emb_temp = pd.read_csv(emb_path)
+    #     df_lbl_temp = pd.read_csv(lbl_path)
+    #     top = int(0.8 * df_lbl_temp.shape[0])
+    #     X_train, X_test = df_emb_temp.iloc[:top, :], df_emb_temp.iloc[top:, :]
+    #     y_train, y_test = df_lbl_temp.iloc[:top, 0].tolist(), df_lbl_temp.iloc[top:, 0].tolist()
+    # else:
+    # Start images processing and dataframe splitting
+    print('Reading File...\nCreating Train, Test...')
+    trainer = Train(IND_FILE, IMAGE_PATH)
+    train, test = trainer.data_preprocess(IND_FILE, label, 50, True, None)
+    print('Done!')
 
-        # Save embedding
-        print(f'\nSave Embedding...')
-        X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
-        X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
-        if exp:
-            data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
-            label_emb = pd.DataFrame(np.hstack([y_train, y_test]))
-            data_emb.to_csv(emb_path)
-            label_emb.to_csv(lbl_path)
+    # Save embedding
+    print(f'\nSave Embedding...')
+    X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
+    X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
+    if exp:
+        data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
+        label_emb = pd.DataFrame(np.hstack([y_train, y_test]))
+        data_emb.to_csv(emb_path)
+        label_emb.to_csv(lbl_path)
 
     # GridSearch Classifiers
     if not isinstance(cls, str):

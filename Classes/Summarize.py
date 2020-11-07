@@ -32,7 +32,7 @@ class Metrics:
         Plot confusion matrix and save it in a csv file
         """
         print('Confusion Matrix ...')
-        cm = confusion_matrix(self.y_test, self.y_pred)
+        cm = confusion_matrix(self.y_test, self.y_pred, normalize='true')
         df = pd.DataFrame(cm)
         df.to_csv('csv/cm/' + self.model_name + '_' + self.label + '_cm.csv')
         print(df)

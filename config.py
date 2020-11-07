@@ -39,7 +39,7 @@ if os.getcwd().startswith('/Users/tal'):
     IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
     PATH_JSON = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/json'
     PATH_CSV = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/csv/data'
-    EMB_PATH = '/Users/tal/Google Drive/embedding'
+    EMB_PATH = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/csv/emb'
 
 elif os.getcwd().startswith('/Users/Sheryl'):
     IMAGE_PATH = '/Users/Sheryl/Desktop/ITC2/Cellebrite Project/face_att_sheryl'

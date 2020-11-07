@@ -184,11 +184,11 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     MLA_predict = y_test.copy()
     if model == MLA:
         algo = model.values()
-    elif model == 'xgb':
+    elif model == 'XGB':
         algo = [XGBClassifier(learning_rate=.01, max_depth=2, n_estimators=100, seed=39, nthread=4,
                               objective='binary:logistic', min_child_weight=11, subsample=0.8, colsample_bytree=0.7,
                               missing=-999, n_jobs=-1, tree_method='gpu_hist', gpu_id=0)]  #
-    elif model == 'svm':
+    elif model == 'SVC':
         algo = [svm.SVC(C=1, decision_function_shape='ovo', gamma=0.01, probability=True, random_state=39)]
     else:
         algo = model['param']

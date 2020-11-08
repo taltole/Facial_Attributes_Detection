@@ -7,7 +7,9 @@ from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_i
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
 from tensorflow.keras.applications.resnet50 import preprocess_input as Preprocess_RESNET50
 
+
 class Prediction:
+
     @staticmethod
     def evaluate_model(model, valid_data):
         """
@@ -32,7 +34,7 @@ class Prediction:
         print('Starting prediction...')
         pred = model.predict(test_data, steps=STEP_SIZE_TEST)
         print('Done!')
-        labels = (train_data.class_indices)
+        labels = train_data.class_indices
         labels = dict((v, k) for k, v in labels.items())
         if len(list(labels.keys())) > 2:
             predicted_class_indices = np.argmax(pred, axis=1)
@@ -89,66 +91,66 @@ class Prediction:
         plt.yticks([])
         plt.show()
 
-    @staticmethod
-    def predict_file(model, file, pos, neg):
-        """
-        function read an image file and predict its label using model and class name arguments
-        """
-        img = tf.keras.preprocessing.image.load_img(file, target_size=(224, 224))
-        img_array = tf.keras.preprocessing.image.img_to_array(img)
-        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
-        predictions = model.predict(img_array)
-        score = predictions[0]
-        result = max((pos, 100 * score), (neg, 100 * (1 - score)), key=lambda x: x[1])
-        text = f"{neg}:\t{100 * (1 - score)}%\t{pos}:\t{100 * score}%"
-        imge = mpimg.imread(file)
-        plt.figure(figsize=(5, 5))
-        plt.imshow(imge)
-        plt.title(result[0])
-        plt.xticks([])
-        plt.yticks([])
-        plt.show()
-        return result
 
-    @staticmethod
-    def analyze_face(df, backend=0):
-        """
-        Function call image file as str or from dataframe and analyze it with deepface module to extract
-        race, age, gender and emotion
-        """
-        backends = ['opencv', 'ssd', 'dlib', 'mtcnn']
+def predict_file(model, file, pos, neg):
+    """
+    function read an image file and predict its label using model and class name arguments
+    """
+    # running rage models
+    result_rage = analyze_face(file)
 
-        # reading file
-        if isinstance(df, str):
-            file = find_imagepath(df)
-        elif isinstance(df, list):
-            files = df
-        else:
-            img_f1 = df.sample().values[0]
-            file = find_imagepath(img_f1)
+    # running binary models
+    img = tf.keras.preprocessing.image.load_img(file, target_size=(224, 224))
+    img_array = tf.keras.preprocessing.image.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0)  # Create batch axis
+    predictions = model.predict(img_array)
+    score = predictions[0]
+    result = max((pos, 100 * score), (neg, 100 * (1 - score)), key=lambda x: x[1])
+    text = f"{neg}:\t{100 * (1 - score)}%\t{pos}:\t{100 * score}%"
+    result = result[0] + result_rage
+    return result
 
-        # Run DeepFace
-        try:
-            demography = DeepFace.analyze(file, detector_backend=backends[backend])
-            age = int(demography['age'])
-            gender = demography['gender']
-            emotion = demography['dominant_emotion']
-            race = demography['dominant_race']
-            # result = predict_file(model, file, pos, neg)
-            textstr = f'Age:\t\t{age}\nGender:\t\t{gender}\nRace:\t\t{race.title()}\nEmotion:\t{emotion.title()}'
 
-        except ValueError:
-            print('Face could not be detected')
-            sys.exit()
+def analyze_face(df, backend=0, plot=False):
+    """
+    Function call image file as str or from dataframe and analyze it with deepface module to extract
+    race, age, gender and emotion
+    """
+    backends = ['opencv', 'ssd', 'dlib', 'mtcnn']
 
+    # reading file
+    if isinstance(df, str):
+        file = find_imagepath(df)
+    elif isinstance(df, list):
+        file = df
+    else:
+        img_f1 = df.sample().values[0]
+        file = find_imagepath(img_f1)
+
+    # Run DeepFace
+    try:
+        demography = DeepFace.analyze(file, detector_backend=backends[backend])
+        age = int(demography['age'])
+        gender = demography['gender']
+        emotion = demography['dominant_emotion']
+        race = demography['dominant_race']
+        textstr = f'\nAge: {age}\nGender: {gender}\nRace: {race.title()}\nEmotion: {emotion.title()}\n'
         # Plot
-        plt.figure(figsize=(5, 5))
-        img = mpimg.imread(file)
-        plt.imshow(img)
-        plt.xticks([])
-        plt.yticks([])
-        plt.show()
-        print(textstr)
+        if plot:
+            plt.figure(figsize=(5, 5))
+            img = mpimg.imread(file)
+            plt.imshow(img)
+            plt.xticks([])
+            plt.yticks([])
+            plt.show()
+        return textstr
+
+    except ValueError:
+        print('Face could not be detected')
+        return ''
+
+
+
 # # ### Predicting
 #
 #

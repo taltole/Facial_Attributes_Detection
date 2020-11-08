@@ -1,58 +1,58 @@
-from tensorflow.python.keras.optimizers import RMSprop
-
 from Classes.LoadModel import BaseModel
-from Classes.Predict import Prediction
+from Classes import Predict
 import memory_profiler
-
 from config import *
+import random
 
-# todo load all H5 / CLS
-# todo check and add best model _att combination
-# todo getting img path to iterate over
+MODEL = 0
+LABEL = 1
 
 
-tic = time()
+def load_best_model(model):
+    best_model = model.split('/')[-1].split('_')[0]
+    label = model.strip('.h5').split('_')[1:]
 
-# Get img path
-IMG_PATH = IMAGE_PATH
-img_list = os.listdir(IMG_PATH)
+    # Loading Best Model
+    basemodel = BaseModel(best_model)
+    model = basemodel.load_model(False)
+    model = basemodel.adding_toplayer(model)
+    model.load_weights(model)
+    print(f"\nBest Model {best_model}'s Arc. and Weights Loaded!")
+    return model, label
 
-# Best Model per att
-# find best combination
-# # models_list = os.listdir(MODEL_PATH)
 
-MODELS = '/Users/tal/Dropbox/Projects/vggface_Eyeglasses.h5'
-best_model = MODELS.split('/')[-1].split('_')[0]
-label = MODELS.strip('.h5').split('_')[-1]
+# Get img list
+img_list = os.listdir(IMAGE_PATH)
 
-# Loading Best Model
-# history = json.load(open(PATH_JSON))
+# Taking Best Model per Att
+models_list = [file for file in os.listdir(MODEL_PATH) if str(file).endswith('h5')]
+best_model_list = []
+label_list = []
+best_pairs = []
+model = '/Users/tal/Dropbox/Projects/vggface_Eyeglasses.h5'
 
-basemodel = BaseModel(best_model)
-model = basemodel.load_model(False)
-model = basemodel.adding_toplayer(model)
-model.load_weights(MODELS)
-# model.compile(RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
-print(f"\nBest Model {best_model}'s Arc. and Weights Loaded!")
+for model in models_list:
+    best_model_list.append(load_best_model(model)[MODEL])
+    label_list.append(load_best_model(model)[LABEL])
+best_pairs.append(list(zip(best_model_list, label_list)))
 
-# Evaluate the network on valid data
-# Prediction.evaluate_model(model, valid_data)
 
-# Predict on test data
-# y_pred = Prediction.test_prediction(model, test_data, train_data)
-# plot
-# top = min(len(test['label']), len(y_pred))
-# metrics = Metrics(history, epoch, test['label'][:top].tolist(), y_pred[:top], model_name, label)
-# metrics.confusion_matrix()
-# #metrics.acc_loss_graph()
-# metrics.classification_report()
+print('Running Inference...')
+for file in random.choices(img_list, k=3):
+    result = []
+    tic = time()
+    file = os.path.join(IMAGE_PATH, file)
+    for model, label in best_pairs:
+        pos, neg = f'{label}: V', f'{label}: X'
+        result.append(Predict.predict_file(model, file, pos, neg))
 
-# Inference
-# labels = [test['files'][test['label'] == '1.0'], test['files'][test['label'] == '0.0']]
-# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/3/face_att_174563.jpg'
-
-pos, neg = f'With {label}', f'W/O {label}'
-for file in img_list[15:45]:
-    file = os.path.join(IMG_PATH, file)
-    Prediction.predict_file(model, file, pos, neg)
-    Prediction.analyze_face(IND_FILE)
+    toc = time()
+    run = toc - tic
+    print(f'Time inference {(run / 60):.2f} minutes.')
+    img = mpimg.imread(file)
+    plt.figure(figsize=(8, 5))
+    plt.imshow(img)
+    plt.text(s=result, x=190, y=100)
+    plt.xticks([])
+    plt.yticks([])
+    plt.show()

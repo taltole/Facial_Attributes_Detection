@@ -132,5 +132,5 @@ if __name__ == '__main__':
               'Rosy_Cheeks',
               'Sideburns',
               'Smiling']
-    for label in accessories_label:
-        main(label, 'tree', True)
+    for label in labels:
+        main(label, 'LGR', True)

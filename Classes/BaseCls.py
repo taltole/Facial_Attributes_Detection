@@ -194,7 +194,7 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
     elif model == 'SVC':
         algo = [svm.SVC(C=1, decision_function_shape='ovo', gamma=0.01, probability=True, random_state=39)]
 
-    elif model == 'tree':
+    elif model == 'LGR':
         algo = [linear_model.LogisticRegression(fit_intercept=True, random_state=39, solver='newton-cg')]
 
     else:

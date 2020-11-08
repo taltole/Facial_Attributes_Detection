@@ -32,8 +32,8 @@ best_pairs = []
 # modelz = '/Users/tal/Dropbox/Projects/vggface_Eyeglasses.h5'
 
 for model in models_list:
-    best_model = model.split('/')[-1].split('_')[0]
-    label = ''.join(model.strip('.h5').split('_')[1:])
+    best_model = model.split('/')[-1].split('_')[MODEL]
+    label = ''.join(model.strip('.h5').split('_')[LABEL:])
     best_model_list.append(best_model)
     label_list.append(label)
 
@@ -55,7 +55,7 @@ for file in random.choices(img_list, k=3):
 
     toc = time()
     run = toc - tic
-    print(f'Time inference {(run / 60):.2f} minutes.')
+    print(f'Avg Time inference {(run / 60)/len(models_list):.2f} minutes.')
     img = mpimg.imread(file)
     plt.figure(figsize=(8, 5))
     plt.imshow(img)

@@ -32,30 +32,31 @@ def find_best_model(path, label='All'):
          'accuracy': sum_dict['best']['accuracy'], 'val_accuracy': sum_dict['best']['val_accuracy']})
 
     name = df['name'].apply(lambda x: x.split('_')[0]).unique()
+
     # if x.count('_') <= 2 else '_'.join(x.split('_')[:2])).unique()
     means_acc, means_loss, means_vloss, means_vacc = [], [], [], []
     # means = [means_acc, means_loss, means_vloss, means_vacc]
-    df_mean = pd.DataFrame()
-    for n in name:
-        df_mean['name'] = n
-        means_acc = df['accuracy'][df['name'].str.startswith(n)].mean()
-        means_vacc = df['val_accuracy'][df['name'].str.startswith(n)].mean()
-        means_loss = df['loss'][df['name'].str.startswith(n)].mean()
-        means_vloss = df['val_loss'][df['name'].str.startswith(n)].mean()
-        df_mean.loc[df_mean['name'] == n, 'means_vacc'] = means_vacc
-        df_mean.loc[df_mean['name'] == n, 'means_acc'] = means_acc
-        df_mean.loc[df_mean['name'] == n, 'means_vloss'] = means_vloss
-        df_mean.loc[df_mean['name'] == n, 'means_loss'] = means_loss
+
+    # df_mean = pd.DataFrame({'name': [], 'label': [], 'means_acc': [], 'means_loss': [], 'means_vloss': [], 'means_vacc': []})
+    # for n in name:
+    #     df_mean['name'] = n
+    #     means_acc = df['accuracy'][df['name'].str.startswith(n)].mean()
+    #     means_vacc = df['val_accuracy'][df['name'].str.startswith(n)].mean()
+    #     means_loss = df['loss'][df['name'].str.startswith(n)].mean()
+    #     means_vloss = df['val_loss'][df['name'].str.startswith(n)].mean()
+    #     df_mean['means_vacc'][df_mean['name'] == n] = means_vacc
+    #     df_mean['means_acc'][df_mean['name'] == n] = means_acc
+    #     df_mean['means_vloss'][df_mean['name'] == n] = means_vloss
+    #     df_mean['means_loss'][df_mean['name'] == n] = means_loss
 
     i = 1
     plt.figure(figsize=(15, 5))
     plt.subplot(1, 2, i)
-    sns.barplot(df_mean['means_vacc'], df_mean['name'], data=df_mean.sort_values(by='means_vacc'), ci="sd", orient='h')
+    sns.barplot(df_mean['means_vacc'].values, df_mean['name'], data=df_mean.sort_values(by='means_vacc'), ci="sd", orient='h')
     plt.title('Validation Acc.')
     i += 1
     plt.subplot(1, 2, i)
-    sns.barplot(df_mean['means_vloss'], df_mean['name'], data=df_mean.sort_values(by='means_vloss'), ci="sd",
-                orient='h')
+    sns.barplot(df_mean['means_vloss'].values, df_mean['name'], data=df_mean.sort_values(by='means_vloss'), ci="sd", orient='h')
     plt.title('Validation Loss.')
     plt.show()
 
@@ -115,5 +116,5 @@ def summarize_classic_cls(csv_path, att, model):
 
 if __name__ == '__main__':
     label = 'Hat'
-    find_best_model(PATH_JSON)
+    # find_best_model(PATH_JSON, label)
     summarize_classic_cls(PATH_CSV, att=None, model=None)

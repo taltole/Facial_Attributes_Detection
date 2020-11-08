@@ -131,6 +131,7 @@ class Prediction:
             gender = demography['gender']
             emotion = demography['dominant_emotion']
             race = demography['dominant_race']
+            result = predict_file(model, file, pos, neg)
             textstr = f'Age:\t\t{age}\nGender:\t\t{gender}\nRace:\t\t{race.title()}\nEmotion:\t{emotion.title()}'
 
         except ValueError:

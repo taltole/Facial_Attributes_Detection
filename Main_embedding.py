@@ -35,7 +35,7 @@ def main(label, cls=MLA, exp=True):
         # Start images processing and dataframe splitting
         print('Reading File...\nCreating Train, Test...')
         trainer = Train(IND_FILE, IMAGE_PATH)
-        train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
+        train, test = trainer.data_preprocess(IND_FILE, label, 50, True, None)
         print('Done!')
 
         # Save embedding
@@ -132,5 +132,5 @@ if __name__ == '__main__':
               'Rosy_Cheeks',
               'Sideburns',
               'Smiling']
-    for label in labels:
+    for label in [labels][0]:
         main(label, MLA, True)

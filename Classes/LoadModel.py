@@ -130,14 +130,14 @@ class BaseModel:
         base_model.trainable = False
         model = Sequential()
         model.add(base_model)
+        #
+        # model.add(Dropout(0.25))
+        # model.add(Flatten())
+        # model.add(Dense(512))
+        # model.add(Activation('relu'))
 
         model.add(Dropout(0.25))
-        model.add(Flatten())
-        model.add(Dense(512))
-        model.add(Activation('relu'))
-
-        model.add(Dropout(0.25))
-        model.add(Dense(256, activation='relu'))
+        model.add(Dense(128, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
         self.print_summary(model)
         return model

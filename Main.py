@@ -26,7 +26,7 @@ def main(label):
 
     # Loading Base Model
     print(f'\n\nLoading Model...')
-    model_list = ['vgg19', 'vgg16' ,'MobileNetV2', 'vggface', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
+    model_list = ['vgg19', 'vgg16', 'MobileNetV2', 'vggface', 'facenet']  # , 'emotion', 'age', 'gender', 'race']
     print('Pick a Model: vgg19, vgg16, ResNet50, MobileNetV2,  vggface, facenet, emotion, age, gender, race')
 
     # Looping over models

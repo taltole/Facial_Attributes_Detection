@@ -116,21 +116,25 @@ class Prediction:
         Function call image file as str or from dataframe and analyze it with deepface module to extract
         race, age, gender and emotion
         """
+        backends = ['opencv', 'ssd', 'dlib', 'mtcnn']
+
         # reading file
         if isinstance(df, str):
             file = find_imagepath(df)
+        elif isinstance(df, list):
+            files = df
         else:
             img_f1 = df.sample().values[0]
             file = find_imagepath(img_f1)
 
         # Run DeepFace
         try:
-            backends = ['opencv', 'ssd', 'dlib', 'mtcnn']
             demography = DeepFace.analyze(file, detector_backend=backends[backend])
             age = int(demography['age'])
             gender = demography['gender']
             emotion = demography['dominant_emotion']
             race = demography['dominant_race']
+            # result = predict_file(model, file, pos, neg)
             textstr = f'Age:\t\t{age}\nGender:\t\t{gender}\nRace:\t\t{race.title()}\nEmotion:\t{emotion.title()}'
 
         except ValueError:

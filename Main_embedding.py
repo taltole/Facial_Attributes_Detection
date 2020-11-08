@@ -50,7 +50,7 @@ def main(label, cls=MLA, exp=True):
             label_emb.to_csv(lbl_path)
     print(f'\nTrain on {label}...\n')
 
-    # GridSearch Classifiers
+    # GridSearch Classifiers (when MLA - several algos used)
     if not isinstance(cls, str):
         print('GridSearch top Cls...')
         df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, cls)
@@ -107,7 +107,7 @@ def main(label, cls=MLA, exp=True):
 if __name__ == '__main__':
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
-    # accessories_label = [l for l in cols if l.startswith("Wearing")]
+    accessories_label = [l for l in cols if l.startswith("Wearing")]
     labels = ['Arched_Eyebrows',
               'Attractive',
               'Bags_Under_Eyes',
@@ -132,5 +132,6 @@ if __name__ == '__main__':
               'Rosy_Cheeks',
               'Sideburns',
               'Smiling']
+
     for label in labels:
-        main(label, MLA, True)
+        main(label, 'LGR', True)

@@ -55,3 +55,4 @@ pos, neg = f'With {label}', f'W/O {label}'
 for file in img_list[15:45]:
     file = os.path.join(IMG_PATH, file)
     Prediction.predict_file(model, file, pos, neg)
+    Prediction.analyze_face(IND_FILE)

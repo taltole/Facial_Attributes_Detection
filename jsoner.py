@@ -117,4 +117,4 @@ def summarize_classic_cls(csv_path, att, model):
 if __name__ == '__main__':
     label = 'Hat'
     # find_best_model(PATH_JSON, label)
-    summarize_classic_cls(PATH_CSV, att=None, model=None)
+    summarize_classic_cls(PATH_CSV, att="Wearing_Hat", model=None)

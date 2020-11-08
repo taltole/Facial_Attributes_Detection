@@ -35,7 +35,7 @@ def main(label, cls=MLA, exp=True):
         # Start images processing and dataframe splitting
         print('Reading File...\nCreating Train, Test...')
         trainer = Train(IND_FILE, IMAGE_PATH)
-        train, test = trainer.data_preprocess(IND_FILE, label, 50, True, None)
+        train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
         print('Done!')
 
         # Save embedding
@@ -107,30 +107,30 @@ def main(label, cls=MLA, exp=True):
 if __name__ == '__main__':
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
-    # accessories_label = [l for l in cols if l.startswith("Wearing")]
-    labels = ['Arched_Eyebrows',
-              'Attractive',
-              'Bags_Under_Eyes',
-              'Bald',
-              'Bangs',
-              'Big_Lips',
-              'Big_Nose',
-              'Bushy_Eyebrows',
-              'Chubby',
-              'Double_Chin',
-              'Eyeglasses',
-              'Goatee',
-              'Heavy_Makeup',
-              'High_Cheekbones',
-              'Mustache',
-              'Narrow_Eyes',
-              'No_Beard',
-              'Oval_Face',
-              'Pale_Skin',
-              'Pointy_Nose',
-              'Receding_Hairline',
-              'Rosy_Cheeks',
-              'Sideburns',
-              'Smiling']
-    for label in [labels][0]:
-        main(label, MLA, True)
+    accessories_label = [l for l in cols if l.startswith("Wearing")]
+    # labels = ['Arched_Eyebrows',
+    #           'Attractive',
+    #           'Bags_Under_Eyes',
+    #           'Bald',
+    #           'Bangs',
+    #           'Big_Lips',
+    #           'Big_Nose',
+    #           'Bushy_Eyebrows',
+    #           'Chubby',
+    #           'Double_Chin',
+    #           'Eyeglasses',
+    #           'Goatee',
+    #           'Heavy_Makeup',
+    #           'High_Cheekbones',
+    #           'Mustache',
+    #           'Narrow_Eyes',
+    #           'No_Beard',
+    #           'Oval_Face',
+    #           'Pale_Skin',
+    #           'Pointy_Nose',
+    #           'Receding_Hairline',
+    #           'Rosy_Cheeks',
+    #           'Sideburns',
+    #           'Smiling']
+    for label in accessories_label:
+        main(label, "SVC", True)

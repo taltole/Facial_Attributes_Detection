@@ -96,9 +96,6 @@ def predict_file(model, file, pos, neg):
     """
     function read an image file and predict its label using model and class name arguments
     """
-    # running rage models
-    result_rage = analyze_face(file)
-
     # running binary models
     img = tf.keras.preprocessing.image.load_img(file, target_size=(224, 224))
     img_array = tf.keras.preprocessing.image.img_to_array(img)
@@ -107,7 +104,7 @@ def predict_file(model, file, pos, neg):
     score = predictions[0]
     result = max((pos, 100 * score), (neg, 100 * (1 - score)), key=lambda x: x[1])
     text = f"{neg}:\t{100 * (1 - score)}%\t{pos}:\t{100 * score}%"
-    result = result[0] + result_rage
+    result = result[0]
     return result
 
 

@@ -2,17 +2,31 @@ from deepface import DeepFace
 
 from config import *
 import tensorflow as tf
-
+from tensorflow.keras.applications.vgg16 import preprocess_input as preprocess_input_VGG16
+from tensorflow.keras.applications.vgg19 import preprocess_input as preprocess_input_VGG19
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input as preprocess_input_MNV2
+from tensorflow.keras.applications.resnet50 import preprocess_input as Preprocess_RESNET50
 
 class Prediction:
     @staticmethod
     def evaluate_model(model, valid_data):
+        """
+        :param model: model
+        :param valid_data: validation data set
+        Evalutates the network on the validation set
+        """
         print('Evaluating the network ...')
         loss, acc = model.evaluate(valid_data)
         print(f"Validation Loss:\t{round(loss, 3)}\nValidation Acc.:\t{round(acc, 3)}")
 
     @staticmethod
     def test_prediction(model, test_data, train_data):
+        """
+        :param model: model
+        :param test_data: test data set
+        :param train_data: train data set
+        return: predictions on the test set
+        """
         test_data.reset()
         STEP_SIZE_TEST = test_data.n // test_data.batch_size
         print('Starting prediction...')
@@ -27,6 +41,7 @@ class Prediction:
         y_pred = [labels[k] for k in predicted_class_indices]
         return y_pred
 
+# ----------------------------------------------------------------------------------
     # Inference
     @staticmethod
     def predict_label(model, labels, pos, neg):
@@ -49,6 +64,30 @@ class Prediction:
             plt.yticks([])
         plt.show()
         return result
+
+    @staticmethod
+    def predict_label_multi(model, labels, imagepath, preprocess=None):
+        img = tf.keras.preprocessing.image.load_img(os.path.join(imagepath), target_size=(224, 224))
+        img_array = tf.keras.preprocessing.image.img_to_array(img)
+        img_array = np.expand_dims(img_array, 0)  # Create batch axis
+
+        if preprocess == 'vgg16':
+            img_array = preprocess_input_VGG16(img_array)
+        elif preprocess == 'vgg19':
+            img_array = preprocess_input_VGG19(img_array)
+        elif preprocess == 'MobileNetV2':
+            img_array = preprocess_input_MNV2(img_array)
+        elif preprocess == 'ResNet50':
+            img_array = Preprocess_RESNET50(img_array)
+        predictions = model.predict(img_array)
+        score = np.argmax(predictions, axis=1)
+        imge = mpimg.imread(imagepath)
+        plt.figure(figsize=(5, 5))
+        plt.imshow(imge)
+        plt.title(list(labels.keys())[int(score)])
+        plt.xticks([])
+        plt.yticks([])
+        plt.show()
 
     @staticmethod
     def predict_file(model, file, pos, neg):

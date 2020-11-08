@@ -13,11 +13,20 @@ from sklearn.utils import shuffle
 
 class Train:
     def __init__(self, index_file, image_path):
+        """
+        :param index_file: path to the csv file
+        :param image_path: path to the image folder
+        """
         self.index_file = index_file
         self.image_path = image_path
 
     # ######################    Data Preparation   ######################
     def img_preprocess(self, data, img_size):
+        """
+        :param data: dataframe
+        :param img_size: int
+        Function that apply general preprocessing to each image of a dataframe
+        """
         data_img = []
         IMG_WIDTH = img_size
         IMG_HEIGHT = img_size
@@ -41,6 +50,7 @@ class Train:
                 labels - list of labels from csv columns name
                 balance - int for a specific balanced set size
                 binary - bool if user want also the negative class (= 0_  +  labels)
+                img_size: int
         returns: balanced train test set for positive and negative or multiclass labels
         """
         # read labels file list

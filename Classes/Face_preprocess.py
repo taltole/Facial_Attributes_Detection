@@ -4,7 +4,6 @@ import numpy as np
 
 
 class BasicFunction:
-
     def __init__(self, folderpath):
         """
         :param folderpath: path to the image folder
@@ -117,5 +116,3 @@ class BasicFunction:
         print(f"Input_shape:\t{model.input_shape}\nOutput_shape:\t{model.output_shape}\nParams:\t{model.count_params()}"
               f"\nLayers:\t{len(model.layers)}\n\n")
         return model.summary()
-
-    # def save_model(model):

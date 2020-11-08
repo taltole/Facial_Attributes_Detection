@@ -50,7 +50,7 @@ def main(label, cls=MLA, exp=True):
             label_emb.to_csv(lbl_path)
     print(f'\nTrain on {label}...\n')
 
-    # GridSearch Classifiers
+    # GridSearch Classifiers (when MLA - several algos used)
     if not isinstance(cls, str):
         print('GridSearch top Cls...')
         df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, cls)
@@ -108,29 +108,29 @@ if __name__ == '__main__':
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
     accessories_label = [l for l in cols if l.startswith("Wearing")]
-    # labels = ['Arched_Eyebrows',
-    #           'Attractive',
-    #           'Bags_Under_Eyes',
-    #           'Bald',
-    #           'Bangs',
-    #           'Big_Lips',
-    #           'Big_Nose',
-    #           'Bushy_Eyebrows',
-    #           'Chubby',
-    #           'Double_Chin',
-    #           'Eyeglasses',
-    #           'Goatee',
-    #           'Heavy_Makeup',
-    #           'High_Cheekbones',
-    #           'Mustache',
-    #           'Narrow_Eyes',
-    #           'No_Beard',
-    #           'Oval_Face',
-    #           'Pale_Skin',
-    #           'Pointy_Nose',
-    #           'Receding_Hairline',
-    #           'Rosy_Cheeks',
-    #           'Sideburns',
-    #           'Smiling']
+    labels = ['Arched_Eyebrows',
+              'Attractive',
+              'Bags_Under_Eyes',
+              'Bald',
+              'Bangs',
+              'Big_Lips',
+              'Big_Nose',
+              'Bushy_Eyebrows',
+              'Chubby',
+              'Double_Chin',
+              'Eyeglasses',
+              'Goatee',
+              'Heavy_Makeup',
+              'High_Cheekbones',
+              'Mustache',
+              'Narrow_Eyes',
+              'No_Beard',
+              'Oval_Face',
+              'Pale_Skin',
+              'Pointy_Nose',
+              'Receding_Hairline',
+              'Rosy_Cheeks',
+              'Sideburns',
+              'Smiling']
     for label in accessories_label:
-        main(label, "SVC", True)
+        main(label, 'tree', True)

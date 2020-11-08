@@ -78,6 +78,7 @@ grid_param = [
         'max_depth': grid_max_depth,  # default=None
         'random_state': grid_seed,
         'n_jobs': [-1]
+        # {'criterion': 'gini', 'max_depth': 8, 'n_estimators': 100, 'n_jobs': -1, 'random_state': 39}
 
     }],
 
@@ -103,6 +104,7 @@ grid_param = [
 
         # {'criterion': 'entropy', 'max_depth': 6, 'n_estimators': 100, 'oob_score': True, 'random_state': 0}
         # {'criterion': 'gini', 'max_depth': 4, 'n_estimators': 100, 'oob_score': True, 'random_state': 39}
+        # {'criterion': 'entropy', 'max_depth': 6, 'n_estimators': 300, 'n_jobs': -1, 'oob_score': True, 'random_state': 39}
 
     }],
 
@@ -191,6 +193,10 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
                               missing=-999, n_jobs=-1, tree_method='gpu_hist', gpu_id=0)]  #
     elif model == 'SVC':
         algo = [svm.SVC(C=1, decision_function_shape='ovo', gamma=0.01, probability=True, random_state=39)]
+
+    elif model == 'tree':
+        algo = [linear_model.LogisticRegression(fit_intercept=True, random_state=39, solver='newton-cg')]
+
     else:
         algo = model['param']
     for alg in algo:

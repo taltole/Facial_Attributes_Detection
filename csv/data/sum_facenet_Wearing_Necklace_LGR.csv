@@ -1,2 +1,2 @@
 ,MLA Name,MLA Test Accuracy Mean,Run Time,MLA pred
-0,LogisticRegression,0.7531628494165987,0.4987358093261719,[1. 1. 0. ... 0. 1. 1.]
+0,LogisticRegression,0.7501029825694132,0.32466683387756345,['0.0' '1.0' '1.0' ... '0.0' '0.0' '0.0']

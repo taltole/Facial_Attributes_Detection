@@ -57,7 +57,7 @@ def main(label, cls=MLA, exp=True):
     tic = time()
     if not isinstance(cls, str):
         print('GridSearch top Cls...')
-        df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, cls)
+        df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, cls, label)
         print(df_cls.iloc[:, :-1])
         # name_best_cls = df_cls['MLA Name'].values[0]
 
@@ -69,7 +69,7 @@ def main(label, cls=MLA, exp=True):
         print('\nOptimizing Hyper Parameters...')
         top_cls = gridsearch_params(df_cls, X_train, y_train, 3)
         print('Final Test for Best Classifier...')
-        df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
+        df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls, label)
         # print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
         best_models = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
         cls = str(best_models).strip('[]')
@@ -78,7 +78,7 @@ def main(label, cls=MLA, exp=True):
         # y_pred = df_top_cls['MLA pred'].values[0]
     else:
         top_cls = cls
-        df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls)
+        df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls, label)
         # best_models = [i for i in top_cls if str(i).startswith(df_top_cls['MLA Name'].values[0])]
         # cls = str(best_models).strip('[]')
         print(f'Best Model:\n{cls}\n', '-' * 50)
@@ -141,4 +141,4 @@ if __name__ == '__main__':
               'Smiling']
 
     for label in labels:
-        main(label, 'LGR', True)
+        main(label, 'SVC', True)

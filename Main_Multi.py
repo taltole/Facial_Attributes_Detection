@@ -79,48 +79,5 @@ def main():
     Prediction.predict_label_multi(model, labels_hair, IMAGE_PATH + '/' + 'face_att_018217.jpg', 'ResNet50')
 
 
-"""
-    # layer_name = 'my_dense'
-    # intermediate_layer_model = Model(inputs=model.input,
-    #                                  outputs=model.get_layer(layer_name).output)
-
-    # intermediate_layer_model.summary()
-    model.summary()
-
-    # intermediate_output = intermediate_layer_model.predict()
-    intermediate_output = y_pred
-    intermediate_output = pd.DataFrame(data=intermediate_output)
-
-    # val_data = intermediate_output[53000:]
-
-    submission_cnn = model.predict(np.float32(test['image']))
-
-    # intermediate_test_output = intermediate_layer_model.predict(test['image'])
-    intermediate_test_output = model.predict(np.float32(test['image']))
-    intermediate_test_output = pd.DataFrame(data=intermediate_test_output)
-
-    # xgbmodel = XGBClassifier(objective='multi:softprob', num_class=2)
-    # xgbmodel.fit(intermediate_output, train_label1)
-    # xgbmodel.score(val_data, val_label1)
-    #
-    # intermediate_layer_model.predict(X_test)
-    # submission_xgb = xgbmodel.predict(intermediate_test_output)
-
-    from sklearn.naive_bayes import GaussianNB
-
-    gnbmodel = GaussianNB().fit(intermediate_output, np.float32(train['label']))
-
-    submission_gnb = gnbmodel.predict(intermediate_test_output)
-    gnbmodel.score(np.float32(train['image'][valid_data.filenames]), valid_data.labels)
-
-    submission_cnn = submission_cnn.astype(int)
-
-    label = np.argmax(submission_cnn, 1)
-    id_ = np.arange(0, label.shape[0])
-    print(label)
-
-"""
-
-
 if __name__ == '__main__':
     main()

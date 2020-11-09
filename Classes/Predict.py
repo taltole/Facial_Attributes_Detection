@@ -84,14 +84,14 @@ class Prediction:
             img_array = Preprocess_RESNET50(img_array)
         predictions = model.predict(img_array)
         score = np.argmax(predictions, axis=1)
-        # imge = mpimg.imread(imagepath)
-        # plt.figure(figsize=(5, 5))
-        # plt.imshow(imge)
-        # plt.title(list(labels.keys())[int(score)])
-        # plt.xticks([])
-        # plt.yticks([])
-        # plt.show()
-        return score
+        imge = mpimg.imread(imagepath)
+        plt.figure(figsize=(5, 5))
+        plt.imshow(imge)
+        plt.title(list(labels.keys())[int(score)])
+        plt.xticks([])
+        plt.yticks([])
+        plt.show()
+        # return score
 
 
 def predict_file(model, file, pos, neg):
@@ -107,7 +107,7 @@ def predict_file(model, file, pos, neg):
     result = max((pos, 100 * score), (neg, 100 * (1 - score)), key=lambda x: x[1])
     text = f"{neg}:\t{100 * (1 - score)}%\t{pos}:\t{100 * score}%"
     result = result[0]
-    return result
+    return result, predictions
 
 
 def analyze_face(df, backend=0, plot=False):
@@ -128,7 +128,7 @@ def analyze_face(df, backend=0, plot=False):
 
     # Run DeepFace
     try:
-        demography = DeepFace.analyze(file, detector_backend=backends[backend])
+        demography, score = DeepFace.analyze(file, detector_backend=backends[backend])
         age = int(demography['age'])
         gender = demography['gender']
         emotion = demography['dominant_emotion']
@@ -142,7 +142,7 @@ def analyze_face(df, backend=0, plot=False):
             plt.xticks([])
             plt.yticks([])
             plt.show()
-        return textstr
+        return textstr, score
 
     except ValueError:
         print('Face could not be detected')

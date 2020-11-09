@@ -170,7 +170,7 @@ grid_param = [
 
 
 # index through MLA and save performance to table
-def gridsearch_cls(X_train, y_train, X_test, y_test, model):
+def gridsearch_cls(X_train, y_train, X_test, y_test, model, label):
     """
     This function takes train and test data sets sand run gridsearch over basic classifier from MLA dict
     model = MLA it gridsearch over all models in MLA
@@ -211,7 +211,10 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
 
         # save MLA predictions
         alg.fit(X_train, y_train)
-        # todo saved to pickle
+        pkl_filename = label + MLA_name + ".pkl"
+        with open(pkl_filename, 'wb') as file:
+            np.pickle.dump(alg, file)
+
         MLA_compare.loc[row_index, 'MLA pred'] = alg.predict(X_test)
         row_index += 1
 

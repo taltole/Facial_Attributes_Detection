@@ -213,7 +213,7 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model, label):
         # save MLA predictions
         alg.fit(X_train, y_train)
         print("Saving model to Pickle...")
-        pkl_filename = f"{label}_{MLA_name}.pkl"
+        pkl_filename = f"pkl/{label}_{MLA_name}.pkl"
         with open(pkl_filename, 'wb') as file:
             pickle.dump(alg, file)
 

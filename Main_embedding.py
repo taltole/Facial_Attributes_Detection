@@ -141,4 +141,4 @@ if __name__ == '__main__':
               'Smiling']
     labels = ['Wearing_Hat', 'Eyeglasses', 'Wearing_Necktie', 'Wearing_Necklace', 'Mustache', 'No_Beard', 'Wearing_Earrings']
     for label in labels:
-        main(label, 'SVC', True)
+        main(label, 'XGB', True)

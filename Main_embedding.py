@@ -59,7 +59,6 @@ def main(label, cls=MLA, exp=True):
         print('GridSearch top Cls...')
         df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, cls, label)
         print(df_cls.iloc[:, :-1])
-        # name_best_cls = df_cls['MLA Name'].values[0]
 
         # Plot top classifier
         if not exp:
@@ -70,23 +69,18 @@ def main(label, cls=MLA, exp=True):
         top_cls = gridsearch_params(df_cls, X_train, y_train, 3)
         print('Final Test for Best Classifier...')
         df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls, label)
-        # print(df_top_cls.iloc[:, :-1], '-'*50, sep='\n')
         best_models = [i for i in top_cls['param'] if str(i).startswith(df_top_cls['MLA Name'].values[0])]
         cls = str(best_models).strip('[]')
         print(f'Best Model:\n{cls}\n', '-' * 50)
-        # best_cls = cls
-        # y_pred = df_top_cls['MLA pred'].values[0]
     else:
         top_cls = cls
         df_top_cls = gridsearch_cls(X_train, y_train, X_test, y_test, top_cls, label)
-        # best_models = [i for i in top_cls if str(i).startswith(df_top_cls['MLA Name'].values[0])]
-        # cls = str(best_models).strip('[]')
         print(f'Best Model:\n{cls}\n', '-' * 50)
 
     print(df_top_cls.iloc[:, :-1], '-' * 50, sep='\n')
     y_pred = df_top_cls['MLA pred'].values[0]
     toc = time()
-    run = tic - toc
+    run = toc - tic
     print(f"Training time for {label}: {run/60} min")
 
     # Saving embedding and final results to file
@@ -114,31 +108,31 @@ def main(label, cls=MLA, exp=True):
 if __name__ == '__main__':
     df = pd.read_csv(IND_FILE)
     cols = df.columns.tolist()
-    accessories_label = [l for l in cols if l.startswith("Wearing")]
-    labels = ['Arched_Eyebrows',
-              'Attractive',
-              'Bags_Under_Eyes',
-              'Bald',
-              'Bangs',
-              'Big_Lips',
-              'Big_Nose',
-              'Bushy_Eyebrows',
-              'Chubby',
-              'Double_Chin',
-              'Eyeglasses',
-              'Goatee',
-              'Heavy_Makeup',
-              'High_Cheekbones',
-              'Mustache',
-              'Narrow_Eyes',
-              'No_Beard',
-              'Oval_Face',
-              'Pale_Skin',
-              'Pointy_Nose',
-              'Receding_Hairline',
-              'Rosy_Cheeks',
-              'Sideburns',
-              'Smiling']
+    # accessories_label = [l for l in cols if l.startswith("Wearing")]
+    # labels = ['Arched_Eyebrows',
+    #           'Attractive',
+    #           'Bags_Under_Eyes',
+    #           'Bald',
+    #           'Bangs',
+    #           'Big_Lips',
+    #           'Big_Nose',
+    #           'Bushy_Eyebrows',
+    #           'Chubby',
+    #           'Double_Chin',
+    #           'Eyeglasses',
+    #           'Goatee',
+    #           'Heavy_Makeup',
+    #           'High_Cheekbones',
+    #           'Mustache',
+    #           'Narrow_Eyes',
+    #           'No_Beard',
+    #           'Oval_Face',
+    #           'Pale_Skin',
+    #           'Pointy_Nose',
+    #           'Receding_Hairline',
+    #           'Rosy_Cheeks',
+    #           'Sideburns',
+    #           'Smiling']
     labels = ['Wearing_Hat', 'Eyeglasses', 'Wearing_Necktie', 'Wearing_Necklace', 'Mustache', 'No_Beard', 'Wearing_Earrings']
     for label in labels:
         main(label, 'XGB', True)

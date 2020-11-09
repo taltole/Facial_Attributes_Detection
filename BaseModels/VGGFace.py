@@ -71,6 +71,6 @@ def loadModel(url='https://drive.google.com/uc?id=1CPSeum3HpopfomUEK1gybeuIVoeJT
 
     # -----------------------------------
 
-    vgg_face_descriptor = Model(inputs=model.layers[0].input, outputs=model.layers[-2].output)
+    vgg_face_descriptor = Model(inputs=model.layers[0].input, outputs=model.layers[-1].output)
 
     return vgg_face_descriptor

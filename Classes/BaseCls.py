@@ -3,6 +3,8 @@ The presented CNN-XGBoost model provides more precise output by integrating CNN 
 extractor to automatically obtain features from input and XGBoost as a recognizer in the top level of the
 network to produce results.
 """
+import pickle
+
 from sklearn import ensemble, linear_model, naive_bayes, neighbors, svm, tree, model_selection, metrics
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.preprocessing import label_binarize

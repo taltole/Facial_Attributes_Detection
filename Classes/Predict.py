@@ -82,16 +82,19 @@ class Prediction:
             img_array = preprocess_input_MNV2(img_array)
         elif preprocess == 'ResNet50':
             img_array = Preprocess_RESNET50(img_array)
+
         predictions = model.predict(img_array)
-        score = np.argmax(predictions, axis=1)
-        imge = mpimg.imread(imagepath)
-        plt.figure(figsize=(5, 5))
-        plt.imshow(imge)
-        plt.title(list(labels.keys())[int(score)])
-        plt.xticks([])
-        plt.yticks([])
-        plt.show()
-        # return score
+        index = np.argmax(predictions, axis=1)
+        score = predictions[int(index)]
+        result = list(labels.keys())[int(score)]
+        # imge = mpimg.imread(imagepath)
+        # plt.figure(figsize=(5, 5))
+        # plt.imshow(imge)
+        # plt.title(list(labels.keys())[int(score)])
+        # plt.xticks([])
+        # plt.yticks([])
+        # plt.show()
+        return result, score
 
 
 def predict_file(model, file, pos, neg):
@@ -118,14 +121,14 @@ def analyze_face(df, backend=0, plot=False):
     backends = ['opencv', 'ssd', 'dlib', 'mtcnn']
 
     # reading file
-    if isinstance(df, str):
-        file = find_imagepath(df)
-    elif isinstance(df, list):
-        file = df
-    else:
-        img_f1 = df.sample().values[0]
-        file = find_imagepath(img_f1)
-
+    # if isinstance(df, str):
+    #     file = find_imagepath(df)
+    # elif isinstance(df, list):
+    #     file = df
+    # else:
+    #     img_f1 = df.sample().values[0]
+    #     file = find_imagepath(img_f1)
+    file = df
     # Run DeepFace
     try:
         demography, score = DeepFace.analyze(file, detector_backend=backends[backend])

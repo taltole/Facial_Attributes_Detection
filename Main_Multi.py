@@ -24,7 +24,6 @@ def main():
     print(f'\nRunning data generator...')
     train_data, valid_data, test_data = Multi.generator_splitter_multi(model_name, train, test, IMAGE_PATH)
 
-
     label_name = 'Hair_color'
     model_file = os.path.join('weights/', model_name + '_' + label_name + '.h5')
     json_path = os.path.join('json/', model_name + '_' + label_name + '.json')

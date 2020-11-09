@@ -68,7 +68,7 @@ class BaseModel:
     # Adding new model `model` whose first layer is base model chosen by user with additional Layer
     # (from `tensorflow.keras.Layer`):
 
-    def adding_toplayer(self, base_model):
+    def adding_toplayer(self, base_model, name):
         """
         Function takes basemodel and add top Layer
         """
@@ -129,9 +129,9 @@ class BaseModel:
         base_model.trainable = False
         model = Sequential()
         model.add(base_model)
-        if self.model_name == 'vgg19':
+        if name == 'vgg19':
             pass
-        elif self.model_name == 'Vggface7':
+        elif name == 'vggface7':
             model = Sequential()
             model.add(base_model)
             model.add(Flatten())
@@ -140,7 +140,7 @@ class BaseModel:
             model.add(Dense(64, activation='relu'))
             model.add(Dense(5, activation='softmax'))
 
-        elif self.model_name == 'Vggface1':
+        elif name == 'vggface1':
             model.add(Dropout(0.25))
             model.add(Flatten())
             model.add(Dense(512))

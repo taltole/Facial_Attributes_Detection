@@ -35,6 +35,7 @@ pylab.rcParams.update(params)
 if os.getcwd().startswith('/Users/tal'):
     path = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection'
     MODEL_PATH = '/Users/tal/Dropbox/Projects/'
+    MOD_ATT_PATH = MODEL_PATH
     WEIGHT_PATH = '/Users/tal/Dropbox/Projects/Facial_Attributes_Detection/Other/Weights'
     IMAGE_PATH = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1'
     IND_FILE = '/Users/tal/Google Drive/Cellebrite/files list.csv'
@@ -52,6 +53,7 @@ else:
     WEIGHT_PATH = '/home/ubuntu/Facial_Attributes_Detection/weights'
     MODEL_PATH = '/home/ubuntu/Facial_Attributes_Detection/'
     EMB_PATH = '/home/ubuntu/Facial_Attributes_Detection/csv/emb'
+    MOD_ATT_PATH = '/home/ubuntu/Facial_Attributes_Detection/model-att'
 
 
 def find_imagepath(file):

@@ -10,6 +10,7 @@ from xgboost import XGBClassifier
 from time import time
 from sklearn.metrics import accuracy_score, confusion_matrix
 from config import *
+import pickle
 import numpy as np
 # from tune_sklearn import TuneGridSearchCV
 
@@ -211,9 +212,10 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model, label):
 
         # save MLA predictions
         alg.fit(X_train, y_train)
-        pkl_filename = label + MLA_name + ".pkl"
+        print("Saving model to Pickle...")
+        pkl_filename = f"{label}_{MLA_name}.pkl"
         with open(pkl_filename, 'wb') as file:
-            np.pickle.dump(alg, file)
+            pickle.dump(alg, file)
 
         MLA_compare.loc[row_index, 'MLA pred'] = alg.predict(X_test)
         row_index += 1

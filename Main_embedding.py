@@ -23,7 +23,7 @@ def main(label, cls=MLA, exp=True):
     emb_path = os.path.join(EMB_PATH, emb_file)
     lbl_path = os.path.join(EMB_PATH, lbl_file)
 
-    if os.path.exists(emb_path):
+    if not os.path.exists(emb_path):
         print('Load Saved Embedding...')
         df_emb_temp = pd.read_csv(emb_path)
         df_lbl_temp = pd.read_csv(lbl_path)
@@ -139,6 +139,6 @@ if __name__ == '__main__':
               'Rosy_Cheeks',
               'Sideburns',
               'Smiling']
-
+    labels = ['Wearing_Hat', 'Eyeglasses', 'Wearing_Necktie', 'Wearing_Necklace', 'Mustache', 'No_Beard', 'Wearing_Earrings']
     for label in labels:
         main(label, 'SVC', True)

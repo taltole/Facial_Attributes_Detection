@@ -69,6 +69,7 @@ class Prediction:
 
     @staticmethod
     def predict_label_multi(model, labels, imagepath, preprocess=None):
+
         img = tf.keras.preprocessing.image.load_img(os.path.join(imagepath), target_size=(224, 224))
         img_array = tf.keras.preprocessing.image.img_to_array(img)
         img_array = np.expand_dims(img_array, 0)  # Create batch axis
@@ -83,13 +84,14 @@ class Prediction:
             img_array = Preprocess_RESNET50(img_array)
         predictions = model.predict(img_array)
         score = np.argmax(predictions, axis=1)
-        imge = mpimg.imread(imagepath)
-        plt.figure(figsize=(5, 5))
-        plt.imshow(imge)
-        plt.title(list(labels.keys())[int(score)])
-        plt.xticks([])
-        plt.yticks([])
-        plt.show()
+        # imge = mpimg.imread(imagepath)
+        # plt.figure(figsize=(5, 5))
+        # plt.imshow(imge)
+        # plt.title(list(labels.keys())[int(score)])
+        # plt.xticks([])
+        # plt.yticks([])
+        # plt.show()
+        return score
 
 
 def predict_file(model, file, pos, neg):

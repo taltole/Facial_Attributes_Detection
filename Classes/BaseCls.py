@@ -211,6 +211,7 @@ def gridsearch_cls(X_train, y_train, X_test, y_test, model):
 
         # save MLA predictions
         alg.fit(X_train, y_train)
+        # todo saved to pickle
         MLA_compare.loc[row_index, 'MLA pred'] = alg.predict(X_test)
         row_index += 1
 

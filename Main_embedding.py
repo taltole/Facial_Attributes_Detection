@@ -33,6 +33,7 @@ def main(label, cls=MLA, exp=True):
 
     else:
         # Start images processing and dataframe splitting
+        tic_emb = time()
         print('Reading File...\nCreating Train, Test...')
         trainer = Train(IND_FILE, IMAGE_PATH)
         train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
@@ -42,7 +43,9 @@ def main(label, cls=MLA, exp=True):
         print(f'\nSave Embedding...')
         X_train, y_train = basemodel.loading_embedding(IMAGE_PATH, model, train, 1)
         X_test, y_test = basemodel.loading_embedding(IMAGE_PATH, model, test, 1)
-        
+        toc_emb = time()
+        run_emb = tic_emb - toc_emb
+        print(f"Find Embedding time: {run_emb/60} min")
         if exp:
             data_emb = pd.DataFrame(np.vstack([X_train, X_test]))
             label_emb = pd.DataFrame(np.hstack([y_train, y_test]))
@@ -51,6 +54,7 @@ def main(label, cls=MLA, exp=True):
     print(f'\nTrain on {label}...\n')
 
     # GridSearch Classifiers (when MLA - several algos used)
+    tic = time()
     if not isinstance(cls, str):
         print('GridSearch top Cls...')
         df_cls = gridsearch_cls(X_train, y_train, X_test, y_test, cls)
@@ -81,6 +85,9 @@ def main(label, cls=MLA, exp=True):
 
     print(df_top_cls.iloc[:, :-1], '-' * 50, sep='\n')
     y_pred = df_top_cls['MLA pred'].values[0]
+    toc = time()
+    run = tic - toc
+    print(f"Training time for {label}: {run/60} min")
 
     # Saving embedding and final results to file
     if exp:

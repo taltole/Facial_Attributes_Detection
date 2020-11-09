@@ -126,20 +126,38 @@ class BaseModel:
 
         # To train our transfer learning model we will freeze the weights of the basemodel and only train
         # the added Layers.
-
         base_model.trainable = False
         model = Sequential()
         model.add(base_model)
-        #
+        if self.model_name == 'vgg19':
+            pass
+        elif self.model_name == 'Vggface7':
+            model = Sequential()
+            model.add(base_model)
+            model.add(Flatten())
+            model.add(Dense(256, activation='relu'))
+            model.add(Dense(128, activation='relu'))
+            model.add(Dense(64, activation='relu'))
+            model.add(Dense(5, activation='softmax'))
+
+        elif self.model_name == 'Vggface1':
+            model.add(Dropout(0.25))
+            model.add(Flatten())
+            model.add(Dense(512))
+            model.add(Activation('relu'))
+            model.add(Dropout(0.25))
+            model.add(Dense(256, activation='relu'))
+            model.add(Dense(1, activation='sigmoid'))
+
         # model.add(Dropout(0.25))
         # model.add(Flatten())
         # model.add(Dense(512))
         # model.add(Activation('relu'))
-
-        model.add(Dropout(0.25))
-        model.add(Dense(128, activation='relu'))
-        model.add(Dense(1, activation='sigmoid'))
-        self.print_summary(model)
+        else:
+            model.add(Dropout(0.25))
+            model.add(Dense(128, activation='relu'))
+            model.add(Dense(1, activation='sigmoid'))
+            self.print_summary(model)
         return model
 
     def loading_embedding(self, imagepath, model, data, layer_num):

@@ -9,13 +9,9 @@ def main(label):
     # Start images processing and dataframe splitting
     trainer = Train(IND_FILE, IMAGE_PATH)
     print('Reading File...')
-    # label = 'Eyeglasses'  # , 'Wearing_Hat', 'Wearing_Earrings']
     print(f'Preparing data for class:\t{label}\nCreating Train, Test...')
     train, test = trainer.data_preprocess(IND_FILE, label, 5000, True, None)
     print('Done!')
-
-    # print(train['image'].shape)
-    # run_ensemble(train['image'], train['label'], test['image'], test['label'])
 
     # print('Checking test sample images...')
     # trainer.sanity_check(test)

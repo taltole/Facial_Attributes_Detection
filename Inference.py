@@ -2,7 +2,7 @@ from Classes.LoadModel import BaseModel
 from Classes import Predict
 import memory_profiler
 
-from Classes.Predict import analyze_face
+from Classes.Predict import analyze_face, Prediction
 from config import *
 import random
 
@@ -21,9 +21,6 @@ def load_best_model(model_name, label):
     return model
 
 
-# Get img list
-img_list = os.listdir(IMAGE_PATH)
-
 # Taking Best Model per Att
 models_list = [file for file in os.listdir(MODEL_PATH) if str(file).endswith('h5')]
 best_model_list = []
@@ -41,10 +38,17 @@ best_pairs = zip(best_model_list, label_list)
 
 print('Running Inference...')
 label_query = ['Eyeglasses']
-for file in random.choices(img_list, k=3):
+
+
+def inference(image_path, best_pairs):
+
+    # Get img list
+    img_list = os.listdir(IMAGE_PATH)
+    file = random.choices(img_list, k=1)
     result = []
     tic = time()
-    file = os.path.join(IMAGE_PATH, file)
+    file = os.path.join(image_path, file)
+
     for model_name, label in best_pairs:
         pos, neg = f'{label}: V', f'{label}: X'
         model = load_best_model(model_name, label)
@@ -52,10 +56,15 @@ for file in random.choices(img_list, k=3):
         result_rage = analyze_face(file)
         # running binary models
         result.append(Predict.predict_file(model, file, pos, neg)+result_rage)
+        # labels_hair = {'Bald': 0, 'Black_Hair': 1, 'Blond_Hair': 2, 'Brown_Hair': 3, 'Gray_Hair': 4}
+        # Prediction.predict_label_multi(model, labels_hair, file, 'ResNet50')
 
+    result = ''.join(result)
     toc = time()
     run = toc - tic
     print(f'Avg Time inference {(run / 60)/len(models_list):.2f} minutes.')
+    # inf_dict = dict(file: result)
+
     img = mpimg.imread(file)
     plt.figure(figsize=(8, 5))
     plt.imshow(img)
@@ -63,3 +72,5 @@ for file in random.choices(img_list, k=3):
     plt.xticks([])
     plt.yticks([])
     plt.show()
+
+inference(IMAGE_PATH, best_pairs)

@@ -77,7 +77,7 @@ class BaseModel:
         model.add(base_model)
         if name == 'vgg19':
             pass
-        elif name == 'ResNet506':
+        elif name == 'ResNet507':
             model = Sequential()
             model.add(base_model)
             model.add(Flatten())

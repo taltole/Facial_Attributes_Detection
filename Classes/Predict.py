@@ -83,7 +83,7 @@ class Prediction:
         elif preprocess == 'ResNet50':
             img_array = Preprocess_RESNET50(img_array)
 
-        predictions = model.predict(img_array)
+        predictions = model.predict(img_array)[0]
         index = np.argmax(predictions, axis=1)
         score = predictions[int(index)]
         result = list(labels.keys())[int(score)]

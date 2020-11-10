@@ -86,9 +86,12 @@ def inference(file, best_pairs, plot=True):
 
 
 if __name__ == '__main__':
+
     # Get img list
     img_list = os.listdir(IMAGE_PATH)
     image = ''.join(random.choices(img_list, k=1))
     file_path = os.path.join(IMAGE_PATH, image)
+
+    # Run Inference
     result = inference(file_path, best_pairs)
     print(result.items(), sep='\n')

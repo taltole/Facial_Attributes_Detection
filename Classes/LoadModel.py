@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Flatten, Layer, Input, Dropout, Activation, Convolution2D, MaxPooling2D
+from tensorflow.keras.layers import Dense, Flatten, Layer, Input, Dropout, Activation, Convolution2D, MaxPooling2D, BatchNormalization
 
 from BaseModels import Facenet, VGGFace
 from AttModels import Age, Emotion, Gender, Race
@@ -72,72 +72,24 @@ class BaseModel:
         """
         Function takes basemodel and add top Layer
         """
-        # classes = 2
-        # base_model_output = Sequential()
-        # base_model_output = Convolution2D(classes, (1, 1), name='predictions')(basemodel.Layer[-4].output)
-        # base_model_output = Flatten()(base_model_output)
-        # base_model_output = Dense(128, activation='relu')(base_model_output)
-        # base_model_output = Dense(2, activation='relu')(base_model_output)
-        # base_model_output = Activation('relu')(base_model_output)
-        # model = Model(inputs=vggface.input, outputs=base_model_output)
-        # -----------------------------------------------------------
-        # model = Sequential()
-        # model.add(basemodel)
-        # model.add(Flatten())
-        # model.add(Dense(128, activation='relu'))
-        # model.add(Dense(1, activation='sigmoid'))
-        # ------------------------------------------------------------
-        # model = Sequential()
-        # model = Convolution2D(classes, (1, 1), name='predictions')(basemodel.Layer[-4].output)
-        # model = Flatten()(model)
-        # model = Activation('relu')(model)
-        # model = Flatten()(model)
-        # model = Convolution2D(64, 3, padding='same', input_shape=(32,32,3))(model)
-        # model = Activation('relu')(model)
-        # model = Convolution2D(64, (3, 3))(model)
-        # model = Activation('relu')(model)
-        # model = MaxPooling2D(pool_size=(2, 2))(model)
-        # model = Dropout(0.25)(model)
-        # model = Convolution2D(32, (3, 3), padding='same')(model)
-        # model = Activation('relu')(model)
-        # model = Convolution2D(32, (3, 3))(model)
-        # model = Activation('relu')(model)
-        # model = MaxPooling2D(pool_size=(2, 2))(model)
-        # model = Dropout(0.25)(model)
-        # model = Flatten()(model)
-        # model = Dense(512)(model)
-        # model = Activation('relu')(model)
-        # model = Dropout(0.5)(model)
-        # model = Dense(10, activation='relu')(model)
-        # -----------------------------------------------------
-        # inputshape = model.output_shape
-        # # model.add(Flatten())
-        # model.add(Convolution2D(64, 3, padding='same', input_shape=(inputshape, 32, 32, 3)))
-        # model.add(Activation('relu'))
-        # model.add(Convolution2D(64, (3, 3)))
-        # model.add(Activation('relu'))
-        # model.add(MaxPooling2D(pool_size=(2, 2)))
-        # model.add(Dropout(0.25))
-        # model.add(Convolution2D(32, (3, 3), padding='same'))
-        # model.add(Activation('relu'))
-        # model.add(Convolution2D(32, (3, 3)))
-        # model.add(Activation('relu'))
-        # model.add(MaxPooling2D(pool_size=(2, 2)))
-
-        # To train our transfer learning model we will freeze the weights of the basemodel and only train
-        # the added Layers.
         base_model.trainable = False
         model = Sequential()
         model.add(base_model)
         if name == 'vgg19':
             pass
-        elif name == 'vggface7':
+        elif name == 'ResNet506':
             model = Sequential()
             model.add(base_model)
             model.add(Flatten())
+            model.add(Dense(512, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.5))
             model.add(Dense(256, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.5))
             model.add(Dense(128, activation='relu'))
-            model.add(Dense(64, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.25))
             model.add(Dense(5, activation='softmax'))
 
         elif name == 'vggface1':

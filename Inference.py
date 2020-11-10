@@ -49,7 +49,8 @@ def inference(file, best_pairs, plot=True):
     result_rage, score_rage = analyze_face(file)
     result = [result_rage]
     labels, scores = [], []
-    file_dict = {file: {labels: scores}}
+    lbl_scr_dict = dict()
+    file_dict = {file: lbl_scr_dict}
 
     for model_name, label in best_pairs:
         pos, neg = f'{label}: V', f'{label}: X'
@@ -66,17 +67,18 @@ def inference(file, best_pairs, plot=True):
         # running binaryCls models
         result_bicls, score_bicls = Predict.predict_file(model, file, pos, neg)
 
-        result.append(result_bicls+'\n' + result_mult)
+        result.append(result_bicls + '\n' + result_mult)
         scores.append(score_bicls[0][0].astype(float))
         labels.append(label)
         # file_dict[file] = file_dict
 
-    file_dict[file][labels].append(list(zip(labels, scores)))
+    lbl_scr_dict = {k: v for k, v in zip(labels, scores)}
+    file_dict[file] = lbl_scr_dict
     file_dict[file].update(score_rage)
 
     toc = time()
     run = toc - tic
-    print(f'Avg Time inference {(run / 60) / len(models_list):.2f} minutes.')
+    print(f'Avg Time inference per Model:\t {(run / 60) / (len(models_list) + 4):.2f} minutes.')
 
     if plot:
         result = ''.join(result)
@@ -92,7 +94,6 @@ def inference(file, best_pairs, plot=True):
 
 
 if __name__ == '__main__':
-
     # Get img list
     img_list = os.listdir(IMAGE_PATH)
     image = ''.join(random.choices(img_list, k=1))
@@ -100,4 +101,4 @@ if __name__ == '__main__':
 
     # Run Inference
     result = inference(file_path, best_pairs)
-    print(result.items(), sep='\n')
+    print([(k, v) for k, v in result.items()], sep='\n')

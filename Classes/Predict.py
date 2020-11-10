@@ -149,7 +149,7 @@ def analyze_face(df, backend=0, plot=False):
 
     except ValueError:
         print('Face could not be detected')
-        return ''
+        return '', ''
 
 
 

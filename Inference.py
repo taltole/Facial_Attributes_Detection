@@ -41,11 +41,10 @@ print('Running Inference...')
 def inference(file, best_pairs, plot=True):
     tic = time()
     # running rage models
-    result_rage, score_rage = analyze_face(file)
+    result_rage, _ = analyze_face(file)
     rage_list = [(k.split(':')[0], k.split(':')[1]) for k in result_rage.split('\n')[1:-1]]
-    rage_dict = {k:v for k,v in rage_list}
-    results = [result_rage]
-    labels, scores = [], []
+    results_img = [result_rage]
+    labels = []
     lbl_scr_dict = dict()
     file_dict = {file: lbl_scr_dict}
 
@@ -64,30 +63,29 @@ def inference(file, best_pairs, plot=True):
             print(f"\nBest Model {model_name}'s Arc. and Weights Loaded!")
 
             labels_hair = {0: 'Bald', 1: 'Black_Hair', 2: 'Blond_Hair', 3: 'Brown_Hair', 4: 'Gray_Hair'}
-            result, score = Prediction.predict_label_multi(model_multi, labels_hair, file, 'ResNet50')
-            # color = result_mult
-            # result.append(color+'\n')
-            # scores.append(score_multi.astype(float))
-            # labels.append(label)
-
+            result, _ = Prediction.predict_label_multi(model_multi, labels_hair, file, 'ResNet50')
+            result = (label, result)
+            result_img = result[1]
         # running binaryCls models
         else:
             # Loading Binary Model Weights
             model_bi.load_weights(os.path.join(MOD_ATT_PATH, f'{model_name}_{label}.h5'))
             print(f"\nBest Model {model_name}'s Arc. and Weights Loaded!")
-            result, score = Predict.predict_file(model_bi, file, pos, neg)
-            # if result == 'X':
+            result, _ = Predict.predict_file(model_bi, file, pos, neg)
 
+            if result.split(': ')[1] == 'X':
+                result = ('', '')
+                result_img = ''
+            else:
+                result_img = result.split(': ')[0]
+                result = (result.split(': ')[0], '')
 
-        results.append(result + '\n')
-        scores.append(score.astype(float))
+        results_img.append(result_img + '\n')
+        rage_list.append(result)
+        file_dict[file] = {k: v for k, v in rage_list}
+
         labels.append(label)
-
-    # return dict labels score
-    lbl_scr_dict = {k: v for k, v in zip(labels, results)}
-    file_dict[file] = lbl_scr_dict
-    # lbl_scr_dict = {k: v for k, v in dict(result_rage)}
-    file_dict[file].update(rage_dict)
+    file_dict[file].pop('')
 
     # Checking Runtime
     toc = time()
@@ -95,7 +93,7 @@ def inference(file, best_pairs, plot=True):
     print(f'Total Run Time inference:\t {(run / 60):.2f} minutes.')
 
     if plot:
-        result = ''.join(results)
+        result = ''.join(results_img)
         img = mpimg.imread(file)
         plt.figure(figsize=(8, 5))
         plt.imshow(img)
@@ -121,3 +119,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_015191.jpg'
+# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_057829.jpg'

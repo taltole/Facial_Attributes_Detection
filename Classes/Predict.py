@@ -107,11 +107,12 @@ def predict_file(model, file, pos, neg):
     img_array = tf.expand_dims(img_array, 0)  # Create batch axis
     predictions = model.predict(img_array)
     score = predictions[0]
-    max_score = score/max(score)
+    # max_score = score/max(score)
     result = max((pos, 100 * score), (neg, 100 * (1 - score)), key=lambda x: x[1])
-    text = f"{neg}:\t{100 * (1 - score)}%\t{pos}:\t{100 * score}%"
-    result = result[0]
-    return result, score
+    # text = f"{neg}:\t{100 * (1 - score)}%\t{pos}:\t{100 * score}%"
+    # result = [result[0].split(': ')[0] if result[0].split(':')[1] == 'V' else '']
+    # print(result)
+    return result[0], score
 
 
 def analyze_face(df, backend=0, plot=False):

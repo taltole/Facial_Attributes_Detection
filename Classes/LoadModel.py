@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Flatten, Layer, Input, Dropout, Activation, Convolution2D, MaxPooling2D
+from tensorflow.keras.layers import Dense, Flatten, Layer, Input, Dropout, Activation, Convolution2D, MaxPooling2D, BatchNormalization
 
 from BaseModels import Facenet, VGGFace
 from AttModels import Age, Emotion, Gender, Race
@@ -77,13 +77,19 @@ class BaseModel:
         model.add(base_model)
         if name == 'vgg19':
             pass
-        elif name == 'vggface7':
+        elif name == 'ResNet506':
             model = Sequential()
             model.add(base_model)
             model.add(Flatten())
+            model.add(Dense(512, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.5))
             model.add(Dense(256, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.5))
             model.add(Dense(128, activation='relu'))
-            model.add(Dense(64, activation='relu'))
+            model.add(BatchNormalization())
+            model.add(Dropout(0.25))
             model.add(Dense(5, activation='softmax'))
 
         elif name == 'vggface1':

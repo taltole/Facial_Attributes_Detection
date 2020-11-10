@@ -4,10 +4,10 @@ import pickle
 from Inference import *
 app = Flask(__name__)
 
-with open('model.pickle', 'rb') as p:
-    model = pickle.load(p)
+# with open('model.pickle', 'rb') as p:
+#     model = pickle.load(p)
 
-# http://127.0.0.1:5000/predict_single?url_image=file
+# http://127.0.0.1:5000/predict_all?url_image=file
 # http://127.0.0.1:5000/predict_single?
 
 
@@ -17,12 +17,17 @@ def predict_single():
     result = inference(file, best_pairs)
     return result
 
-# @app.route('/predict_all/', methods=['POST'])
-# def predict_all():
-    # data = request.get_json()
+
+@app.route('/predict_all/', methods=['POST'])
+def predict_all():
+
+    data = request.get_json('url_image')
+    result = inference(data, best_pairs)
+    #
     # df = pd.DataFrame(data)
     # df['Prediction'] = model.predict(df)
-    # return df.to_json(orient='records')
+
+    return result  # df.to_json(orient='records')
 
 
 if __name__ == '__main__':

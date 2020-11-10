@@ -27,7 +27,7 @@ def loadModel():
     # load weights
 
     model_name = 'race_model_weights.h5'
-    model_path = os.path.join(WEIGHT_PATH, model_name)
+    model_path = WEIGHT_PATH + model_name
 
     if not os.path.isfile(model_path):
         print("race_model_single_batch.h5 will be downloaded...")

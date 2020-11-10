@@ -44,9 +44,11 @@ print('Running Inference...')
 def inference(file, best_pairs, plot=True):
     score = []
     tic = time()
+
     # running rage models
     result_rage, score_rage = analyze_face(file)
     result = [result_rage]
+
     for model_name, label in best_pairs:
         pos, neg = f'{label}: V', f'{label}: X'
         model = load_best_model(model_name, label)

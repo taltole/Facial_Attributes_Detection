@@ -42,12 +42,14 @@ print('Running Inference...')
 
 
 def inference(file, best_pairs, plot=True):
-    score = []
+    scores = []
     tic = time()
 
     # running rage models
     result_rage, score_rage = analyze_face(file)
     result = [result_rage]
+    labels, scores = [], []
+    file_dict = {file: {labels: scores}}
 
     for model_name, label in best_pairs:
         pos, neg = f'{label}: V', f'{label}: X'
@@ -65,9 +67,11 @@ def inference(file, best_pairs, plot=True):
         result_bicls, score_bicls = Predict.predict_file(model, file, pos, neg)
 
         result.append(result_bicls+'\n' + result_mult)
-        file_dict = {file: {label: score}}
+        scores.append(score_bicls[0][0].astype(float))
+        labels.append(label)
         # file_dict[file] = file_dict
-        file_dict[file][label] = score_bicls[0][0].astype(float)
+
+    file_dict[file][labels].append(list(zip(labels, scores)))
     file_dict[file].update(score_rage)
 
     toc = time()

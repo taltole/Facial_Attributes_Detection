@@ -47,6 +47,7 @@ def inference(file, best_pairs, plot=True):
 
     # running rage models
     result_rage, score_rage = analyze_face(file)
+
     result = [result_rage]
     labels, scores = [], []
     lbl_scr_dict = dict()
@@ -60,25 +61,26 @@ def inference(file, best_pairs, plot=True):
         if label == 'Hair_color':
             labels_hair = {0: 'Bald', 1: 'Black_Hair', 2: 'Blond_Hair', 3: 'Brown_Hair', 4: 'Gray_Hair'}
             result_mult, score_multi = Prediction.predict_label_multi(model, labels_hair, file, 'ResNet50')
-            label = result_mult
+            color = result_mult
+            result.append(color+'\n')
+            scores.append(score_multi.astype(float))
+            labels.append(label)
+
         else:
-            result_mult, score_multi = '', ''
+            # running binaryCls models
+            result_bicls, score_bicls = Predict.predict_file(model, file, pos, neg)
+            result.append(result_bicls + '\n')
+            scores.append(score_bicls.astype(float))
+            labels.append(label)
 
-        # running binaryCls models
-        result_bicls, score_bicls = Predict.predict_file(model, file, pos, neg)
-
-        result.append(result_bicls + '\n' + result_mult)
-        scores.append(score_bicls[0][0].astype(float))
-        labels.append(label)
-        # file_dict[file] = file_dict
-
+    # return dict labels score
     lbl_scr_dict = {k: v for k, v in zip(labels, scores)}
     file_dict[file] = lbl_scr_dict
     file_dict[file].update(score_rage)
 
     toc = time()
     run = toc - tic
-    print(f'Avg Time inference per Model:\t {(run / 60) / (len(models_list) + 4):.2f} minutes.')
+    print(f'Total Run Time inference:\t {(run / 60):.2f} minutes.')
 
     if plot:
         result = ''.join(result)
@@ -93,7 +95,7 @@ def inference(file, best_pairs, plot=True):
     return file_dict
 
 
-if __name__ == '__main__':
+def main():
     # Get img list
     img_list = os.listdir(IMAGE_PATH)
     image = ''.join(random.choices(img_list, k=1))
@@ -102,3 +104,9 @@ if __name__ == '__main__':
     # Run Inference
     result = inference(file_path, best_pairs)
     print([(k, v) for k, v in result.items()], sep='\n')
+    return result
+
+
+if __name__ == '__main__':
+    main()
+

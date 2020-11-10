@@ -37,9 +37,9 @@ def loadModel():
     # ----------------------------
 
     model_name = 'facial_expression_model_weights.h5'
-    model_path = os.path.join(WEIGHT_PATH, model_name)
+    model_path = os.path.join(MOD_ATT_PATH, model_name)
 
-    if not os.path.isfile(WEIGHT_PATH + model_name):
+    if not os.path.isfile(MOD_ATT_PATH + model_name):
         print("facial_expression_model_weights.h5 will be downloaded...")
 
         # zip

@@ -18,7 +18,7 @@ def load_best_model(model_name, label):
     model = basemodel.load_model(False)
     model = basemodel.adding_toplayer(model, name)
     # Loading Best Model
-    model.load_weights(os.path.join(MODEL_PATH, f'{model_name}_{label}.h5'))
+    model.load_weights(os.path.join(MOD_ATT_PATH, f'{model_name}_{label}.h5'))
     print(f"\nBest Model {model_name}'s Arc. and Weights Loaded!")
     return model
 

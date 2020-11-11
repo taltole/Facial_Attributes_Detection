@@ -37,10 +37,10 @@ if __name__ == '__main__':
     # file = os.path.join(IMAGE_PATH, image)
     # print(file)
     file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_029252.jpg'
-    # app.run()
+    app.run()
     port = os.environ.get('PORT')
-    if port:
-        app.run(host='0.0.0.0', port=int(port))
-        print('in port')
-    else:
-        app.run()
+    # if port:
+    #     app.run(host='0.0.0.0', port=int(port))
+    #     print('in port')
+    # else:
+    #     app.run()

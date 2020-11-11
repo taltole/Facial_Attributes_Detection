@@ -47,8 +47,6 @@ for model in models_list:
 
 best_pairs = zip(best_model_list, label_list)
 
-print('Running Inference...')
-
 
 def inference(file, best_pairs, plot=True):
     """
@@ -58,6 +56,8 @@ def inference(file, best_pairs, plot=True):
             plot: bool if want to see labeled image file
     returns: plot and dictionary with file and labels
     """
+    print('Running Inference...')
+
     tic = time()
     # running rage models
     # Loading Models

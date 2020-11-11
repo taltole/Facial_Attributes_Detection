@@ -226,10 +226,11 @@ class Train:
             callback_list = callback
 
         # Optimizing
-        if optimize is None and multi==False:
+        if optimize is None and multi == False:
             model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='binary_crossentropy', metrics=["accuracy"])
-        elif optimize is None and multi==True:
-            model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='categorical_crossentropy', metrics=["accuracy"])
+        elif optimize is None and multi == True:
+            model.compile(optimizers.RMSprop(lr=0.0001, decay=1e-6), loss='categorical_crossentropy',
+                          metrics=["accuracy"])
         else:
             model.compile(optimize)
 

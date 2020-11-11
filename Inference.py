@@ -11,15 +11,12 @@ MODEL = 0
 LABEL = 1
 
 
-def load_best_model(model_name, label):
+def load_best_model(model_name):
     # Loading BaseModel
     name = model_name
     basemodel = BaseModel(model_name[:-1])
     model = basemodel.load_model(False)
     model = basemodel.adding_toplayer(model, name)
-    # Loading Best Model
-    model.load_weights(os.path.join(MOD_ATT_PATH, f'{model_name}_{label}.h5'))
-    print(f"\nBest Model {model_name}'s Arc. and Weights Loaded!")
     return model
 
 
@@ -42,46 +39,61 @@ print('Running Inference...')
 
 
 def inference(file, best_pairs, plot=True):
-    scores = []
     tic = time()
-
     # running rage models
-    result_rage, score_rage = analyze_face(file)
-    result = [result_rage]
-    labels, scores = [], []
+    result_rage, _ = analyze_face(file)
+    rage_list = [(k.split(':')[0], k.split(':')[1]) for k in result_rage.split('\n')[1:-1]]
+    results_img = [result_rage]
+    labels = []
     lbl_scr_dict = dict()
     file_dict = {file: lbl_scr_dict}
 
+    # Loading Models
+    model_bi = load_best_model('vggface1')
+    model_multi = load_best_model('ResNet507')
+
     for model_name, label in best_pairs:
         pos, neg = f'{label}: V', f'{label}: X'
-        model = load_best_model(model_name, label)
+        print(f"\nFinding best model for {label}...")
 
         # running multiCls models
         if label == 'Hair_color':
+            # Loading Multicls Model Weights
+            model_multi.load_weights(os.path.join(MOD_ATT_PATH, f'{model_name}_{label}.h5'))
+            print(f"\nBest Model {model_name}'s Arc. and Weights Loaded!")
+
             labels_hair = {0: 'Bald', 1: 'Black_Hair', 2: 'Blond_Hair', 3: 'Brown_Hair', 4: 'Gray_Hair'}
-            result_mult, score_multi = Prediction.predict_label_multi(model, labels_hair, file, 'ResNet50')
-            label = result_mult
-        else:
-            result_mult, score_multi = '', ''
-
+            result, _ = Prediction.predict_label_multi(model_multi, labels_hair, file, 'ResNet50')
+            result = (label, result)
+            result_img = result[1]
         # running binaryCls models
-        result_bicls, score_bicls = Predict.predict_file(model, file, pos, neg)
+        else:
+            # Loading Binary Model Weights
+            model_bi.load_weights(os.path.join(MOD_ATT_PATH, f'{model_name}_{label}.h5'))
+            print(f"\nBest Model {model_name}'s Arc. and Weights Loaded!")
+            result, _ = Predict.predict_file(model_bi, file, pos, neg)
 
-        result.append(result_bicls + '\n' + result_mult)
-        scores.append(score_bicls[0][0].astype(float))
+            if result.split(': ')[1] == 'X':
+                result = ('', '')
+                result_img = ''
+            else:
+                result_img = result.split(': ')[0]
+                result = (result.split(': ')[0], '')
+
+        results_img.append(result_img + '\n')
+        rage_list.append(result)
+        file_dict[file] = {k: v for k, v in rage_list}
+
         labels.append(label)
-        # file_dict[file] = file_dict
+    file_dict[file].pop('')
 
-    lbl_scr_dict = {k: v for k, v in zip(labels, scores)}
-    file_dict[file] = lbl_scr_dict
-    file_dict[file].update(score_rage)
-
+    # Checking Runtime
     toc = time()
     run = toc - tic
-    print(f'Avg Time inference per Model:\t {(run / 60) / (len(models_list) + 4):.2f} minutes.')
+    print(f'Total Run Time inference:\t {(run / 60):.2f} minutes.')
 
     if plot:
-        result = ''.join(result)
+        result = ''.join(results_img)
         img = mpimg.imread(file)
         plt.figure(figsize=(8, 5))
         plt.imshow(img)
@@ -93,7 +105,7 @@ def inference(file, best_pairs, plot=True):
     return file_dict
 
 
-if __name__ == '__main__':
+def main():
     # Get img list
     img_list = os.listdir(IMAGE_PATH)
     image = ''.join(random.choices(img_list, k=1))
@@ -101,4 +113,11 @@ if __name__ == '__main__':
 
     # Run Inference
     result = inference(file_path, best_pairs)
-    print([(k, v) for k, v in result.items()], sep='\n')
+    print(result)
+    return result
+
+
+if __name__ == '__main__':
+    main()
+# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_015191.jpg'
+# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_057829.jpg'

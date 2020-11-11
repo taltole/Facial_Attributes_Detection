@@ -15,33 +15,9 @@ app = Flask(__name__)
 
 @app.route('/predict_single', methods=['GET'])
 def predict_single():
-    file = request.args.get('image_url')
-    result = inference(file, best_pairs)
-    return result
-
-
-@app.route('/predict_all/', methods=['POST'])
-def predict_all():
-
-    data = request.get_json('image_url')
-    result = inference(data, best_pairs)
-    #
-    # df = pd.DataFrame(data)
-    # df['Prediction'] = model.predict(df)
-
-    return result  # df.to_json(orient='records')
-
-
-if __name__ == '__main__':
-    # img_list = os.listdir(IMAGE_PATH)
-    # image = ''.join(random.choices(img_list, k=1))
-    # file = os.path.join(IMAGE_PATH, image)
-    # print(file)
-    # file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_029252.jpg'
     models_list = [file for file in os.listdir(MOD_ATT_PATH) if str(file).endswith('h5')]
     best_model_list = []
     label_list = []
-    best_pairs = []
 
     for model in models_list:
         best_model = model.split('/')[-1].split('_')[MODEL]
@@ -51,6 +27,30 @@ if __name__ == '__main__':
         label_list.append(label)
 
     best_pairs = zip(best_model_list, label_list)
+    file = request.args.get('image_url')
+    result = inference(file, best_pairs)
+    return result
+
+
+# @app.route('/predict_all/', methods=['POST'])
+# def predict_all():
+#
+#     data = request.get_json('image_url')
+#     result = inference(data, best_pairs)
+    #
+    # df = pd.DataFrame(data)
+    # df['Prediction'] = model.predict(df)
+
+    # return result  # df.to_json(orient='records')
+
+
+if __name__ == '__main__':
+    # img_list = os.listdir(IMAGE_PATH)
+    # image = ''.join(random.choices(img_list, k=1))
+    # file = os.path.join(IMAGE_PATH, image)
+    # print(file)
+    # file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_029252.jpg'
+
 
     app.run()
     # port = os.environ.get('PORT')

@@ -18,6 +18,7 @@ def run_benchmark():
     print(psutil.virtual_memory().percent)# you can calculate percentage of available memory
     print(psutil.virtual_memory().available * 100 / psutil.virtual_memory().total)
 
+
 # Taking Best Model per Att
 models_list = [file for file in os.listdir(MOD_ATT_PATH) if str(file).endswith('h5')]
 best_model_list = []
@@ -46,7 +47,7 @@ def load_best_model(model_name):
     return model
 
 
-def inference(file, best_pairs, plot=True):
+def inference(file, best_pairs, plot=False):
     """
     function take a file and list of model - att combination and run inference on it. print a labeled pic and dict.
     params: file: str with abs file path

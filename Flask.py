@@ -10,6 +10,7 @@ app = Flask(__name__)
 # http://127.0.0.1:5000/predict_all?url_image=file
 # http://127.0.0.1:5000/predict_single?
 # http://127.0.0.1:5000/predict_single?image_url=/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_029252.jpg
+# Taking Best Model per Att
 
 
 @app.route('/predict_single', methods=['GET'])
@@ -36,9 +37,23 @@ if __name__ == '__main__':
     # image = ''.join(random.choices(img_list, k=1))
     # file = os.path.join(IMAGE_PATH, image)
     # print(file)
-    file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_029252.jpg'
+    # file = '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_029252.jpg'
+    models_list = [file for file in os.listdir(MOD_ATT_PATH) if str(file).endswith('h5')]
+    best_model_list = []
+    label_list = []
+    best_pairs = []
+
+    for model in models_list:
+        best_model = model.split('/')[-1].split('_')[MODEL]
+        label = model.strip('.h5').split('_', 1)[LABEL:]
+        label = ''.join(label)
+        best_model_list.append(best_model)
+        label_list.append(label)
+
+    best_pairs = zip(best_model_list, label_list)
+
     app.run()
-    port = os.environ.get('PORT')
+    # port = os.environ.get('PORT')
     # if port:
     #     app.run(host='0.0.0.0', port=int(port))
     #     print('in port')

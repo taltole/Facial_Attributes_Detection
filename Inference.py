@@ -18,20 +18,6 @@ def run_benchmark():
     print(psutil.virtual_memory().percent)# you can calculate percentage of available memory
     print(psutil.virtual_memory().available * 100 / psutil.virtual_memory().total)
 
-
-def load_best_model(model_name):
-    """
-    function loads basemodel without toplayer and add customized top layers depends on model-name
-    return model arch.
-    """
-    # Loading BaseModel
-    name = model_name
-    basemodel = BaseModel(model_name[:-1])
-    model = basemodel.load_model(False)
-    model = basemodel.adding_toplayer(model, name)
-    return model
-
-
 # Taking Best Model per Att
 models_list = [file for file in os.listdir(MOD_ATT_PATH) if str(file).endswith('h5')]
 best_model_list = []
@@ -47,6 +33,18 @@ for model in models_list:
 
 best_pairs = zip(best_model_list, label_list)
 
+def load_best_model(model_name):
+    """
+    function loads basemodel without toplayer and add customized top layers depends on model-name
+    return model arch.
+    """
+    # Loading BaseModel
+    name = model_name
+    basemodel = BaseModel(model_name[:-1])
+    model = basemodel.load_model(False)
+    model = basemodel.adding_toplayer(model, name)
+    return model
+
 
 def inference(file, best_pairs, plot=True):
     """
@@ -56,6 +54,7 @@ def inference(file, best_pairs, plot=True):
             plot: bool if want to see labeled image file
     returns: plot and dictionary with file and labels
     """
+
     print('Running Inference...')
 
     tic = time()
@@ -116,34 +115,34 @@ def inference(file, best_pairs, plot=True):
     run = toc - tic
     print(f'Total Run Time inference:\t {(run / 60):.2f} minutes.')
 
-    if plot:
-        result = ''.join(results_img)
-        img = mpimg.imread(file)
-        plt.figure(figsize=(8, 5))
-        plt.imshow(img)
-        plt.text(s=result, x=190, y=100)
-        plt.xticks([])
-        plt.yticks([])
-        plt.show()
+    # if plot:
+    #     result = ''.join(results_img)
+    #     img = mpimg.imread(file)
+    #     plt.figure(figsize=(8, 5))
+    #     plt.imshow(img)
+    #     plt.text(s=result, x=190, y=100)
+    #     plt.xticks([])
+    #     plt.yticks([])
+    #     plt.show()
 
     return file_dict
 
 
-def main():
-    # Get img list
-    img_list = os.listdir(IMAGE_PATH)
-    image = ''.join(random.choices(img_list, k=1))
-    file_path = os.path.join(IMAGE_PATH, image)
+# def main():
+#     # Get img list
+#     # img_list = os.listdir(IMAGE_PATH)
+#     # image = ''.join(random.choices(img_list, k=1))
+#     # file_path = os.path.join(IMAGE_PATH, image)
+#
+#     # Run Inference
+#     result = inference(file_path, best_pairs, False)
+#     print(result)
+#     return result
 
-    # Run Inference
-    result = inference(file_path, best_pairs)
-    print(result)
-    return result
 
-
-if __name__ == '__main__':
-    # while True:
-    main()
+# if __name__ == '__main__':
+#     # while True:
+#     main()
     # run_benchmark()
 # '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_015191.jpg'
 # '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_057829.jpg'

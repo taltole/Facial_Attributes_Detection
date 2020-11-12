@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <form>
+        Keyword:<br>
+        <input type="text" name="keyword" onkeyup="callREST()"><br>
+    </form>
+    <div id="response"></div>
+    <script>
+        function callREST() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("response").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "http://127.0.0.1:5000/", true);
+            xhttp.send('predict_single?image_url=');
+        }
+    </script>
+</body>
+</html>
+

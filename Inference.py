@@ -5,17 +5,20 @@ from Classes.Predict import analyze_face, Prediction
 from sklearn.metrics import accuracy_score
 from config import *
 import random
+
 MODEL = 0
 LABEL = 1
 import psutil
+
+
 # gives a single float value
 
 
 def run_benchmark():
-    print(psutil.cpu_percent())# gives an object with many fields
-    print(psutil.virtual_memory())# you can convert that object to a dictionary
+    print(psutil.cpu_percent())  # gives an object with many fields
+    print(psutil.virtual_memory())  # you can convert that object to a dictionary
     # print(dict(psutil.virtual_memory()._asdict()))# you can have the percentage of used RAM
-    print(psutil.virtual_memory().percent)# you can calculate percentage of available memory
+    print(psutil.virtual_memory().percent)  # you can calculate percentage of available memory
     print(psutil.virtual_memory().available * 100 / psutil.virtual_memory().total)
 
 
@@ -33,6 +36,7 @@ for model in models_list:
     label_list.append(label)
 
 best_pairs = zip(best_model_list, label_list)
+
 
 def load_best_model(model_name):
     """
@@ -57,9 +61,8 @@ def inference(file, best_pairs, plot=False):
     """
 
     print('Running Inference...')
-
     tic = time()
-    # running rage models
+
     # Loading Models
     model_bi = load_best_model('vggface1')
     print(f"\nBest Binary Classifier Model VggFace's Arc. and Weights Loaded!")
@@ -67,6 +70,8 @@ def inference(file, best_pairs, plot=False):
     model_multi = load_best_model('ResNet507')
     print(f"\nBest Multi Classifier Model ResNet50's Arc. and Weights Loaded!")
 
+    # running rage models
+    print(f'\nLoading Race, Age, Gender, Emotions Models...')
     result_rage, _ = analyze_face(file)
     rage_list = [(k.split(':')[0], k.split(':')[1]) for k in result_rage.split('\n')[1:-1]]
     results_img = [result_rage]
@@ -87,13 +92,13 @@ def inference(file, best_pairs, plot=False):
             result, _ = Prediction.predict_label_multi(model_multi, labels_hair, file, 'ResNet50')
             result = (label, result)
             result_img = result[1]
+
         # running binaryCls models
         else:
             # Loading Binary Model Weights
             model_bi.load_weights(os.path.join(MOD_ATT_PATH, f'{model_name}_{label}.h5'))
-            # print(f"\nBest Model {model_name}'s Arc. and Weights Loaded!")
-            result, _ = Predict.predict_file(model_bi, file, pos, neg)
 
+            result, _ = Predict.predict_file(model_bi, file, pos, neg)
             if result.split(': ')[1] == 'X':
                 result = ('', '')
                 result_img = ''
@@ -113,21 +118,20 @@ def inference(file, best_pairs, plot=False):
 
     # Checking Runtime
     toc = time()
-    run = toc - tic
+    run = tic - toc
     print(f'Total Run Time inference:\t {(run / 60):.2f} minutes.')
 
-    # if plot:
-    #     result = ''.join(results_img)
-    #     img = mpimg.imread(file)
-    #     plt.figure(figsize=(8, 5))
-    #     plt.imshow(img)
-    #     plt.text(s=result, x=190, y=100)
-    #     plt.xticks([])
-    #     plt.yticks([])
-    #     plt.show()
+    if plot:
+        result = ''.join(results_img)
+        img = mpimg.imread(file)
+        plt.figure(figsize=(8, 5))
+        plt.imshow(img)
+        plt.text(s=result, x=190, y=100)
+        plt.xticks([])
+        plt.yticks([])
+        plt.show()
 
     return file_dict
-
 
 # def main():
 #     # Get img list
@@ -144,10 +148,4 @@ def inference(file, best_pairs, plot=False):
 # if __name__ == '__main__':
 #     # while True:
 #     main()
-    # run_benchmark()
-# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_015191.jpg'
-# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_057829.jpg'
-# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_054661.jpg'
-# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_000330.jpg'
-# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_010013.jpg'
-# '/Users/tal/Google Drive/Cellebrite/Datasets/face_att/1/face_att_061007.jpg'
+# run_benchmark()

@@ -20,12 +20,12 @@ The dataset can be employed as the training and test sets for the following comp
 - Required Libraries requiement file
 - Extract the datasets with .csv file into same folder or change folder path in config.py
 - IND_FILE can be created with Notebook/dataset manager to index dataset from celebA or one user provide.
-- there are 3 main files to run: 
+- there are 3 optional main files to run, depends on the task: 
   1. main.py - CNN transfer learning for facial attribute *binary* classifier.
   2. main_multi.py  - CNN transfer learning for facial attribute *multi* classifier.
-  3. main_embedding.py - Using embedded images to use with machine learn classic models (file find top performing model using GSCV) 
+  3. main_embedding.py - Using embedded images to use with classic machine learning models (file find top performing model using GSCV) 
 
-- Run each of files, at final step of Training the model, save that model into models folder. 
+- Files will run each different training, at final step of training the model, it will be saved into models folder. 
 - Give the path of saved Model in config.py  
 - For inference run inference.py for local quary or Flask.py to get UI of Model. 
 There are several more files and notebooks for you to try them out for different needs (i.e. orginize, ploting, models history also CM and evalutions summary in csv folders)

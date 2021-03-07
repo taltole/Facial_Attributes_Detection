@@ -2,7 +2,9 @@ venv/
 Other/
 .DS_Store
 __pycache__/
-.idea/
+.idea
 *.h5
 weights/
+.ipynb_checkpoints
+.gitignore
 

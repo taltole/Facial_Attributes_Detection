@@ -9,14 +9,23 @@ CelebA has large diversities, large quantities, and rich annotations, including:
 10,177 number of identities,
 202,599 number of face images, and
 5 landmark locations, 40 binary attributes annotations per image.
- <p align="center">
-  <img src=https://github.com/taltole/template/1.png? width="350" alt="accessibility text">
+<p align="center">
+  <img src=https://github.com/taltole/templates/1.png? width="350" alt="accessibility text">
 </p>
 The dataset can be employed as the training and test sets for the following computer vision tasks: 
 - face attribute recognition, 
 - face detection, 
 - landmark (or facial part) localization
 - face editing & synthesis.
+
+CNN tranfer learning and classic machine learning models (on embedded images) applied for the classifiaction (for GPU/CPU utilization) in order to compare and evalute GDCV used before deployent for each class.
+<p align="center">
+  <img src=https://github.com/taltole/templates/2.png? width="350" alt="accessibility text">
+</p>
+<p align="center">
+  <img src=https://github.com/taltole/templates/3.png? width="350" alt="accessibility text">
+</p>
+
 
 ### Steps to follow: 
 - Required Libraries requiement file

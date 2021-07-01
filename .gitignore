@@ -7,4 +7,4 @@ __pycache__/
 weights/
 .ipynb_checkpoints
 .gitignore
-
+.*

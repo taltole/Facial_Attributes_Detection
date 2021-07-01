@@ -19,14 +19,12 @@ The dataset can be employed as the training and test sets for the following comp
 - face editing & synthesis.
 
 </p>
+
 CNN tranfer learning and classic machine learning models (on embedded images) applied for the classifiaction (for GPU/CPU utilization) in order to compare and evalute GDCV used before deployent for each class.
+
 </p>
 <p align="center">
   <img src=https://github.com/taltole/Facial_Attributes_Detection/blob/master/templates/Picture2.png? width="650" height="300" alt="accessibility text">
-</p>
-</p>
-<p align="center">
-  <img src=https://github.com/taltole/Facial_Attributes_Detection/blob/master/templates/Picture3.png? width="550" height="350" alt="accessibility text">
 </p>
 
 
@@ -39,7 +37,12 @@ CNN tranfer learning and classic machine learning models (on embedded images) ap
   2. main_multi.py  - CNN transfer learning for facial attribute *multi* classifier.
   3. main_embedding.py - Using embedded images to use with classic machine learning models (file find top performing model using GSCV) 
 
-- Files will run each different training, at final step of training the model, it will be saved into models folder. 
+</p>
+<p align="center">
+  <img src=https://github.com/taltole/Facial_Attributes_Detection/blob/master/templates/Picture3.png? width="550" height="350" alt="accessibility text">
+</p>
+
+- Files run each different training, at final step of training the model, it will be saved into models folder. 
 - Give the path of saved Model in config.py  
 - For inference run inference.py for local quary or Flask.py to get UI of Model. 
 There are several more files and notebooks for you to try them out for different needs (i.e. orginize, ploting, models history also CM and evalutions summary in csv folders)

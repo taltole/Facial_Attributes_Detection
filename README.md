@@ -1,8 +1,8 @@
 # Facial_Attributes_Detection
-CelebA dataset was the main one used for this project. 
+CelebFaces Attributes Dataset (CelebA) dataset was the main one used for this project. 
 Link to download datasets : http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
 
-CelebFaces Attributes Dataset (CelebA) is a large-scale face attributes dataset with more than 200K celebrity images, each with 40 attribute annotations. 
+CelebA is a large-scale face attributes dataset with more than 200K celebrity images, each with 40 attribute annotations. 
 The images in this dataset cover large pose variations and background clutter. 
 
 CelebA has large diversities, large quantities, and rich annotations, including:

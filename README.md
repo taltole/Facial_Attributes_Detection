@@ -12,11 +12,13 @@ CelebA has large diversities, large quantities, and rich annotations, including:
 <p align="center">
   <img src=https://github.com/taltole/Facial_Attributes_Detection/blob/master/templates/Picture1.png? width="350" alt="accessibility text">
 </p>
-The dataset can be employed as the training and test sets for the following computer vision tasks (function and files for that can also be found on notebooks): 
+
+The dataset and code library can be employ as the training and test sets for the following computer vision tasks (function and files for that can also be found on notebooks):</br>
+
 - face attribute recognition. </br>
-- face detection. </br>
+- face detection and croping. </br>
 - landmark (or facial part) localization. </br>
-- face editing & synthesis. </br>
+- face editing & synthesis/augmantation. </br>
 
 </p>
 

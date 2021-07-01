@@ -22,7 +22,7 @@ The dataset can be employed as the training and test sets for the following comp
 CNN tranfer learning and classic machine learning models (on embedded images) applied for the classifiaction (for GPU/CPU utilization) in order to compare and evalute GDCV used before deployent for each class.
 
 <p align="center">
-  <img src=https://github.com/taltole/Facial_Attributes_Detection/blob/master/templates/Picture2.png? width="350" height="450" alt="accessibility text">
+  <img src=https://github.com/taltole/Facial_Attributes_Detection/blob/master/templates/Picture2.png? width="550" height="350" alt="accessibility text">
 </p>
 
 <p align="center">
